@@ -844,16 +844,44 @@ function closeBingoViering() {
     currentGoalIndex++;
     updateBingoGoal();
     
-    // Toon bericht over volgend doel of voltooiing
+    // Toon overlay over volgend doel of voltooiing
     if (currentGoalIndex < bingoGoals.length) {
         setTimeout(() => {
-            alert(`📋 Volgend doel: ${bingoGoals[currentGoalIndex].name}`);
-        }, 500);
+            showVolgendDoelOverlay();
+        }, 300);
     } else {
         setTimeout(() => {
-            alert('🏆 Alle BINGO doelen behaald! Gefeliciteerd! 🎉');
-        }, 500);
+            showAlleDoelentOverlay();
+        }, 300);
     }
+}
+
+// Toon volgend doel overlay
+function showVolgendDoelOverlay() {
+    const overlay = document.getElementById('volgendDoelOverlay');
+    const doelText = document.getElementById('volgendDoelText');
+    doelText.textContent = bingoGoals[currentGoalIndex].name;
+    overlay.classList.remove('hidden');
+}
+
+// Sluit volgend doel overlay
+function closeVolgendDoel() {
+    const overlay = document.getElementById('volgendDoelOverlay');
+    overlay.classList.add('hidden');
+}
+
+// Toon alle doelen behaald overlay
+function showAlleDoelentOverlay() {
+    const overlay = document.getElementById('alleDoelenhOverlay');
+    overlay.classList.remove('hidden');
+    // Speel nog een keer confetti voor de volledige voltooiing
+    showMegaConfetti();
+}
+
+// Sluit alle doelen overlay
+function closeAlleDoelen() {
+    const overlay = document.getElementById('alleDoelenhOverlay');
+    overlay.classList.add('hidden');
 }
 
 // Speel BINGO geluid effect
@@ -970,3 +998,5 @@ window.triggerBingo = triggerBingo;
 window.confirmBingo = confirmBingo;
 window.closeBingoViering = closeBingoViering;
 window.closeRondeStart = closeRondeStart;
+window.closeVolgendDoel = closeVolgendDoel;
+window.closeAlleDoelen = closeAlleDoelen;
