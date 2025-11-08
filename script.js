@@ -775,7 +775,7 @@ function triggerBingo() {
     
     // Toon bevestigingsoverlay
     const overlay = document.getElementById('bingoConfirmOverlay');
-    const goalNameElement = overlay.querySelector('.bingo-confirm-goal h2');
+    const goalNameElement = document.getElementById('bingoConfirmGoalText');
     goalNameElement.textContent = currentGoal.name;
     overlay.classList.remove('hidden');
 }
@@ -805,7 +805,7 @@ function confirmBingo(isConfirmed) {
     
     // Toon vieringsoverlay
     const vieringOverlay = document.getElementById('bingoVieringOverlay');
-    const goalNameElement = vieringOverlay.querySelector('.bingo-viering-goal p');
+    const goalNameElement = document.getElementById('bingoVieringGoalText');
     goalNameElement.textContent = currentGoal.name;
     vieringOverlay.classList.remove('hidden');
 }
