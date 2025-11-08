@@ -854,7 +854,7 @@ function playBingoEffect() {
     // Speel victory geluid
     if (effectSound) {
         effectSound.src = 'sounds/victory/pokimons.mp3';
-        effectSound.volume = effectsVolume;
+        effectSound.volume = audioConfig.effects.volume;
         effectSound.play().catch(e => console.error('Error playing victory sound:', e));
     }
 }
