@@ -247,6 +247,7 @@ let isMusicPlaying = false;
 // Shuffle systeem voor effecten
 let effectsPlaylist = [];
 let effectsPlaylistIndex = 0;
+let lastPlayedEffect = null; // Houd laatste effect bij
 
 // Shuffle een array (Fisher-Yates algorithm)
 function shuffleArray(array) {
@@ -396,6 +397,9 @@ function playRandomEffect() {
     const effectFile = effectsPlaylist[effectsPlaylistIndex];
     effectsPlaylistIndex++;
     
+    // Sla laatste effect op voor replay
+    lastPlayedEffect = effectFile;
+    
     // Als we aan het einde zijn, shuffle opnieuw
     if (effectsPlaylistIndex >= effectsPlaylist.length) {
         console.log('🔄 Alle effecten afgespeeld! Shuffle opnieuw...');
@@ -411,6 +415,28 @@ function playRandomEffect() {
             console.error('❌ Effect niet afgespeeld:', effectFile, e.message);
             // Alleen fallback als er echt een fout is
             playDingSound();
+        });
+}
+
+// Speel laatste effect opnieuw af
+function replayLastEffect() {
+    if (!lastPlayedEffect) {
+        console.log('ℹ️ Geen effect om opnieuw af te spelen');
+        return;
+    }
+    
+    if (!effectSound) {
+        console.error('❌ Effect sound element niet gevonden');
+        return;
+    }
+    
+    console.log('🔁 Replay:', lastPlayedEffect);
+    
+    effectSound.src = lastPlayedEffect;
+    effectSound.currentTime = 0;
+    effectSound.play()
+        .catch(e => {
+            console.error('❌ Replay mislukt:', lastPlayedEffect, e.message);
         });
 }
 
@@ -713,9 +739,10 @@ document.addEventListener('keydown', (e) => {
         e.preventDefault();
         nextStatement();
     }
-    // R = reset
+    // R = herhaal laatste effect
     if (e.key === 'r' || e.key === 'R') {
-        resetRound();
+        e.preventDefault();
+        replayLastEffect();
     }
     // Pijltje links = vorige stelling
     if (e.key === 'ArrowLeft') {
