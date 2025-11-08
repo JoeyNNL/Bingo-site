@@ -281,6 +281,13 @@ let statementHistory = [];
 let totalStatements = 0;
 let historyIndex = -1; // Voor navigatie door geschiedenis
 
+// BINGO doelen systeem
+const bingoGoals = [
+    { id: 'line', name: 'Horizontale of Verticale Lijn', achieved: false },
+    { id: 'full', name: 'Volle Kaart', achieved: false }
+];
+let currentGoalIndex = 0;
+
 // Initialiseer audio bij laden van pagina
 function initAudio() {
     backgroundMusic = document.getElementById('backgroundMusic');
@@ -540,6 +547,11 @@ function selectRound(roundNumber) {
     totalStatements = availableNumbers.length;
     historyIndex = -1;
     
+    // Reset BINGO doelen
+    bingoGoals.forEach(goal => goal.achieved = false);
+    currentGoalIndex = 0;
+    updateBingoGoal();
+    
     // Update UI
     document.getElementById('currentRound').textContent = `Ronde ${roundNumber}`;
     document.getElementById('numberDisplay').textContent = '-';
@@ -739,6 +751,139 @@ function openBingoCards() {
     window.open('bingokaarten.html', '_blank');
 }
 
+// Update BINGO doel display
+function updateBingoGoal() {
+    const goalElement = document.getElementById('bingoGoal');
+    if (currentGoalIndex < bingoGoals.length) {
+        const currentGoal = bingoGoals[currentGoalIndex];
+        goalElement.textContent = currentGoal.name;
+        goalElement.style.color = '#667eea';
+    } else {
+        goalElement.textContent = 'Alle doelen behaald! 🎉';
+        goalElement.style.color = '#2ecc71';
+    }
+}
+
+// BINGO effect triggeren
+function triggerBingo() {
+    if (currentGoalIndex >= bingoGoals.length) {
+        alert('Alle BINGO doelen zijn al behaald! 🎉');
+        return;
+    }
+    
+    const currentGoal = bingoGoals[currentGoalIndex];
+    
+    // Bevestigingsdialoog
+    const confirmed = confirm(
+        `🎯 BINGO Controle\n\n` +
+        `Doel: ${currentGoal.name}\n\n` +
+        `Is dit een echte BINGO?\n\n` +
+        `Klik OK om te bevestigen\n` +
+        `Klik Annuleren als het geen BINGO is`
+    );
+    
+    // Als niet bevestigd, annuleer
+    if (!confirmed) {
+        console.log('❌ BINGO geannuleerd');
+        // Optioneel: speel een "fout" geluid
+        if (effectSound) {
+            playDingSound(); // Of een ander geluid voor foutieve BINGO
+        }
+        return;
+    }
+    
+    // Bevestigde BINGO - ga door met effect
+    currentGoal.achieved = true;
+    
+    // Speel BINGO effecten
+    playBingoEffect();
+    showMegaConfetti();
+    
+    // Toon bericht
+    setTimeout(() => {
+        const goalName = currentGoal.name;
+        const message = `🎉 BINGO! 🎉\n\n${goalName} behaald!\n\nWinnaar gefeliciteerd! 🏆`;
+        alert(message);
+        
+        // Ga naar volgend doel
+        currentGoalIndex++;
+        updateBingoGoal();
+        
+        if (currentGoalIndex < bingoGoals.length) {
+            const nextGoal = bingoGoals[currentGoalIndex];
+            setTimeout(() => {
+                alert(`Nu spelen we voor:\n${nextGoal.name}`);
+            }, 500);
+        } else {
+            setTimeout(() => {
+                alert('🎊 Alle doelen behaald! De ronde is voltooid! 🎊');
+            }, 500);
+        }
+    }, 1000);
+}
+
+// Speel BINGO geluid effect
+function playBingoEffect() {
+    // Speel een speciaal effect of meerdere effecten achter elkaar
+    if (effectSound && effectsPlaylist.length > 0) {
+        playRandomEffect();
+        setTimeout(() => playRandomEffect(), 300);
+        setTimeout(() => playRandomEffect(), 600);
+    }
+}
+
+// Mega confetti voor BINGO
+function showMegaConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const confetti = [];
+    const colors = ['#e74c3c', '#3498db', '#f1c40f', '#2ecc71', '#9b59b6', '#e67e22', '#1abc9c', '#e91e63'];
+    
+    // Veel meer confetti voor BINGO!
+    for (let i = 0; i < 300; i++) {
+        confetti.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            r: Math.random() * 8 + 6,
+            d: Math.random() * 15 + 10,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            tilt: Math.floor(Math.random() * 20) - 10,
+            tiltAngleIncremental: Math.random() * 0.1 + 0.05,
+            tiltAngle: 0
+        });
+    }
+    
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        confetti.forEach((p, index) => {
+            ctx.beginPath();
+            ctx.lineWidth = p.r / 2;
+            ctx.strokeStyle = p.color;
+            ctx.moveTo(p.x + p.tilt + p.r, p.y);
+            ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r);
+            ctx.stroke();
+            
+            p.tiltAngle += p.tiltAngleIncremental;
+            p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
+            p.tilt = Math.sin(p.tiltAngle) * 15;
+            
+            if (p.y > canvas.height) {
+                confetti.splice(index, 1);
+            }
+        });
+        
+        if (confetti.length > 0) {
+            requestAnimationFrame(draw);
+        }
+    }
+    
+    draw();
+}
+
 // Sneltoetsen
 document.addEventListener('keydown', (e) => {
     // Spatiebalk = volgende stelling
@@ -750,6 +895,11 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'r' || e.key === 'R') {
         e.preventDefault();
         replayLastEffect();
+    }
+    // B = BINGO!
+    if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        triggerBingo();
     }
     // Pijltje links = vorige stelling
     if (e.key === 'ArrowLeft') {
