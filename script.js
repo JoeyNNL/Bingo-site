@@ -583,6 +583,9 @@ function selectRound(roundNumber) {
         }
     });
     
+    // Sync naar display scherm
+    syncToDisplay();
+    
     // Toon ronde start overlay
     showRondeStartOverlay(roundNumber);
     
@@ -604,12 +607,20 @@ function showRondeStartOverlay(roundNumber) {
     document.getElementById('rondeStartRoundNumber').textContent = roundNumber;
     document.getElementById('rondeStartGoalText').textContent = bingoGoals[0].name;
     overlay.classList.remove('hidden');
+    
+    // Sync naar display
+    localStorage.setItem('bingo_round_start_overlay', 'true');
+    localStorage.setItem('bingo_round_start_number', roundNumber);
+    localStorage.setItem('bingo_round_start_goal', bingoGoals[0].name);
 }
 
 // Sluit ronde start overlay
 function closeRondeStart() {
     const overlay = document.getElementById('rondeStartOverlay');
     overlay.classList.add('hidden');
+    
+    // Clear display overlay
+    localStorage.setItem('bingo_round_start_overlay', 'false');
 }
 
 // Functie om de kleur te bepalen op basis van het nummer
@@ -677,6 +688,9 @@ function nextStatement() {
         statementDisplay.style.transform = 'scale(1)';
         statementDisplay.style.opacity = '1';
         
+        // Sync naar display scherm
+        syncToDisplay();
+        
         // Speel sound effect
         playRandomEffect();
     }, 300);
@@ -694,36 +708,53 @@ function nextStatement() {
 // Update de lijst met gebruikte nummers
 function updateUsedNumbers() {
     const container = document.getElementById('usedNumbers');
-    container.innerHTML = '';
     
     // Sorteer de gebruikte nummers
     const sortedUsed = [...usedNumbers].sort((a, b) => a - b);
     
-    sortedUsed.forEach(num => {
-        const span = document.createElement('span');
-        span.className = 'used-number';
-        span.textContent = num;
-        span.style.backgroundColor = getNumberColor(num);
+    // Check welke nummers al bestaan in de container
+    const existingNumbers = Array.from(container.children).map(el => parseInt(el.textContent));
+    
+    // Vind nieuwe nummers die nog niet in de lijst staan
+    const newNumbers = sortedUsed.filter(num => !existingNumbers.includes(num));
+    
+    // Als er nieuwe nummers zijn, herbouw de hele lijst (voor correcte sortering)
+    if (newNumbers.length > 0) {
+        container.innerHTML = '';
         
-        // Voeg tooltip toe met de stelling
-        const statementData = statementHistory.find(s => s.number === num);
-        if (statementData) {
-            span.title = statementData.statement;
-            span.style.cursor = 'pointer';
+        sortedUsed.forEach((num, index) => {
+            const span = document.createElement('span');
+            span.className = 'used-number';
+            span.textContent = num;
+            span.style.backgroundColor = getNumberColor(num);
             
-            // Klik om stelling te tonen
-            span.addEventListener('click', () => {
-                const numberDisplay = document.getElementById('numberDisplay');
-                const statementDisplay = document.getElementById('statementDisplay');
+            // Alleen nieuwe nummers krijgen de animatie
+            const isNew = newNumbers.includes(num);
+            if (!isNew) {
+                // Disable animatie voor bestaande nummers
+                span.style.animation = 'none';
+            }
+            
+            // Voeg tooltip toe met de stelling
+            const statementData = statementHistory.find(s => s.number === num);
+            if (statementData) {
+                span.title = statementData.statement;
+                span.style.cursor = 'pointer';
                 
-                numberDisplay.textContent = num;
-                numberDisplay.style.backgroundColor = getNumberColor(num);
-                statementDisplay.textContent = statementData.statement;
-            });
-        }
-        
-        container.appendChild(span);
-    });
+                // Klik om stelling te tonen
+                span.addEventListener('click', () => {
+                    const numberDisplay = document.getElementById('numberDisplay');
+                    const statementDisplay = document.getElementById('statementDisplay');
+                    
+                    numberDisplay.textContent = num;
+                    numberDisplay.style.backgroundColor = getNumberColor(num);
+                    statementDisplay.textContent = statementData.statement;
+                });
+            }
+            
+            container.appendChild(span);
+        });
+    }
 }
 
 // Reset de huidige ronde
@@ -735,6 +766,14 @@ function resetRound() {
     
     if (confirm('Weet je zeker dat je deze ronde wilt resetten?')) {
         selectRound(currentRound);
+        
+        // Clear display data
+        localStorage.removeItem('bingo_currentNumber');
+        localStorage.removeItem('bingo_currentStatement');
+        localStorage.removeItem('bingo_numberColor');
+        localStorage.removeItem('bingo_winner');
+        localStorage.removeItem('bingo_goal_achieved');
+        localStorage.setItem('bingo_celebration', 'false');
     }
 }
 
@@ -764,6 +803,9 @@ function showPreviousStatement() {
     numberDisplay.textContent = previous.number;
     numberDisplay.style.backgroundColor = getNumberColor(previous.number);
     statementDisplay.textContent = `[Geschiedenis] ${previous.statement}`;
+    
+    // Sync naar display
+    syncToDisplay();
 }
 
 // Toon volgende stelling uit geschiedenis (nieuwe functie)
@@ -781,6 +823,9 @@ function showNextInHistory() {
     numberDisplay.textContent = next.number;
     numberDisplay.style.backgroundColor = getNumberColor(next.number);
     statementDisplay.textContent = `[Geschiedenis] ${next.statement}`;
+    
+    // Sync naar display
+    syncToDisplay();
 }
 
 // Fullscreen toggle
@@ -818,6 +863,9 @@ function updateBingoGoal() {
         goalElement.textContent = 'Alle doelen behaald! 🎉';
         goalElement.style.color = '#2ecc71';
     }
+    
+    // Sync naar display
+    syncToDisplay();
 }
 
 // BINGO effect triggeren
@@ -834,6 +882,25 @@ function triggerBingo() {
     const goalNameElement = document.getElementById('bingoConfirmGoalText');
     goalNameElement.textContent = currentGoal.name;
     overlay.classList.remove('hidden');
+    
+    // Focus op naam invoerveld
+    setTimeout(() => {
+        document.getElementById('winnerName').focus();
+    }, 100);
+    
+    // Toon pending BINGO op display
+    localStorage.setItem('bingo_pending', 'true');
+    localStorage.setItem('bingo_pending_goal', currentGoal.name);
+}
+
+// Update pending BINGO met naam
+function updatePendingBingo() {
+    const winnerName = document.getElementById('winnerName').value.trim();
+    if (winnerName) {
+        localStorage.setItem('bingo_pending_name', winnerName);
+    } else {
+        localStorage.removeItem('bingo_pending_name');
+    }
 }
 
 // Bevestig of annuleer BINGO
@@ -841,6 +908,11 @@ function confirmBingo(isConfirmed) {
     // Verberg bevestigingsoverlay
     const confirmOverlay = document.getElementById('bingoConfirmOverlay');
     confirmOverlay.classList.add('hidden');
+    
+    // Clear pending status
+    localStorage.setItem('bingo_pending', 'false');
+    localStorage.removeItem('bingo_pending_name');
+    localStorage.removeItem('bingo_pending_goal');
     
     if (!isConfirmed) {
         console.log('❌ BINGO geannuleerd');
@@ -851,6 +923,13 @@ function confirmBingo(isConfirmed) {
         return;
     }
     
+    // Haal winnaarsnaam op
+    const winnerNameInput = document.getElementById('winnerName');
+    const winnerName = winnerNameInput.value.trim() || 'Onbekende speler';
+    
+    // Reset het invoerveld voor volgende keer
+    winnerNameInput.value = '';
+    
     // Bevestigde BINGO - markeer als behaald
     const currentGoal = bingoGoals[currentGoalIndex];
     currentGoal.achieved = true;
@@ -859,11 +938,20 @@ function confirmBingo(isConfirmed) {
     playBingoEffect();
     showMegaConfetti();
     
-    // Toon vieringsoverlay
+    // Toon vieringsoverlay met winnaarsnaam
     const vieringOverlay = document.getElementById('bingoVieringOverlay');
     const goalNameElement = document.getElementById('bingoVieringGoalText');
+    const winnerElement = document.getElementById('bingoVieringWinner');
+    
     goalNameElement.textContent = currentGoal.name;
+    winnerElement.textContent = `🏆 ${winnerName} heeft gewonnen! 🏆`;
+    
     vieringOverlay.classList.remove('hidden');
+    
+    // Sync winnaar naar display
+    localStorage.setItem('bingo_winner', winnerName);
+    localStorage.setItem('bingo_goal_achieved', currentGoal.name);
+    localStorage.setItem('bingo_celebration', 'true');
 }
 
 // Sluit viering en ga naar volgend doel
@@ -871,6 +959,9 @@ function closeBingoViering() {
     // Verberg vieringsoverlay
     const vieringOverlay = document.getElementById('bingoVieringOverlay');
     vieringOverlay.classList.add('hidden');
+    
+    // Clear celebration op display
+    localStorage.setItem('bingo_celebration', 'false');
     
     // Ga naar volgend doel
     currentGoalIndex++;
@@ -894,12 +985,19 @@ function showVolgendDoelOverlay() {
     const doelText = document.getElementById('volgendDoelText');
     doelText.textContent = bingoGoals[currentGoalIndex].name;
     overlay.classList.remove('hidden');
+    
+    // Sync naar display
+    localStorage.setItem('bingo_next_goal_overlay', 'true');
+    localStorage.setItem('bingo_next_goal_text', bingoGoals[currentGoalIndex].name);
 }
 
 // Sluit volgend doel overlay
 function closeVolgendDoel() {
     const overlay = document.getElementById('volgendDoelOverlay');
     overlay.classList.add('hidden');
+    
+    // Clear display overlay
+    localStorage.setItem('bingo_next_goal_overlay', 'false');
 }
 
 // Toon alle doelen behaald overlay
@@ -908,12 +1006,64 @@ function showAlleDoelentOverlay() {
     overlay.classList.remove('hidden');
     // Speel nog een keer confetti voor de volledige voltooiing
     showMegaConfetti();
+    
+    // Sync naar display
+    localStorage.setItem('bingo_all_goals_overlay', 'true');
 }
 
 // Sluit alle doelen overlay
 function closeAlleDoelen() {
     const overlay = document.getElementById('alleDoelenhOverlay');
     overlay.classList.add('hidden');
+    
+    // Clear display overlay
+    localStorage.setItem('bingo_all_goals_overlay', 'false');
+    
+    // Reset volledige spel na volle kaart BINGO
+    if (confirm('Volle kaart BINGO behaald! Wil je het spel volledig resetten voor een nieuwe ronde?')) {
+        // Reset ronde
+        currentRound = null;
+        availableNumbers = [];
+        usedNumbers = [];
+        statementHistory = [];
+        totalStatements = 0;
+        historyIndex = -1;
+        
+        // Reset BINGO doelen
+        bingoGoals.forEach(goal => goal.achieved = false);
+        currentGoalIndex = 0;
+        
+        // Reset UI
+        document.getElementById('currentRound').textContent = 'Geen ronde geselecteerd';
+        document.getElementById('numberDisplay').textContent = '-';
+        document.getElementById('numberDisplay').style.backgroundColor = '#667eea';
+        document.getElementById('statementDisplay').textContent = 'Selecteer een ronde om te beginnen';
+        document.getElementById('usedNumbers').innerHTML = '';
+        updateProgress();
+        updateBingoGoal();
+        
+        // Deactiveer alle ronde knoppen
+        document.querySelectorAll('.round-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Reset display volledig
+        localStorage.removeItem('bingo_currentRound');
+        localStorage.removeItem('bingo_currentGoal');
+        localStorage.removeItem('bingo_currentNumber');
+        localStorage.removeItem('bingo_currentStatement');
+        localStorage.removeItem('bingo_usedNumbers');
+        localStorage.removeItem('bingo_numberColor');
+        localStorage.removeItem('bingo_winner');
+        localStorage.removeItem('bingo_goal_achieved');
+        localStorage.removeItem('bingo_updateTime');
+        localStorage.setItem('bingo_celebration', 'false');
+        localStorage.setItem('bingo_pending', 'false');
+        localStorage.removeItem('bingo_pending_name');
+        localStorage.removeItem('bingo_pending_goal');
+        
+        console.log('🔄 Spel volledig gereset na volle kaart BINGO');
+    }
 }
 
 // Speel BINGO geluid effect
@@ -982,6 +1132,19 @@ function showMegaConfetti() {
 
 // Sneltoetsen
 document.addEventListener('keydown', (e) => {
+    // Negeer keyboard shortcuts als een input veld focus heeft
+    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+        // Alleen Enter laten werken in input velden voor BINGO bevestiging
+        if (e.key === 'Enter' && document.activeElement.id === 'winnerName') {
+            const bingoConfirmOverlay = document.getElementById('bingoConfirmOverlay');
+            if (!bingoConfirmOverlay.classList.contains('hidden')) {
+                e.preventDefault();
+                confirmBingo(true);
+            }
+        }
+        return; // Stop verdere verwerking van shortcuts
+    }
+    
     // Enter = Actieve overlay doorgaan
     if (e.key === 'Enter') {
         // Check welke overlay actief is en klik de juiste knop
@@ -1024,7 +1187,7 @@ document.addEventListener('keydown', (e) => {
     }
     
     // Spatiebalk = volgende stelling
-    if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
+    if (e.code === 'Space') {
         e.preventDefault();
         nextStatement();
     }
@@ -1060,7 +1223,83 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const numberDisplay = document.getElementById('numberDisplay');
     numberDisplay.style.transition = 'transform 0.3s ease, background-color 0.3s ease';
+    
+    // Clear celebration flag bij laden
+    localStorage.setItem('bingo_celebration', 'false');
 });
+
+// Reset display scherm
+function resetDisplay() {
+    if (confirm('Weet je zeker dat je het display scherm wilt resetten?')) {
+        localStorage.removeItem('bingo_currentRound');
+        localStorage.removeItem('bingo_currentGoal');
+        localStorage.removeItem('bingo_currentNumber');
+        localStorage.removeItem('bingo_currentStatement');
+        localStorage.removeItem('bingo_usedNumbers');
+        localStorage.removeItem('bingo_numberColor');
+        localStorage.removeItem('bingo_winner');
+        localStorage.removeItem('bingo_goal_achieved');
+        localStorage.removeItem('bingo_updateTime');
+        localStorage.setItem('bingo_celebration', 'false');
+        localStorage.setItem('bingo_pending', 'false');
+        localStorage.removeItem('bingo_pending_name');
+        localStorage.removeItem('bingo_pending_goal');
+        localStorage.setItem('bingo_next_goal_overlay', 'false');
+        localStorage.removeItem('bingo_next_goal_text');
+        localStorage.setItem('bingo_all_goals_overlay', 'false');
+        localStorage.setItem('bingo_round_start_overlay', 'false');
+        localStorage.removeItem('bingo_round_start_number');
+        localStorage.removeItem('bingo_round_start_goal');
+        alert('Display scherm is gereset!');
+    }
+}
+
+// Sync data naar display scherm via localStorage
+function syncToDisplay() {
+    try {
+        // Huidige ronde
+        if (currentRound) {
+            localStorage.setItem('bingo_currentRound', `Ronde ${currentRound}`);
+        }
+        
+        // Huidig doel
+        if (currentGoalIndex < bingoGoals.length) {
+            localStorage.setItem('bingo_currentGoal', bingoGoals[currentGoalIndex].name);
+        }
+        
+        // Huidig nummer
+        const numberDisplay = document.getElementById('numberDisplay');
+        const currentNumber = numberDisplay.textContent;
+        if (currentNumber && currentNumber !== '-') {
+            localStorage.setItem('bingo_currentNumber', currentNumber);
+            localStorage.setItem('bingo_numberColor', numberDisplay.style.backgroundColor);
+            localStorage.setItem('bingo_updateTime', Date.now().toString());
+        }
+        
+        // Huidige stelling
+        const statementDisplay = document.getElementById('statementDisplay');
+        const currentStatement = statementDisplay.textContent;
+        if (currentStatement && !currentStatement.includes('Klik op')) {
+            localStorage.setItem('bingo_currentStatement', currentStatement);
+        }
+        
+        // Gebruikte nummers
+        localStorage.setItem('bingo_usedNumbers', JSON.stringify(usedNumbers));
+        
+    } catch (error) {
+        console.error('Fout bij sync naar display:', error);
+    }
+}
+
+// Open display scherm in nieuw venster
+function openDisplayWindow() {
+    const displayWindow = window.open('display.html', 'BingoDisplay', 'width=1920,height=1080');
+    if (displayWindow) {
+        console.log('📺 Display scherm geopend');
+    } else {
+        alert('Kon display scherm niet openen. Controleer of pop-ups zijn toegestaan.');
+    }
+}
 
 // Maak functies globaal beschikbaar voor onclick handlers
 window.triggerBingo = triggerBingo;
@@ -1070,3 +1309,49 @@ window.closeRondeStart = closeRondeStart;
 window.closeVolgendDoel = closeVolgendDoel;
 window.closeAlleDoelen = closeAlleDoelen;
 window.toggleSettings = toggleSettings;
+window.openDisplayWindow = openDisplayWindow;
+window.resetDisplay = resetDisplay;
+window.updatePendingBingo = updatePendingBingo;
+
+// Foto timer - countdown van 30 seconden
+let photoCountdown = 30;
+
+function updatePhotoTimer() {
+    const timerElement = document.getElementById('photoTimer');
+    if (timerElement) {
+        timerElement.textContent = photoCountdown;
+        
+        photoCountdown--;
+        
+        if (photoCountdown < 0) {
+            photoCountdown = 30; // Reset naar 30 seconden
+        }
+    }
+}
+
+// Start de foto timer
+setInterval(updatePhotoTimer, 1000); // Update elke seconde
+
+// Dark Mode Toggle
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const icon = document.getElementById('darkModeIcon');
+    const isDark = document.body.classList.contains('dark-mode');
+    
+    icon.textContent = isDark ? '☀️' : '🌙';
+    
+    // Bewaar voorkeur
+    localStorage.setItem('bingo_darkMode', isDark ? 'true' : 'false');
+}
+
+// Laad dark mode voorkeur bij opstarten
+document.addEventListener('DOMContentLoaded', function() {
+    const darkModePreference = localStorage.getItem('bingo_darkMode');
+    if (darkModePreference === 'true') {
+        document.body.classList.add('dark-mode');
+        const icon = document.getElementById('darkModeIcon');
+        if (icon) icon.textContent = '☀️';
+    }
+});
+
+window.toggleDarkMode = toggleDarkMode;

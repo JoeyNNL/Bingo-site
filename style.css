@@ -20,6 +20,61 @@ body {
     position: relative;
 }
 
+body.dark-mode {
+    background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e);
+}
+
+body.dark-mode .container {
+    background: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark-mode h1 {
+    color: #bb86fc;
+}
+
+body.dark-mode h2 {
+    color: #03dac6;
+}
+
+body.dark-mode h3 {
+    color: #a0a0a0;
+}
+
+body.dark-mode .round-selector,
+body.dark-mode .current-round,
+body.dark-mode .statement-display,
+body.dark-mode .used-numbers,
+body.dark-mode .audio-controls {
+    background: #2a2a2a;
+}
+
+body.dark-mode .display-box {
+    background: #333;
+    color: #e0e0e0;
+    border-color: #555;
+}
+
+body.dark-mode .progress-container {
+    background: #2a2a2a;
+}
+
+body.dark-mode .progress-bar {
+    background: #444;
+}
+
+body.dark-mode .current-round p {
+    color: #e0e0e0;
+}
+
+body.dark-mode .bingo-goal {
+    color: #bb86fc;
+}
+
+body.dark-mode .used-numbers h3 {
+    color: #a0a0a0;
+}
+
 @keyframes gradientShift {
     0% {
         background-position: 0% 50%;
@@ -193,6 +248,28 @@ h1 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* Photo Timer */
+.photo-timer {
+    text-align: center;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.photo-timer p {
+    color: white;
+    font-size: clamp(1.1em, 3vw, 1.5em);
+    font-weight: bold;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.photo-timer #photoTimer {
+    font-size: 1.3em;
+    color: #fee140;
+}
+
 h2 {
     color: #23a6d5;
     margin-bottom: 15px;
@@ -350,13 +427,13 @@ h3 {
     justify-content: center;
     line-height: 1;
     text-align: center;
-    /* 3D effect - uses inline background color */
-    box-shadow: 
-        0 8px 16px rgba(0, 0, 0, 0.3),
-        inset 0 -4px 8px rgba(0, 0, 0, 0.2),
-        inset 0 4px 8px rgba(255, 255, 255, 0.3);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     position: relative;
+    /* Subtiel 3D effect */
+    box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.3),
+        inset 0 -5px 10px rgba(0, 0, 0, 0.2),
+        inset 0 3px 10px rgba(255, 255, 255, 0.2);
+    text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.4);
 }
 
 @keyframes rollIn {
@@ -389,7 +466,12 @@ h3 {
     right: 0;
     bottom: 0;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), transparent 50%);
+    background: radial-gradient(
+        circle at 30% 30%, 
+        rgba(255, 255, 255, 0.35) 0%,
+        rgba(255, 255, 255, 0.1) 25%,
+        transparent 55%
+    );
     pointer-events: none;
 }
 
@@ -467,14 +549,14 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* 3D effect */
-    box-shadow: 
-        0 4px 8px rgba(0, 0, 0, 0.25),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.2),
-        inset 0 2px 4px rgba(255, 255, 255, 0.3);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
     position: relative;
     animation: rollInSmall 0.5s ease-out;
+    /* Subtiel 3D effect */
+    box-shadow: 
+        0 3px 8px rgba(0, 0, 0, 0.25),
+        inset 0 -2px 5px rgba(0, 0, 0, 0.15),
+        inset 0 2px 5px rgba(255, 255, 255, 0.2);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 @keyframes rollInSmall {
@@ -503,16 +585,21 @@ h3 {
     right: 0;
     bottom: 0;
     border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.4), transparent 60%);
+    background: radial-gradient(
+        circle at 32% 32%, 
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.1) 30%,
+        transparent 60%
+    );
     pointer-events: none;
 }
 
 .used-number:hover {
     transform: scale(1.3);
     box-shadow: 
-        0 6px 16px rgba(0, 0, 0, 0.4),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.2),
-        inset 0 2px 4px rgba(255, 255, 255, 0.3);
+        0 5px 12px rgba(0, 0, 0, 0.3),
+        inset 0 -2px 5px rgba(0, 0, 0, 0.15),
+        inset 0 2px 5px rgba(255, 255, 255, 0.2);
     z-index: 10;
 }
 
@@ -617,9 +704,16 @@ h3 {
 
 .ronde-start-goal h2 {
     color: white;
-    font-size: clamp(1.8em, 5vw, 3em);
+    font-size: clamp(0.8em, 1.8vw, 1.5em);
     margin: 0;
     font-weight: bold;
+    line-height: 1.1;
+    word-wrap: break-word;
+    hyphens: auto;
+    overflow-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .ronde-start-btn {
@@ -679,15 +773,25 @@ h3 {
 
 .bingo-confirm-goal h2 {
     color: white;
-    font-size: clamp(1.5em, 4vw, 2.5em);
+    font-size: clamp(0.8em, 1.5vw, 1.3em);
     margin: 0;
+    line-height: 1.1;
+    word-wrap: break-word;
+    hyphens: auto;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .bingo-confirm-question {
     color: white;
-    font-size: clamp(1.3em, 3vw, 2em);
+    font-size: clamp(0.9em, 2vw, 1.4em);
     margin-bottom: 40px;
     font-weight: bold;
+    line-height: 1.1;
+    white-space: nowrap;
 }
 
 .bingo-confirm-buttons {
@@ -771,16 +875,25 @@ h3 {
 
 .bingo-viering-goal p {
     color: white;
-    font-size: clamp(1.5em, 4vw, 3em);
+    font-size: clamp(0.8em, 1.5vw, 1.4em);
     margin: 0;
     font-weight: bold;
+    line-height: 1.1;
+    word-wrap: break-word;
+    hyphens: auto;
+    overflow-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .bingo-viering-congrats {
     color: white;
-    font-size: clamp(1.5em, 3vw, 2.5em);
+    font-size: clamp(1em, 2vw, 1.6em);
     margin-bottom: 40px;
     font-weight: bold;
+    line-height: 1.1;
+    white-space: nowrap;
 }
 
 .bingo-viering-close {
@@ -829,9 +942,16 @@ h3 {
 
 .volgend-doel-info p {
     color: white;
-    font-size: clamp(1.8em, 5vw, 3em);
+    font-size: clamp(0.85em, 1.8vw, 1.5em);
     margin: 0;
     font-weight: bold;
+    line-height: 1.1;
+    word-wrap: break-word;
+    hyphens: auto;
+    overflow-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .volgend-doel-btn {
@@ -881,16 +1001,28 @@ h3 {
 
 .alle-doelen-message {
     color: white;
-    font-size: clamp(1.8em, 5vw, 3em);
+    font-size: clamp(0.85em, 1.8vw, 1.5em);
     margin: 0 0 20px 0;
     font-weight: bold;
+    line-height: 1.1;
+    word-wrap: break-word;
+    hyphens: auto;
+    overflow-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .alle-doelen-congrats {
     color: white;
-    font-size: clamp(1.5em, 4vw, 2.5em);
+    font-size: clamp(0.8em, 1.5vw, 1.3em);
     margin: 0;
     font-weight: bold;
+    line-height: 1.1;
+    word-wrap: break-word;
+    hyphens: auto;
+    overflow-wrap: break-word;
+    white-space: nowrap;
 }
 
 .alle-doelen-btn {

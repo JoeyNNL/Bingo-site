@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BINGO Display - Publiek</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Jua&family=Momo+Signature&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="display.css">
+</head>
+<body>
+    <div class="display-container">
+        <!-- Ronde informatie -->
+        <div class="round-info">
+            <h1 id="roundDisplay">Welkom bij BINGO!</h1>
+            <div class="goal-display" id="goalDisplay">
+                <p>Doel:</p>
+                <h2 id="currentGoal">Wacht op ronde selectie...</h2>
+            </div>
+        </div>
+
+        <!-- Grote nummer display -->
+        <div class="number-section">
+            <div class="ball-wrapper">
+                <div id="displayNumber" class="big-number">-</div>
+            </div>
+        </div>
+
+        <!-- Stelling display -->
+        <div class="statement-section">
+            <div id="displayStatement" class="statement-text">Wacht op de volgende stelling...</div>
+        </div>
+
+        <!-- Gebruikte nummers -->
+        <div class="used-section">
+            <div id="displayUsedNumbers" class="used-numbers-grid"></div>
+        </div>
+    </div>
+
+    <!-- BINGO Viering Overlay voor Display -->
+    <div id="bingoCelebrationOverlay" class="bingo-celebration-overlay hidden">
+        <div class="bingo-celebration-content">
+            <h1 class="bingo-celebration-title">🎉 BINGO! 🎉</h1>
+            <div class="bingo-celebration-goal">
+                <p id="celebrationGoal">-</p>
+            </div>
+            <p class="bingo-celebration-winner" id="celebrationWinner">🏆 Winnaar! 🏆</p>
+        </div>
+    </div>
+
+    <!-- Pending BINGO Overlay voor Display -->
+    <div id="pendingBingoOverlay" class="pending-bingo-overlay hidden">
+        <div class="pending-bingo-content">
+            <h1 class="pending-bingo-title">BINGO Controle!</h1>
+            <div class="pending-bingo-info">
+                <p id="pendingGoal">-</p>
+            </div>
+            <p class="pending-bingo-question" id="pendingQuestion">Heeft [Naam] BINGO?</p>
+        </div>
+    </div>
+
+    <!-- Volgend Doel Overlay voor Display -->
+    <div id="volgendDoelOverlay" class="volgend-doel-overlay hidden">
+        <div class="volgend-doel-content">
+            <h1 class="volgend-doel-title">Volgend doel!</h1>
+            <div class="volgend-doel-info">
+                <p id="nextGoalText">-</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alle Doelen Overlay voor Display -->
+    <div id="alleDoelenhOverlay" class="alle-doelen-overlay hidden">
+        <div class="alle-doelen-content">
+            <h1 class="alle-doelen-title">🎊 VOLTOOID! 🎊</h1>
+            <div class="alle-doelen-info">
+                <p class="alle-doelen-message">Alle BINGO doelen behaald!</p>
+                <p class="alle-doelen-congrats">🏆 Fantastisch gespeeld! 🏆</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ronde Start Overlay voor Display -->
+    <div id="rondeStartOverlay" class="ronde-start-overlay hidden">
+        <div class="ronde-start-content">
+            <h1 class="ronde-start-title">Start Ronde <span id="rondeStartRoundNumber">-</span></h1>
+            <div class="ronde-start-info">
+                <p class="ronde-start-label">Eerste Doel:</p>
+                <p class="ronde-start-goal" id="rondeStartGoalText">-</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confettiCanvas"></canvas>
+
+    <script src="display.js"></script>
+</body>
+</html>
