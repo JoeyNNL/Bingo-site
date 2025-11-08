@@ -85,6 +85,16 @@
             transform: translateY(-2px);
         }
 
+        .download-btn {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .download-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
         .cards-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
@@ -152,6 +162,33 @@
             padding: 2px;
         }
 
+        .card-note.hidden {
+            display: none;
+        }
+
+        .card-number.hidden {
+            display: none;
+        }
+
+        /* Font size variants */
+        .font-small .card-number {
+            font-size: 1em;
+            width: 28px;
+            height: 28px;
+        }
+
+        .font-medium .card-number {
+            font-size: 1.3em;
+            width: 35px;
+            height: 35px;
+        }
+
+        .font-large .card-number {
+            font-size: 1.6em;
+            width: 42px;
+            height: 42px;
+        }
+
         @media print {
             body {
                 background: white;
@@ -216,8 +253,38 @@
                     <option value="5" selected>5x5 (25 vakjes)</option>
                 </select>
             </label>
+            <label>
+                Titel:
+                <input type="text" id="cardTitle" value="Bingokaart" placeholder="Kaart titel">
+            </label>
+            <label>
+                Lettertype grootte:
+                <select id="fontSize">
+                    <option value="small">Klein</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="large">Groot</option>
+                </select>
+            </label>
+            <label>
+                Kleurenschema:
+                <select id="colorScheme">
+                    <option value="default" selected>Standaard</option>
+                    <option value="pastel">Pastel</option>
+                    <option value="dark">Donker</option>
+                    <option value="rainbow">Regenboog</option>
+                </select>
+            </label>
+            <label>
+                <input type="checkbox" id="showNumbers" checked>
+                Toon nummers
+            </label>
+            <label>
+                <input type="checkbox" id="showNoteLines" checked>
+                Toon notitie lijnen
+            </label>
             <button class="btn generate-btn" onclick="generateCards()">Genereer Kaarten</button>
             <button class="btn print-btn" onclick="window.print()">Print Kaarten</button>
+            <button class="btn download-btn" onclick="downloadCardsAsPDF()">Download PDF</button>
         </div>
 
         <div id="cardsContainer" class="cards-container"></div>
@@ -231,12 +298,29 @@
             3: Array.from({length: 50}, (_, i) => i + 1)
         };
 
-        function getNumberColor(number) {
-            if (number >= 1 && number <= 10) return '#e74c3c';
-            if (number >= 11 && number <= 20) return '#3498db';
-            if (number >= 21 && number <= 30) return '#f1c40f';
-            if (number >= 31 && number <= 40) return '#2ecc71';
-            if (number >= 41 && number <= 50) return '#9b59b6';
+        // Kleurenschema's
+        const colorSchemes = {
+            default: {
+                1: '#e74c3c', 11: '#3498db', 21: '#f1c40f', 31: '#2ecc71', 41: '#9b59b6'
+            },
+            pastel: {
+                1: '#ffb3ba', 11: '#bae1ff', 21: '#ffffba', 31: '#baffc9', 41: '#e0bbff'
+            },
+            dark: {
+                1: '#8b0000', 11: '#00008b', 21: '#8b8b00', 31: '#006400', 41: '#4b0082'
+            },
+            rainbow: {
+                1: '#ff0000', 11: '#ff7f00', 21: '#ffff00', 31: '#00ff00', 41: '#4b0082'
+            }
+        };
+
+        function getNumberColor(number, scheme = 'default') {
+            const colors = colorSchemes[scheme];
+            if (number >= 1 && number <= 10) return colors[1];
+            if (number >= 11 && number <= 20) return colors[11];
+            if (number >= 21 && number <= 30) return colors[21];
+            if (number >= 31 && number <= 40) return colors[31];
+            if (number >= 41 && number <= 50) return colors[41];
             return '#667eea';
         }
 
@@ -244,6 +328,11 @@
             const cardCount = parseInt(document.getElementById('cardCount').value);
             const round = document.getElementById('roundSelect').value;
             const gridSize = parseInt(document.getElementById('gridSize').value);
+            const cardTitle = document.getElementById('cardTitle').value || 'Bingokaart';
+            const fontSize = document.getElementById('fontSize').value;
+            const colorScheme = document.getElementById('colorScheme').value;
+            const showNumbers = document.getElementById('showNumbers').checked;
+            const showNoteLines = document.getElementById('showNoteLines').checked;
             const container = document.getElementById('cardsContainer');
             container.innerHTML = '';
 
@@ -259,11 +348,11 @@
 
             for (let i = 0; i < cardCount; i++) {
                 const card = document.createElement('div');
-                card.className = 'bingo-card';
+                card.className = `bingo-card font-${fontSize}`;
 
                 const title = document.createElement('div');
                 title.className = 'card-title';
-                title.textContent = `Bingokaart ${i + 1}`;
+                title.textContent = `${cardTitle} ${i + 1}`;
                 card.appendChild(title);
 
                 const grid = document.createElement('div');
@@ -279,12 +368,12 @@
                     cell.className = 'card-cell';
 
                     const number = document.createElement('div');
-                    number.className = 'card-number';
+                    number.className = 'card-number' + (showNumbers ? '' : ' hidden');
                     number.textContent = num;
-                    number.style.backgroundColor = getNumberColor(num);
+                    number.style.backgroundColor = getNumberColor(num, colorScheme);
 
                     const note = document.createElement('div');
-                    note.className = 'card-note';
+                    note.className = 'card-note' + (showNoteLines ? '' : ' hidden');
 
                     cell.appendChild(number);
                     cell.appendChild(note);
@@ -294,6 +383,21 @@
                 card.appendChild(grid);
                 container.appendChild(card);
             }
+        }
+
+        // Download als PDF functie
+        function downloadCardsAsPDF() {
+            // Gebruik browser's print functionaliteit om PDF te maken
+            const originalTitle = document.title;
+            document.title = 'Bingokaarten - ' + new Date().toLocaleDateString('nl-NL');
+            
+            // Trigger print dialog (gebruiker kan hier 'Opslaan als PDF' kiezen)
+            window.print();
+            
+            // Reset titel
+            setTimeout(() => {
+                document.title = originalTitle;
+            }, 100);
         }
 
         // Genereer automatisch 4 kaarten bij laden
