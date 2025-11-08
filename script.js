@@ -386,16 +386,23 @@ function playRandomEffect() {
         return;
     }
     
-    if (audioConfig.effects.files.length === 0) {
+    if (effectsPlaylist.length === 0) {
         console.log('ℹ️ Geen effecten geregistreerd - gebruik fallback geluid');
         playDingSound();
         return;
     }
     
-    const randomIndex = Math.floor(Math.random() * audioConfig.effects.files.length);
-    const effectFile = audioConfig.effects.files[randomIndex];
+    // Haal volgende effect uit de playlist
+    const effectFile = effectsPlaylist[effectsPlaylistIndex];
+    effectsPlaylistIndex++;
     
-    console.log('🔊 Speel effect:', effectFile);
+    // Als we aan het einde zijn, shuffle opnieuw
+    if (effectsPlaylistIndex >= effectsPlaylist.length) {
+        console.log('🔄 Alle effecten afgespeeld! Shuffle opnieuw...');
+        initEffectsPlaylist();
+    }
+    
+    console.log(`🔊 Speel effect (${effectsPlaylistIndex}/${effectsPlaylist.length}):`, effectFile);
     
     effectSound.src = effectFile;
     effectSound.currentTime = 0; // Reset naar begin
