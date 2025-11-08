@@ -48,6 +48,76 @@ body {
     z-index: 100;
 }
 
+.audio-controls {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    padding: 15px;
+    background: #f8f9ff;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.volume-control label {
+    font-weight: bold;
+    color: #23a6d5;
+    font-size: clamp(0.9em, 2vw, 1em);
+}
+
+.volume-control input[type="range"] {
+    width: 120px;
+    height: 6px;
+    border-radius: 5px;
+    background: #e0e0e0;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.volume-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #23a6d5;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.volume-control input[type="range"]::-webkit-slider-thumb:hover {
+    background: #1a8fb5;
+    transform: scale(1.2);
+}
+
+.volume-control input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #23a6d5;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.volume-control input[type="range"]::-moz-range-thumb:hover {
+    background: #1a8fb5;
+    transform: scale(1.2);
+}
+
+.volume-control span {
+    font-weight: bold;
+    color: #667eea;
+    min-width: 40px;
+    font-size: clamp(0.8em, 1.8vw, 0.95em);
+}
+
 .icon-btn {
     width: 45px;
     height: 45px;

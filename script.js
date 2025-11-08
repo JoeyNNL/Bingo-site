@@ -158,6 +158,99 @@ const statements = {
     }
 };
 
+// Audio configuratie
+const audioConfig = {
+    backgroundMusic: {
+        folder: 'sounds/background/',
+        files: [],
+        currentIndex: 0,
+        volume: 0.3
+    },
+    effects: {
+        folder: 'sounds/effects/',
+        files: [],
+        volume: 0.5
+    }
+};
+
+// Audio elementen
+let backgroundMusic = null;
+let effectSound = null;
+let isMusicPlaying = false;
+
+// Detecteer alle audio bestanden in een map door veel bestandsnamen te proberen
+async function detectAudioFiles(folderPath) {
+    const audioExtensions = ['.mp3', '.wav', '.ogg', '.m4a'];
+    const detectedFiles = [];
+    
+    // Uitgebreide lijst met mogelijk bestandsnamen (zonder extensie)
+    const possibleNames = [
+        // Nummering
+        ...Array.from({length: 100}, (_, i) => `${i + 1}`),
+        ...Array.from({length: 50}, (_, i) => `0${i + 1}`),
+        // Veel voorkomende patronen
+        ...Array.from({length: 50}, (_, i) => `effect${i + 1}`),
+        ...Array.from({length: 50}, (_, i) => `sound${i + 1}`),
+        ...Array.from({length: 50}, (_, i) => `sfx${i + 1}`),
+        ...Array.from({length: 50}, (_, i) => `audio${i + 1}`),
+        ...Array.from({length: 30}, (_, i) => `music${i + 1}`),
+        ...Array.from({length: 30}, (_, i) => `song${i + 1}`),
+        ...Array.from({length: 30}, (_, i) => `track${i + 1}`),
+        // Letters
+        ...'abcdefghijklmnopqrstuvwxyz'.split(''),
+        ...Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i)),
+        // Veelvoorkomende namen
+        'ding', 'beep', 'boop', 'pop', 'click', 'ping', 'bingo', 'win', 'success',
+        'background', 'main', 'theme', 'loop', 'ambient', 'default', 'sample', 'test'
+    ];
+    
+    // Test welke bestanden bestaan
+    for (const name of possibleNames) {
+        for (const ext of audioExtensions) {
+            const filePath = folderPath + name + ext;
+            
+            try {
+                const exists = await checkFileExists(filePath);
+                if (exists && !detectedFiles.includes(filePath)) {
+                    detectedFiles.push(filePath);
+                }
+            } catch (e) {
+                // Bestand bestaat niet, ga door
+            }
+        }
+    }
+    
+    return detectedFiles;
+}
+
+// Check of een bestand bestaat
+function checkFileExists(url) {
+    return new Promise((resolve) => {
+        const audio = new Audio();
+        
+        const timeout = setTimeout(() => {
+            audio.src = '';
+            resolve(false);
+        }, 500); // 500ms timeout per bestand
+        
+        audio.addEventListener('canplaythrough', () => {
+            clearTimeout(timeout);
+            audio.src = '';
+            resolve(true);
+        }, { once: true });
+        
+        audio.addEventListener('error', () => {
+            clearTimeout(timeout);
+            audio.src = '';
+            resolve(false);
+        }, { once: true });
+        
+        audio.preload = 'metadata';
+        audio.volume = 0; // Geluidloos testen
+        audio.src = url;
+    });
+}
+
 // Staat van het spel
 let currentRound = null;
 let availableNumbers = [];
@@ -165,6 +258,131 @@ let usedNumbers = [];
 let statementHistory = [];
 let totalStatements = 0;
 let historyIndex = -1; // Voor navigatie door geschiedenis
+
+// Initialiseer audio bij laden van pagina
+async function initAudio() {
+    backgroundMusic = document.getElementById('backgroundMusic');
+    effectSound = document.getElementById('effectSound');
+    
+    // Detecteer beschikbare audio bestanden
+    console.log('🔍 Zoeken naar audio bestanden...');
+    
+    const [musicFiles, effectFiles] = await Promise.all([
+        detectAudioFiles(audioConfig.backgroundMusic.folder),
+        detectAudioFiles(audioConfig.effects.folder)
+    ]);
+    
+    audioConfig.backgroundMusic.files = musicFiles;
+    audioConfig.effects.files = effectFiles;
+    
+    console.log(`🎵 Gevonden muziek: ${musicFiles.length} bestand(en)`, musicFiles);
+    console.log(`🔊 Gevonden effecten: ${effectFiles.length} bestand(en)`, effectFiles);
+    
+    // Stel volumes in
+    if (backgroundMusic) {
+        backgroundMusic.volume = audioConfig.backgroundMusic.volume;
+        
+        // Laad eerste achtergrondmuziek
+        if (musicFiles.length > 0) {
+            loadBackgroundMusic();
+            
+            // Event listener voor als muziek eindigt, speel volgende
+            backgroundMusic.addEventListener('ended', playNextBackgroundMusic);
+        } else {
+            console.log('ℹ️ Geen achtergrondmuziek gevonden');
+        }
+    }
+    
+    if (effectSound) {
+        effectSound.volume = audioConfig.effects.volume;
+        
+        if (effectFiles.length === 0) {
+            console.log('ℹ️ Geen geluidseffecten gevonden - gebruik fallback geluid');
+        }
+    }
+}
+
+// Laad achtergrondmuziek
+function loadBackgroundMusic() {
+    if (!backgroundMusic || audioConfig.backgroundMusic.files.length === 0) return;
+    
+    const musicFile = audioConfig.backgroundMusic.files[audioConfig.backgroundMusic.currentIndex];
+    backgroundMusic.src = musicFile;
+    
+    // Probeer te laden, als het mislukt gebruik fallback
+    backgroundMusic.addEventListener('error', () => {
+        console.log('Muziekbestand niet gevonden:', musicFile);
+    }, { once: true });
+}
+
+// Speel volgende muziek in de playlist
+function playNextBackgroundMusic() {
+    audioConfig.backgroundMusic.currentIndex = 
+        (audioConfig.backgroundMusic.currentIndex + 1) % audioConfig.backgroundMusic.files.length;
+    loadBackgroundMusic();
+    if (isMusicPlaying) {
+        backgroundMusic.play().catch(e => console.log('Autoplay geblokkeerd'));
+    }
+}
+
+// Toggle achtergrondmuziek
+function toggleBackgroundMusic() {
+    if (!backgroundMusic) return;
+    
+    if (isMusicPlaying) {
+        backgroundMusic.pause();
+        isMusicPlaying = false;
+        document.getElementById('musicIcon').textContent = '🔇';
+    } else {
+        backgroundMusic.play()
+            .then(() => {
+                isMusicPlaying = true;
+                document.getElementById('musicIcon').textContent = '🔊';
+            })
+            .catch(e => {
+                console.log('Kan muziek niet afspelen:', e);
+                alert('Klik eerst ergens op de pagina om muziek in te schakelen (browser beveiliging)');
+            });
+    }
+}
+
+// Stel muziek volume in
+function setMusicVolume(value) {
+    audioConfig.backgroundMusic.volume = value / 100;
+    if (backgroundMusic) {
+        backgroundMusic.volume = audioConfig.backgroundMusic.volume;
+    }
+    document.getElementById('musicVolumeValue').textContent = value + '%';
+}
+
+// Stel effecten volume in
+function setEffectsVolume(value) {
+    audioConfig.effects.volume = value / 100;
+    if (effectSound) {
+        effectSound.volume = audioConfig.effects.volume;
+    }
+    document.getElementById('effectsVolumeValue').textContent = value + '%';
+}
+
+// Speel random sound effect
+function playRandomEffect() {
+    if (!effectSound || audioConfig.effects.files.length === 0) {
+        // Fallback naar oude ding sound
+        playDingSound();
+        return;
+    }
+    
+    const randomIndex = Math.floor(Math.random() * audioConfig.effects.files.length);
+    const effectFile = audioConfig.effects.files[randomIndex];
+    
+    effectSound.src = effectFile;
+    effectSound.play()
+        .catch(e => {
+            console.log('Effect niet afgespeeld:', e);
+            // Fallback naar oude ding sound
+            playDingSound();
+        });
+}
 
 // Maak geluid (Web Audio API fallback omdat we geen externe bestanden hebben)
 function playDingSound() {
@@ -334,8 +552,8 @@ function nextStatement() {
         statementDisplay.style.transform = 'scale(1)';
         statementDisplay.style.opacity = '1';
         
-        // Speel geluid
-        playDingSound();
+        // Speel sound effect
+        playRandomEffect();
     }, 300);
     
     // Update gebruikte nummers en progress
@@ -485,6 +703,9 @@ document.addEventListener('keydown', (e) => {
 
 // Voeg CSS transitie toe voor animaties
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialiseer audio
+    initAudio();
+    
     const displays = document.querySelectorAll('.display-box');
     displays.forEach(display => {
         display.style.transition = 'transform 0.3s ease, opacity 0.3s ease';

@@ -21,6 +21,23 @@
             <button class="icon-btn" onclick="openBingoCards()" title="Bingokaarten genereren">
                 🎫
             </button>
+            <button class="icon-btn" onclick="toggleBackgroundMusic()" title="Achtergrondmuziek aan/uit">
+                <span id="musicIcon">🔇</span>
+            </button>
+        </div>
+
+        <!-- Audio controles -->
+        <div class="audio-controls">
+            <div class="volume-control">
+                <label for="musicVolume">🎵 Muziek:</label>
+                <input type="range" id="musicVolume" min="0" max="100" value="30" oninput="setMusicVolume(this.value)">
+                <span id="musicVolumeValue">30%</span>
+            </div>
+            <div class="volume-control">
+                <label for="effectsVolume">🔊 Effecten:</label>
+                <input type="range" id="effectsVolume" min="0" max="100" value="50" oninput="setEffectsVolume(this.value)">
+                <span id="effectsVolumeValue">50%</span>
+            </div>
         </div>
 
         <h1>🎯 Bingo Avond</h1>
@@ -67,8 +84,9 @@
         </div>
     </div>
 
-    <!-- Geluid element -->
-    <audio id="dingSound" preload="auto"></audio>
+    <!-- Audio elementen -->
+    <audio id="backgroundMusic" loop preload="auto"></audio>
+    <audio id="effectSound" preload="auto"></audio>
     
     <!-- Canvas voor confetti -->
     <canvas id="confettiCanvas"></canvas>
