@@ -293,14 +293,21 @@ function initAudio() {
     backgroundMusic = document.getElementById('backgroundMusic');
     effectSound = document.getElementById('effectSound');
     
+    // Bewaar volume voordat we files overschrijven
+    const effectsVolume = audioConfig.effects.volume;
+    
     // Bouw volledige paden voor effecten
     audioConfig.effects.files = audioConfig.effects.files.map(file => 
         audioConfig.effects.folder + file
     );
     
+    // Herstel volume (voor zekerheid)
+    audioConfig.effects.volume = effectsVolume;
+    
     console.log('🔍 Audio systeem geladen');
     console.log(`🎵 Achtergrondmuziek: ${audioConfig.backgroundMusic.files.length} bestand(en)`);
     console.log(`🔊 Geluidseffecten: ${audioConfig.effects.files.length} bestand(en)`);
+    console.log(`🔊 Effects volume: ${audioConfig.effects.volume}`);
     
     // Initialiseer de shuffled playlist voor effecten
     if (audioConfig.effects.files.length > 0) {
@@ -854,7 +861,9 @@ function playBingoEffect() {
     // Speel victory geluid
     if (effectSound) {
         effectSound.src = 'sounds/victory/pokimons.mp3';
-        effectSound.volume = audioConfig.effects.volume;
+        const volume = audioConfig.effects.volume || 0.5;
+        console.log('🎵 Victory volume:', volume, 'Type:', typeof volume);
+        effectSound.volume = volume;
         effectSound.play().catch(e => console.error('Error playing victory sound:', e));
     }
 }
