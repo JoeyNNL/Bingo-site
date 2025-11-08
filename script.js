@@ -955,3 +955,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const numberDisplay = document.getElementById('numberDisplay');
     numberDisplay.style.transition = 'transform 0.3s ease, background-color 0.3s ease';
 });
+
+// Maak functies globaal beschikbaar voor onclick handlers
+window.triggerBingo = triggerBingo;
+window.confirmBingo = confirmBingo;
+window.closeBingoViering = closeBingoViering;
+window.closeRondeStart = closeRondeStart;
