@@ -244,6 +244,27 @@ let backgroundMusic = null;
 let effectSound = null;
 let isMusicPlaying = false;
 
+// Shuffle systeem voor effecten
+let effectsPlaylist = [];
+let effectsPlaylistIndex = 0;
+
+// Shuffle een array (Fisher-Yates algorithm)
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+// Initialiseer de effects playlist
+function initEffectsPlaylist() {
+    effectsPlaylist = shuffleArray(audioConfig.effects.files);
+    effectsPlaylistIndex = 0;
+    console.log('🔀 Effecten playlist geshuffled:', effectsPlaylist.length, 'effecten');
+}
+
 // Staat van het spel
 let currentRound = null;
 let availableNumbers = [];
@@ -265,6 +286,11 @@ function initAudio() {
     console.log('🔍 Audio systeem geladen');
     console.log(`🎵 Achtergrondmuziek: ${audioConfig.backgroundMusic.files.length} bestand(en)`);
     console.log(`🔊 Geluidseffecten: ${audioConfig.effects.files.length} bestand(en)`);
+    
+    // Initialiseer de shuffled playlist voor effecten
+    if (audioConfig.effects.files.length > 0) {
+        initEffectsPlaylist();
+    }
     
     // Stel volumes in
     if (backgroundMusic) {
