@@ -1,16 +1,48 @@
 # 🎵 Audio Instructies - Bingo Site
 
 ## Overzicht
-De Bingo-site ondersteunt nu achtergrondmuziek en geluidseffecten! Plaats je audio bestanden in de juiste mappen om ze te gebruiken.
+De Bingo-site ondersteunt nu achtergrondmuziek en geluidseffecten! Plaats je audio bestanden in de juiste mappen en registreer ze in het manifest bestand.
 
 ## 📁 Mappenstructuur
 
 ```
 Bingo-site/
 ├── sounds/
-│   ├── background/     # Achtergrondmuziek
-│   └── effects/        # Geluidseffecten
+│   ├── audio-files.json    # Manifest bestand (BELANGRIJK!)
+│   ├── background/         # Achtergrondmuziek
+│   └── effects/            # Geluidseffecten
 ```
+
+## ⚙️ Setup Stappen
+
+### 1️⃣ Plaats je audio bestanden
+- Achtergrondmuziek → `sounds/background/`
+- Geluidseffecten → `sounds/effects/`
+
+### 2️⃣ Registreer je bestanden in audio-files.json
+Bewerk het bestand `sounds/audio-files.json` en voeg je bestandsnamen toe:
+
+```json
+{
+  "background": [
+    "mijn_nummer.mp3",
+    "cool_song.wav",
+    "track3.ogg"
+  ],
+  "effects": [
+    "boing.mp3",
+    "ding.wav",
+    "beep.ogg",
+    "sound4.m4a",
+    "effect5.mp3"
+  ]
+}
+```
+
+**Let op:** 
+- Alleen de bestandsnaam opgeven (niet het volledige pad)
+- De naam moet exact kloppen (hoofdlettergevoelig!)
+- Gebruik komma's tussen bestandsnamen
 
 ## 🎵 Achtergrondmuziek
 
@@ -18,7 +50,6 @@ Bingo-site/
 Plaats je achtergrondmuziek in: `sounds/background/`
 
 ### Bestandsnamen
-De site detecteert **automatisch alle audio bestanden** in de map! 
 De naam maakt **helemaal niet uit** - geef je bestanden elke naam die je wilt:
 - `mijn_favoriete_nummer.mp3`
 - `1.mp3`, `2.mp3`, `3.mp3`
@@ -26,17 +57,29 @@ De naam maakt **helemaal niet uit** - geef je bestanden elke naam die je wilt:
 - `feestje.ogg`
 - `whatever_you_want.m4a`
 
-**✨ De site vindt al je bestanden automatisch, ongeacht de naam!**
+**✨ Maar je MOET ze registreren in `sounds/audio-files.json`!**
+
+### Voorbeeld
+1. Plaats `cool_song.mp3` in `sounds/background/`
+2. Voeg toe aan `audio-files.json`:
+```json
+{
+  "background": [
+    "cool_song.mp3"
+  ],
+  ...
+}
+```
 
 ### Eigenschappen
 - ✅ Speelt automatisch in een loop
 - ✅ Gaat naar het volgende nummer als het huidige eindigt
 - ✅ Instelbaar volume (standaard 30%)
 - ✅ Aan/uit knop in de interface (🔇/🔊 icoon)
-- ✅ **Automatische detectie** van alle bestanden in de map
 
 ### Meer nummers toevoegen
-Plaats gewoon meer bestanden in de map! De naam maakt niet uit - de site vindt ze allemaal.
+1. Plaats meer bestanden in de map
+2. Voeg ze toe aan het `background` array in `audio-files.json`
 
 ## 🔊 Geluidseffecten
 
@@ -44,23 +87,34 @@ Plaats gewoon meer bestanden in de map! De naam maakt niet uit - de site vindt z
 Plaats je geluidseffecten in: `sounds/effects/`
 
 ### Bestandsnamen
-De site detecteert **automatisch alle audio bestanden** in de map! 
 De naam maakt **helemaal niet uit** - geef je bestanden elke naam die je wilt:
 - `boing.mp3`, `beep.wav`, `ding.ogg`
 - `1.mp3`, `2.mp3`, `3.mp3`
 - `cool_sound_effect.mp3`
 - `whatever.m4a`
 
-**✨ De site vindt al je bestanden automatisch, ongeacht de naam!**
+**✨ Maar je MOET ze registreren in `sounds/audio-files.json`!**
+
+### Voorbeeld
+1. Plaats `ding.mp3` in `sounds/effects/`
+2. Voeg toe aan `audio-files.json`:
+```json
+{
+  ...,
+  "effects": [
+    "ding.mp3"
+  ]
+}
+```
 
 ### Eigenschappen
 - ✅ Random effect bij elke nieuwe stelling
 - ✅ Instelbaar volume (standaard 50%)
 - ✅ Fallback naar synthetisch geluid als bestanden niet gevonden worden
-- ✅ **Automatische detectie** van alle bestanden in de map
 
 ### Meer effecten toevoegen
-Plaats gewoon meer bestanden in de map! De naam maakt niet uit - de site vindt ze allemaal.
+1. Plaats meer bestanden in de map
+2. Voeg ze toe aan het `effects` array in `audio-files.json`
 
 ## 🎛️ Bediening
 
@@ -112,24 +166,32 @@ Sommige browsers blokkeren autoplay. Als de muziek niet automatisch start:
 
 ## 🐛 Problemen oplossen
 
-### Muziek speelt niet
-1. ✅ Check of de bestanden in de juiste map staan (`sounds/background/`)
-2. ✅ Check of de bestandsnamen exact kloppen (hoofdlettergevoelig!)
+### Muziek/effecten spelen niet
+1. ✅ Check of de bestanden in de juiste map staan
+2. ✅ Check of de bestandsnamen in `audio-files.json` exact kloppen (hoofdlettergevoelig!)
 3. ✅ Controleer of het volume niet op 0% staat
 4. ✅ Klik op de pagina en probeer de muziek knop opnieuw
+5. ✅ Open de browser console (F12) voor foutmeldingen
 
-### Effecten spelen niet
-1. ✅ Check of de bestanden in de juiste map staan (`sounds/effects/`)
-2. ✅ Check of de bestandsnamen exact kloppen
-3. ✅ Controleer of het effecten volume niet op 0% staat
-4. ✅ Open de browser console (F12) om eventuele errors te zien
+### audio-files.json niet gevonden
+Als je in de console ziet: `⚠️ audio-files.json niet gevonden`
+1. ✅ Zorg dat het bestand bestaat in de `sounds/` map
+2. ✅ Check de bestandsnaam (moet exact `audio-files.json` zijn)
+3. ✅ Zorg dat het geldige JSON is
+
+### JSON fouten
+Als je een error ziet over JSON:
+1. ✅ Check of je komma's op de juiste plek hebt
+2. ✅ Check of je aanhalingstekens correct zijn (`"bestand.mp3"`)
+3. ✅ Gebruik een JSON validator: https://jsonlint.com/
 
 ### Bestanden niet gevonden
-Controleer in de browser console (F12) op foutmeldingen zoals:
+Controleer in de browser console (F12):
 ```
-Muziekbestand niet gevonden: sounds/background/music1.mp3
-Effect niet afgespeeld: [error details]
+🎵 Achtergrondmuziek: 3 bestand(en) [...]
+🔊 Geluidseffecten: 5 bestand(en) [...]
 ```
+Als je errors ziet, check of de bestanden echt in de mappen staan.
 
 ## 💡 Tips
 
@@ -138,9 +200,9 @@ Effect niet afgespeeld: [error details]
 3. **Test verschillende browsers** - Chrome, Firefox, Safari kunnen verschillend reageren
 4. **Gebruik korte effecten** - Idealiter 0.5-2 seconden voor geluidseffecten
 5. **Achtergrondmuziek** - Kies rustige, niet te opdringerige nummers voor de beste ervaring
-6. **Elke naam is OK** - Je kunt je bestanden noemen zoals je wilt, de site vindt ze automatisch!
-7. **Browser Console** - Open de console (F12) om te zien welke bestanden de site heeft gevonden: "🎵 Gevonden muziek: X bestand(en)"
-8. **Laden duurt even** - Bij het eerste laden scant de site naar alle mogelijke bestanden (dit duurt een paar seconden)
+6. **Elke naam is OK** - Zolang je ze maar registreert in `audio-files.json`
+7. **Browser Console** - Open de console (F12) om te zien welke bestanden zijn geladen
+8. **JSON Syntax** - Zorg dat je JSON geldig is (gebruik een validator zoals jsonlint.com)
 
 ## 📧 Vragen?
 

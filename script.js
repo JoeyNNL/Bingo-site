@@ -178,77 +178,20 @@ let backgroundMusic = null;
 let effectSound = null;
 let isMusicPlaying = false;
 
-// Detecteer alle audio bestanden in een map door veel bestandsnamen te proberen
-async function detectAudioFiles(folderPath) {
-    const audioExtensions = ['.mp3', '.wav', '.ogg', '.m4a'];
-    const detectedFiles = [];
-    
-    // Uitgebreide lijst met mogelijk bestandsnamen (zonder extensie)
-    const possibleNames = [
-        // Nummering
-        ...Array.from({length: 100}, (_, i) => `${i + 1}`),
-        ...Array.from({length: 50}, (_, i) => `0${i + 1}`),
-        // Veel voorkomende patronen
-        ...Array.from({length: 50}, (_, i) => `effect${i + 1}`),
-        ...Array.from({length: 50}, (_, i) => `sound${i + 1}`),
-        ...Array.from({length: 50}, (_, i) => `sfx${i + 1}`),
-        ...Array.from({length: 50}, (_, i) => `audio${i + 1}`),
-        ...Array.from({length: 30}, (_, i) => `music${i + 1}`),
-        ...Array.from({length: 30}, (_, i) => `song${i + 1}`),
-        ...Array.from({length: 30}, (_, i) => `track${i + 1}`),
-        // Letters
-        ...'abcdefghijklmnopqrstuvwxyz'.split(''),
-        ...Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i)),
-        // Veelvoorkomende namen
-        'ding', 'beep', 'boop', 'pop', 'click', 'ping', 'bingo', 'win', 'success',
-        'background', 'main', 'theme', 'loop', 'ambient', 'default', 'sample', 'test'
-    ];
-    
-    // Test welke bestanden bestaan
-    for (const name of possibleNames) {
-        for (const ext of audioExtensions) {
-            const filePath = folderPath + name + ext;
-            
-            try {
-                const exists = await checkFileExists(filePath);
-                if (exists && !detectedFiles.includes(filePath)) {
-                    detectedFiles.push(filePath);
-                }
-            } catch (e) {
-                // Bestand bestaat niet, ga door
-            }
+// Laad audio bestanden lijst uit manifest bestand
+async function loadAudioManifest() {
+    try {
+        const response = await fetch('sounds/audio-files.json');
+        if (!response.ok) {
+            console.log('⚠️ audio-files.json niet gevonden - maak dit bestand aan om bestanden op te geven');
+            return { background: [], effects: [] };
         }
+        const manifest = await response.json();
+        return manifest;
+    } catch (e) {
+        console.log('⚠️ Kan audio-files.json niet laden:', e.message);
+        return { background: [], effects: [] };
     }
-    
-    return detectedFiles;
-}
-
-// Check of een bestand bestaat
-function checkFileExists(url) {
-    return new Promise((resolve) => {
-        const audio = new Audio();
-        
-        const timeout = setTimeout(() => {
-            audio.src = '';
-            resolve(false);
-        }, 500); // 500ms timeout per bestand
-        
-        audio.addEventListener('canplaythrough', () => {
-            clearTimeout(timeout);
-            audio.src = '';
-            resolve(true);
-        }, { once: true });
-        
-        audio.addEventListener('error', () => {
-            clearTimeout(timeout);
-            audio.src = '';
-            resolve(false);
-        }, { once: true });
-        
-        audio.preload = 'metadata';
-        audio.volume = 0; // Geluidloos testen
-        audio.src = url;
-    });
 }
 
 // Staat van het spel
@@ -264,40 +207,42 @@ async function initAudio() {
     backgroundMusic = document.getElementById('backgroundMusic');
     effectSound = document.getElementById('effectSound');
     
-    // Detecteer beschikbare audio bestanden
-    console.log('🔍 Zoeken naar audio bestanden...');
+    // Laad audio bestanden uit manifest
+    console.log('🔍 Laden van audio bestanden...');
     
-    const [musicFiles, effectFiles] = await Promise.all([
-        detectAudioFiles(audioConfig.backgroundMusic.folder),
-        detectAudioFiles(audioConfig.effects.folder)
-    ]);
+    const manifest = await loadAudioManifest();
     
-    audioConfig.backgroundMusic.files = musicFiles;
-    audioConfig.effects.files = effectFiles;
+    // Bouw volledige paden
+    audioConfig.backgroundMusic.files = manifest.background.map(file => 
+        audioConfig.backgroundMusic.folder + file
+    );
+    audioConfig.effects.files = manifest.effects.map(file => 
+        audioConfig.effects.folder + file
+    );
     
-    console.log(`🎵 Gevonden muziek: ${musicFiles.length} bestand(en)`, musicFiles);
-    console.log(`🔊 Gevonden effecten: ${effectFiles.length} bestand(en)`, effectFiles);
+    console.log(`🎵 Achtergrondmuziek: ${audioConfig.backgroundMusic.files.length} bestand(en)`, audioConfig.backgroundMusic.files);
+    console.log(`🔊 Geluidseffecten: ${audioConfig.effects.files.length} bestand(en)`, audioConfig.effects.files);
     
     // Stel volumes in
     if (backgroundMusic) {
         backgroundMusic.volume = audioConfig.backgroundMusic.volume;
         
         // Laad eerste achtergrondmuziek
-        if (musicFiles.length > 0) {
+        if (audioConfig.backgroundMusic.files.length > 0) {
             loadBackgroundMusic();
             
             // Event listener voor als muziek eindigt, speel volgende
             backgroundMusic.addEventListener('ended', playNextBackgroundMusic);
         } else {
-            console.log('ℹ️ Geen achtergrondmuziek gevonden');
+            console.log('ℹ️ Geen achtergrondmuziek opgegeven in audio-files.json');
         }
     }
     
     if (effectSound) {
         effectSound.volume = audioConfig.effects.volume;
         
-        if (effectFiles.length === 0) {
-            console.log('ℹ️ Geen geluidseffecten gevonden - gebruik fallback geluid');
+        if (audioConfig.effects.files.length === 0) {
+            console.log('ℹ️ Geen geluidseffecten opgegeven - gebruik fallback geluid');
         }
     }
 }
@@ -366,8 +311,14 @@ function setEffectsVolume(value) {
 
 // Speel random sound effect
 function playRandomEffect() {
-    if (!effectSound || audioConfig.effects.files.length === 0) {
-        // Fallback naar oude ding sound
+    if (!effectSound) {
+        console.error('❌ Effect sound element niet gevonden');
+        playDingSound();
+        return;
+    }
+    
+    if (audioConfig.effects.files.length === 0) {
+        console.log('ℹ️ Geen effecten geregistreerd - gebruik fallback geluid');
         playDingSound();
         return;
     }
@@ -375,11 +326,14 @@ function playRandomEffect() {
     const randomIndex = Math.floor(Math.random() * audioConfig.effects.files.length);
     const effectFile = audioConfig.effects.files[randomIndex];
     
+    console.log('🔊 Speel effect:', effectFile);
+    
     effectSound.src = effectFile;
+    effectSound.currentTime = 0; // Reset naar begin
     effectSound.play()
         .catch(e => {
-            console.log('Effect niet afgespeeld:', e);
-            // Fallback naar oude ding sound
+            console.error('❌ Effect niet afgespeeld:', effectFile, e.message);
+            // Alleen fallback als er echt een fout is
             playDingSound();
         });
 }
