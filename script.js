@@ -168,7 +168,73 @@ const audioConfig = {
     },
     effects: {
         folder: 'sounds/effects/',
-        files: [],
+        files: [
+            "alloo.wav",
+            "Becky lach.wav",
+            "Becky nooit wijn.mp3",
+            "becky_lach.wav",
+            "Blaadypoep.wav",
+            "Bram mamamelk.mp3",
+            "Danny - Pats broek vol.mp3",
+            "Danny - Seks.mp3",
+            "Danny - tantoe ziek.mp3",
+            "Danny - wine op de cockie.mp3",
+            "Danny cumsho.wav",
+            "Danny relatie.mp3",
+            "danny_mees_s.wav",
+            "die bweeg niet meer.mp3",
+            "Donder.wav",
+            "doritos.wav",
+            "Dries - kan me niet schelen.mp3",
+            "Dries - neuken.mp3",
+            "Dries clipje.m4a",
+            "Geen dick.wav",
+            "Gewoon conte.wav",
+            "Gewoon conte2.wav",
+            "Guyon - boef man.mp3",
+            "Guyon - GANG.mp3",
+            "Guyon - Grappig.mp3",
+            "Guyon - Reet neuken.mp3",
+            "Guyon - vallen.mp3",
+            "Guyon gvange.wav",
+            "Guyon net.wav",
+            "Guyon raar.wav",
+            "Guyon.wav",
+            "Hallo blauw.wav",
+            "hehehehehe.wav",
+            "Ik ben homo.wav",
+            "Ik_hou_van_p.wav",
+            "ik_kan_alles.wav",
+            "Ik_zit_er_ni.wav",
+            "Joel - gekkie.m4a",
+            "Joel - reet zien.mp3",
+            "Joel bambu.m4a",
+            "Kei sexy.wav",
+            "Kevin - Maar.wav",
+            "Knuffelen.wav",
+            "kut spel.wav",
+            "kutje.m4a",
+            "LELELE.wav",
+            "Lenny koekoe.wav",
+            "mugdood.wav",
+            "Nandi.wav",
+            "Onlyfans.wav",
+            "patat mayo m.wav",
+            "Pik.wav",
+            "Pjenis.wav",
+            "spuug.m4a",
+            "Thomas - Baby.mp3",
+            "Thomas - gek geluid.mp3",
+            "Thomas - ohneee.mp3",
+            "Thomas - Vieze moeder.mp3",
+            "Thomas gek geluidje.mp3",
+            "Untitled video - Made with Clipchamp (17).m4a",
+            "Untitled video - Made with Clipchamp (21).m4a",
+            "Untitled video - Made with Clipchamp (27).m4a",
+            "Untitled video - Made with Clipchamp (49).m4a",
+            "verkrachten.wav",
+            "Wil_jij_een_.wav"
+        ],
         volume: 0.5
     }
 };
@@ -177,22 +243,6 @@ const audioConfig = {
 let backgroundMusic = null;
 let effectSound = null;
 let isMusicPlaying = false;
-
-// Laad audio bestanden lijst uit manifest bestand
-async function loadAudioManifest() {
-    try {
-        const response = await fetch('sounds/audio-files.json');
-        if (!response.ok) {
-            console.log('⚠️ audio-files.json niet gevonden - maak dit bestand aan om bestanden op te geven');
-            return { background: [], effects: [] };
-        }
-        const manifest = await response.json();
-        return manifest;
-    } catch (e) {
-        console.log('⚠️ Kan audio-files.json niet laden:', e.message);
-        return { background: [], effects: [] };
-    }
-}
 
 // Staat van het spel
 let currentRound = null;
@@ -203,25 +253,18 @@ let totalStatements = 0;
 let historyIndex = -1; // Voor navigatie door geschiedenis
 
 // Initialiseer audio bij laden van pagina
-async function initAudio() {
+function initAudio() {
     backgroundMusic = document.getElementById('backgroundMusic');
     effectSound = document.getElementById('effectSound');
     
-    // Laad audio bestanden uit manifest
-    console.log('🔍 Laden van audio bestanden...');
-    
-    const manifest = await loadAudioManifest();
-    
-    // Bouw volledige paden
-    audioConfig.backgroundMusic.files = manifest.background.map(file => 
-        audioConfig.backgroundMusic.folder + file
-    );
-    audioConfig.effects.files = manifest.effects.map(file => 
+    // Bouw volledige paden voor effecten
+    audioConfig.effects.files = audioConfig.effects.files.map(file => 
         audioConfig.effects.folder + file
     );
     
-    console.log(`🎵 Achtergrondmuziek: ${audioConfig.backgroundMusic.files.length} bestand(en)`, audioConfig.backgroundMusic.files);
-    console.log(`🔊 Geluidseffecten: ${audioConfig.effects.files.length} bestand(en)`, audioConfig.effects.files);
+    console.log('🔍 Audio systeem geladen');
+    console.log(`🎵 Achtergrondmuziek: ${audioConfig.backgroundMusic.files.length} bestand(en)`);
+    console.log(`🔊 Geluidseffecten: ${audioConfig.effects.files.length} bestand(en)`);
     
     // Stel volumes in
     if (backgroundMusic) {
@@ -234,7 +277,7 @@ async function initAudio() {
             // Event listener voor als muziek eindigt, speel volgende
             backgroundMusic.addEventListener('ended', playNextBackgroundMusic);
         } else {
-            console.log('ℹ️ Geen achtergrondmuziek opgegeven in audio-files.json');
+            console.log('ℹ️ Geen achtergrondmuziek geconfigureerd');
         }
     }
     
@@ -242,7 +285,7 @@ async function initAudio() {
         effectSound.volume = audioConfig.effects.volume;
         
         if (audioConfig.effects.files.length === 0) {
-            console.log('ℹ️ Geen geluidseffecten opgegeven - gebruik fallback geluid');
+            console.log('ℹ️ Geen geluidseffecten geconfigureerd - gebruik fallback geluid');
         }
     }
 }
