@@ -1313,8 +1313,8 @@ window.openDisplayWindow = openDisplayWindow;
 window.resetDisplay = resetDisplay;
 window.updatePendingBingo = updatePendingBingo;
 
-// Foto timer - countdown van 30 seconden
-let photoCountdown = 30;
+// Foto timer - countdown van 60 seconden
+let photoCountdown = 60;
 
 function updatePhotoTimer() {
     const timerElement = document.getElementById('photoTimer');
@@ -1324,7 +1324,7 @@ function updatePhotoTimer() {
         photoCountdown--;
         
         if (photoCountdown < 0) {
-            photoCountdown = 30; // Reset naar 30 seconden
+            photoCountdown = 60; // Reset naar 60 seconden
         }
     }
 }

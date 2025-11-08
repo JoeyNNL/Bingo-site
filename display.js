@@ -114,7 +114,7 @@ function createFlyingImage() {
 }
 
 // Start vliegende foto's interval
-setInterval(createFlyingImage, 30000); // Elke 30 seconden een nieuwe foto
+setInterval(createFlyingImage, 60000); // Elke 60 seconden (1 minuut) een nieuwe foto
 
 // Confetti functie voor BINGO viering
 function showMegaConfetti() {
