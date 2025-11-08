@@ -162,9 +162,11 @@ const statements = {
 const audioConfig = {
     backgroundMusic: {
         folder: 'sounds/background/',
-        files: [],
+        files: [
+            'Wii Party Soundtrack 016 - Bingo [9cJGHyxwftc].mp3'
+        ],
         currentIndex: 0,
-        volume: 0.3
+        volume: 0.1
     },
     effects: {
         folder: 'sounds/effects/',
@@ -242,7 +244,7 @@ const audioConfig = {
             "verkrachten.wav",
             "Wil_jij_een_.wav"
         ],
-        volume: 0.5
+        volume: 1.0
     }
 };
 
@@ -317,13 +319,16 @@ function initAudio() {
     // Stel volumes in
     if (backgroundMusic) {
         backgroundMusic.volume = audioConfig.backgroundMusic.volume;
+        backgroundMusic.loop = true; // Zet loop aan voor continue muziek
         
-        // Laad eerste achtergrondmuziek
+        // Laad eerste achtergrondmuziek (maar start niet automatisch)
         if (audioConfig.backgroundMusic.files.length > 0) {
             loadBackgroundMusic();
             
-            // Event listener voor als muziek eindigt, speel volgende
-            backgroundMusic.addEventListener('ended', playNextBackgroundMusic);
+            // Event listener voor als muziek eindigt (alleen voor multi-file playlists)
+            if (audioConfig.backgroundMusic.files.length > 1) {
+                backgroundMusic.addEventListener('ended', playNextBackgroundMusic);
+            }
         } else {
             console.log('ℹ️ Geen achtergrondmuziek geconfigureerd');
         }
@@ -342,12 +347,14 @@ function initAudio() {
 function loadBackgroundMusic() {
     if (!backgroundMusic || audioConfig.backgroundMusic.files.length === 0) return;
     
-    const musicFile = audioConfig.backgroundMusic.files[audioConfig.backgroundMusic.currentIndex];
+    const musicFile = audioConfig.backgroundMusic.folder + 
+                     audioConfig.backgroundMusic.files[audioConfig.backgroundMusic.currentIndex];
     backgroundMusic.src = musicFile;
+    console.log('🎵 Geladen:', musicFile);
     
     // Probeer te laden, als het mislukt gebruik fallback
     backgroundMusic.addEventListener('error', () => {
-        console.log('Muziekbestand niet gevonden:', musicFile);
+        console.error('❌ Muziekbestand niet gevonden:', musicFile);
     }, { once: true });
 }
 
@@ -578,6 +585,17 @@ function selectRound(roundNumber) {
     
     // Toon ronde start overlay
     showRondeStartOverlay(roundNumber);
+    
+    // Start achtergrondmuziek bij eerste ronde selectie
+    if (backgroundMusic && !isMusicPlaying) {
+        backgroundMusic.play().then(() => {
+            isMusicPlaying = true;
+            document.getElementById('musicIcon').textContent = '🔊';
+            console.log('🎵 Achtergrondmuziek gestart');
+        }).catch(err => {
+            console.log('ℹ️ Muziek kon niet starten:', err.message);
+        });
+    }
 }
 
 // Toon ronde start overlay
@@ -645,6 +663,14 @@ function nextStatement() {
         numberDisplay.textContent = selectedNumber;
         numberDisplay.style.backgroundColor = getNumberColor(selectedNumber);
         statementDisplay.textContent = statement;
+        
+        // Voeg rolling animatie toe
+        numberDisplay.classList.add('rolling');
+        
+        // Verwijder animatie class na afloop
+        setTimeout(() => {
+            numberDisplay.classList.remove('rolling');
+        }, 800);
         
         // Animatie in
         numberDisplay.style.transform = 'scale(1) rotate(0deg)';
@@ -768,6 +794,12 @@ function toggleFullscreen() {
         document.exitFullscreen();
         document.getElementById('fullscreenIcon').textContent = '⛶';
     }
+}
+
+// Toggle instellingen (audio controles)
+function toggleSettings() {
+    const audioControls = document.getElementById('audioControls');
+    audioControls.classList.toggle('hidden');
 }
 
 // Open bingokaarten generator
@@ -950,6 +982,47 @@ function showMegaConfetti() {
 
 // Sneltoetsen
 document.addEventListener('keydown', (e) => {
+    // Enter = Actieve overlay doorgaan
+    if (e.key === 'Enter') {
+        // Check welke overlay actief is en klik de juiste knop
+        const rondeStartOverlay = document.getElementById('rondeStartOverlay');
+        const bingoConfirmOverlay = document.getElementById('bingoConfirmOverlay');
+        const bingoVieringOverlay = document.getElementById('bingoVieringOverlay');
+        const volgendDoelOverlay = document.getElementById('volgendDoelOverlay');
+        const alleDoelenhOverlay = document.getElementById('alleDoelenhOverlay');
+        
+        if (!rondeStartOverlay.classList.contains('hidden')) {
+            e.preventDefault();
+            closeRondeStart();
+        } else if (!bingoConfirmOverlay.classList.contains('hidden')) {
+            e.preventDefault();
+            confirmBingo(true); // Enter = JA bij bevestiging
+        } else if (!bingoVieringOverlay.classList.contains('hidden')) {
+            e.preventDefault();
+            closeBingoViering();
+        } else if (!volgendDoelOverlay.classList.contains('hidden')) {
+            e.preventDefault();
+            closeVolgendDoel();
+        } else if (!alleDoelenhOverlay.classList.contains('hidden')) {
+            e.preventDefault();
+            closeAlleDoelen();
+        }
+    }
+    
+    // Backspace = BINGO weigeren
+    if (e.key === 'Backspace') {
+        const bingoConfirmOverlay = document.getElementById('bingoConfirmOverlay');
+        if (!bingoConfirmOverlay.classList.contains('hidden')) {
+            e.preventDefault();
+            confirmBingo(false); // Backspace = NEE bij bevestiging
+        }
+    }
+    
+    // Escape = exit fullscreen
+    if (e.key === 'Escape' && document.fullscreenElement) {
+        document.exitFullscreen();
+    }
+    
     // Spatiebalk = volgende stelling
     if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
         e.preventDefault();
@@ -972,10 +1045,6 @@ document.addEventListener('keydown', (e) => {
     // Pijltje rechts = volgende in geschiedenis
     if (e.key === 'ArrowRight') {
         showNextInHistory();
-    }
-    // Escape = exit fullscreen
-    if (e.key === 'Escape' && document.fullscreenElement) {
-        document.exitFullscreen();
     }
 });
 
@@ -1000,3 +1069,4 @@ window.closeBingoViering = closeBingoViering;
 window.closeRondeStart = closeRondeStart;
 window.closeVolgendDoel = closeVolgendDoel;
 window.closeAlleDoelen = closeAlleDoelen;
+window.toggleSettings = toggleSettings;
