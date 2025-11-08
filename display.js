@@ -369,10 +369,8 @@ function updateDisplay() {
                     numberDisplay.textContent = currentNumber;
                     lastDisplayedNumber = currentNumber;
                     
-                    // Update kleur als die is ingesteld
-                    if (numberColor) {
-                        numberDisplay.style.backgroundColor = numberColor;
-                    }
+                    // Update kleur op basis van nummer
+                    numberDisplay.style.backgroundColor = getNumberColor(parseInt(currentNumber));
                 }, 800); // Wacht op fade-out (half van 1.5s)
             } else if (updateTimestamp && updateTimestamp !== lastUpdateTime) {
                 // First number or timestamp changed
@@ -385,10 +383,8 @@ function updateDisplay() {
                 numberDisplay.textContent = currentNumber;
                 lastDisplayedNumber = currentNumber;
                 
-                // Update kleur als die is ingesteld
-                if (numberColor) {
-                    numberDisplay.style.backgroundColor = numberColor;
-                }
+                // Update kleur op basis van nummer
+                numberDisplay.style.backgroundColor = getNumberColor(parseInt(currentNumber));
             } else if (currentNumber !== lastDisplayedNumber) {
                 // Just update if different but no animation needed
                 numberDisplay.textContent = currentNumber;
@@ -396,9 +392,8 @@ function updateDisplay() {
                 numberDisplay.classList.remove('fade-out');
                 ballWrapper.classList.remove('fade-out');
                 
-                if (numberColor) {
-                    numberDisplay.style.backgroundColor = numberColor;
-                }
+                // Update kleur op basis van nummer
+                numberDisplay.style.backgroundColor = getNumberColor(parseInt(currentNumber));
             }
         } else {
             // Fade out de bal wanneer er geen nummer meer is
