@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo Avond</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="top-controls">
+            <button class="icon-btn" onclick="toggleFullscreen()" title="Fullscreen (F11)">
+                <span id="fullscreenIcon">⛶</span>
+            </button>
+            <button class="icon-btn" onclick="showPreviousStatement()" title="Vorige stelling (←)">
+                ←
+            </button>
+            <button class="icon-btn" onclick="showNextInHistory()" title="Volgende stelling (→)">
+                →
+            </button>
+            <button class="icon-btn" onclick="openBingoCards()" title="Bingokaarten genereren">
+                🎫
+            </button>
+        </div>
+
+        <h1>🎯 Bingo Avond</h1>
+        
+        <div class="round-selector">
+            <h2>Selecteer Ronde</h2>
+            <div class="round-buttons">
+                <button class="round-btn" onclick="selectRound(1)">Ronde 1</button>
+                <button class="round-btn" onclick="selectRound(2)">Ronde 2</button>
+                <button class="round-btn" onclick="selectRound(3)">Ronde 3</button>
+            </div>
+        </div>
+
+        <div class="current-round">
+            <p>Huidige ronde: <span id="currentRound">Niet geselecteerd</span></p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <p class="progress-text"><span id="progressText">0 / 0</span> stellingen</p>
+        </div>
+
+        <div class="statement-display">
+            <div class="number-display">
+                <h3>Nummer</h3>
+                <div id="numberDisplay" class="display-box">-</div>
+            </div>
+            <div class="statement-box">
+                <h3>Stelling</h3>
+                <div id="statementDisplay" class="display-box">Klik op "Volgende Stelling" om te beginnen</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="main-btn" onclick="nextStatement()">Volgende Stelling</button>
+            <button class="reset-btn" onclick="resetRound()">Reset Ronde</button>
+        </div>
+
+        <div class="used-numbers">
+            <h3>Gebruikte nummers:</h3>
+            <div id="usedNumbers"></div>
+        </div>
+    </div>
+
+    <!-- Geluid element -->
+    <audio id="dingSound" preload="auto"></audio>
+    
+    <!-- Canvas voor confetti -->
+    <canvas id="confettiCanvas"></canvas>
+
+    <script src="script.js"></script>
+</body>
+</html>

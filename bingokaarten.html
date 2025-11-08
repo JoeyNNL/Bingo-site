@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingokaarten Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .controls label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        .controls input, .controls select {
+            padding: 8px 12px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .generate-btn {
+            background: #667eea;
+            color: white;
+        }
+
+        .generate-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .print-btn {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .print-btn:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .bingo-card {
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            padding: 20px;
+            background: white;
+            page-break-inside: avoid;
+        }
+
+        .card-title {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .card-cell {
+            aspect-ratio: 1;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            position: relative;
+        }
+
+        .card-number {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .card-note {
+            width: 100%;
+            height: 30px;
+            border: 1px dashed #ccc;
+            border-radius: 4px;
+            font-size: 0.7em;
+            text-align: center;
+            padding: 2px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                padding: 0;
+            }
+
+            .controls, .btn {
+                display: none !important;
+            }
+
+            .bingo-card {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .cards-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .card-number {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎫 Bingokaarten Generator</h1>
+        
+        <div class="controls">
+            <label>
+                Aantal kaarten:
+                <input type="number" id="cardCount" value="4" min="1" max="20">
+            </label>
+            <label>
+                Ronde:
+                <select id="roundSelect">
+                    <option value="1">Ronde 1</option>
+                    <option value="2">Ronde 2</option>
+                    <option value="3">Ronde 3</option>
+                    <option value="all">Alle rondes</option>
+                </select>
+            </label>
+            <label>
+                Grootte:
+                <select id="gridSize">
+                    <option value="3">3x3 (9 vakjes)</option>
+                    <option value="4">4x4 (16 vakjes)</option>
+                    <option value="5" selected>5x5 (25 vakjes)</option>
+                </select>
+            </label>
+            <button class="btn generate-btn" onclick="generateCards()">Genereer Kaarten</button>
+            <button class="btn print-btn" onclick="window.print()">Print Kaarten</button>
+        </div>
+
+        <div id="cardsContainer" class="cards-container"></div>
+    </div>
+
+    <script>
+        // Stellingen per ronde (kopie voor bingokaarten)
+        const statements = {
+            1: Array.from({length: 50}, (_, i) => i + 1),
+            2: Array.from({length: 50}, (_, i) => i + 1),
+            3: Array.from({length: 50}, (_, i) => i + 1)
+        };
+
+        function getNumberColor(number) {
+            if (number >= 1 && number <= 10) return '#e74c3c';
+            if (number >= 11 && number <= 20) return '#3498db';
+            if (number >= 21 && number <= 30) return '#f1c40f';
+            if (number >= 31 && number <= 40) return '#2ecc71';
+            if (number >= 41 && number <= 50) return '#9b59b6';
+            return '#667eea';
+        }
+
+        function generateCards() {
+            const cardCount = parseInt(document.getElementById('cardCount').value);
+            const round = document.getElementById('roundSelect').value;
+            const gridSize = parseInt(document.getElementById('gridSize').value);
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = '';
+
+            // Verzamel alle beschikbare nummers
+            let allNumbers = [];
+            if (round === 'all') {
+                allNumbers = Array.from({length: 50}, (_, i) => i + 1);
+            } else {
+                allNumbers = statements[round];
+            }
+
+            const numbersPerCard = gridSize * gridSize;
+
+            for (let i = 0; i < cardCount; i++) {
+                const card = document.createElement('div');
+                card.className = 'bingo-card';
+
+                const title = document.createElement('div');
+                title.className = 'card-title';
+                title.textContent = `Bingokaart ${i + 1}`;
+                card.appendChild(title);
+
+                const grid = document.createElement('div');
+                grid.className = 'card-grid';
+                grid.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+
+                // Selecteer willekeurige nummers
+                const shuffled = [...allNumbers].sort(() => Math.random() - 0.5);
+                const selectedNumbers = shuffled.slice(0, numbersPerCard);
+
+                selectedNumbers.forEach(num => {
+                    const cell = document.createElement('div');
+                    cell.className = 'card-cell';
+
+                    const number = document.createElement('div');
+                    number.className = 'card-number';
+                    number.textContent = num;
+                    number.style.backgroundColor = getNumberColor(num);
+
+                    const note = document.createElement('div');
+                    note.className = 'card-note';
+
+                    cell.appendChild(number);
+                    cell.appendChild(note);
+                    grid.appendChild(cell);
+                });
+
+                card.appendChild(grid);
+                container.appendChild(card);
+            }
+        }
+
+        // Genereer automatisch 4 kaarten bij laden
+        window.addEventListener('load', () => {
+            generateCards();
+        });
+    </script>
+</body>
+</html>
