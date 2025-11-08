@@ -462,3 +462,189 @@ h3 {
         width: 100%;
     }
 }
+
+/* BINGO Overlay Styles */
+.bingo-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease;
+}
+
+.bingo-overlay.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* BINGO Bevestiging */
+.bingo-confirm-content {
+    text-align: center;
+    padding: 50px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+    animation: scaleIn 0.4s ease;
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.bingo-confirm-title {
+    font-size: clamp(2em, 6vw, 4em);
+    color: white;
+    margin-bottom: 30px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.bingo-confirm-goal {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+.bingo-confirm-goal p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.bingo-confirm-goal h2 {
+    color: white;
+    font-size: clamp(1.5em, 4vw, 2.5em);
+    margin: 0;
+}
+
+.bingo-confirm-question {
+    color: white;
+    font-size: clamp(1.3em, 3vw, 2em);
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+.bingo-confirm-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.bingo-confirm-yes,
+.bingo-confirm-no {
+    padding: 20px 40px;
+    font-size: clamp(1.2em, 2.5vw, 1.8em);
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.bingo-confirm-yes {
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+    color: white;
+    box-shadow: 0 10px 30px rgba(46, 204, 113, 0.4);
+}
+
+.bingo-confirm-yes:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(46, 204, 113, 0.6);
+}
+
+.bingo-confirm-no {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    box-shadow: 0 10px 30px rgba(231, 60, 126, 0.4);
+}
+
+.bingo-confirm-no:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(231, 60, 126, 0.6);
+}
+
+/* BINGO Viering */
+.bingo-viering-content {
+    text-align: center;
+    padding: 60px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    max-width: 700px;
+    animation: celebration 0.6s ease;
+}
+
+@keyframes celebration {
+    0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+    50% { transform: scale(1.1) rotate(5deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.bingo-viering-title {
+    font-size: clamp(3em, 8vw, 6em);
+    color: white;
+    margin-bottom: 30px;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+    animation: pulse 1s ease infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.bingo-viering-goal {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 25px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+}
+
+.bingo-viering-goal p {
+    color: white;
+    font-size: clamp(1.5em, 4vw, 3em);
+    margin: 0;
+    font-weight: bold;
+}
+
+.bingo-viering-congrats {
+    color: white;
+    font-size: clamp(1.5em, 3vw, 2.5em);
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+.bingo-viering-close {
+    padding: 20px 50px;
+    font-size: clamp(1.2em, 2.5vw, 1.8em);
+    font-weight: bold;
+    border: 3px solid white;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.bingo-viering-close:hover {
+    background: white;
+    color: #f5576c;
+    transform: scale(1.1);
+}
+

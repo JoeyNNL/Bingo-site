@@ -773,17 +773,20 @@ function triggerBingo() {
     
     const currentGoal = bingoGoals[currentGoalIndex];
     
-    // Bevestigingsdialoog
-    const confirmed = confirm(
-        `🎯 BINGO Controle\n\n` +
-        `Doel: ${currentGoal.name}\n\n` +
-        `Is dit een echte BINGO?\n\n` +
-        `Klik OK om te bevestigen\n` +
-        `Klik Annuleren als het geen BINGO is`
-    );
+    // Toon bevestigingsoverlay
+    const overlay = document.getElementById('bingoConfirmOverlay');
+    const goalNameElement = overlay.querySelector('.bingo-confirm-goal h2');
+    goalNameElement.textContent = currentGoal.name;
+    overlay.classList.remove('hidden');
+}
+
+// Bevestig of annuleer BINGO
+function confirmBingo(isConfirmed) {
+    // Verberg bevestigingsoverlay
+    const confirmOverlay = document.getElementById('bingoConfirmOverlay');
+    confirmOverlay.classList.add('hidden');
     
-    // Als niet bevestigd, annuleer
-    if (!confirmed) {
+    if (!isConfirmed) {
         console.log('❌ BINGO geannuleerd');
         // Optioneel: speel een "fout" geluid
         if (effectSound) {
@@ -792,43 +795,50 @@ function triggerBingo() {
         return;
     }
     
-    // Bevestigde BINGO - ga door met effect
+    // Bevestigde BINGO - markeer als behaald
+    const currentGoal = bingoGoals[currentGoalIndex];
     currentGoal.achieved = true;
     
     // Speel BINGO effecten
     playBingoEffect();
     showMegaConfetti();
     
-    // Toon bericht
-    setTimeout(() => {
-        const goalName = currentGoal.name;
-        const message = `🎉 BINGO! 🎉\n\n${goalName} behaald!\n\nWinnaar gefeliciteerd! 🏆`;
-        alert(message);
-        
-        // Ga naar volgend doel
-        currentGoalIndex++;
-        updateBingoGoal();
-        
-        if (currentGoalIndex < bingoGoals.length) {
-            const nextGoal = bingoGoals[currentGoalIndex];
-            setTimeout(() => {
-                alert(`Nu spelen we voor:\n${nextGoal.name}`);
-            }, 500);
-        } else {
-            setTimeout(() => {
-                alert('🎊 Alle doelen behaald! De ronde is voltooid! 🎊');
-            }, 500);
-        }
-    }, 1000);
+    // Toon vieringsoverlay
+    const vieringOverlay = document.getElementById('bingoVieringOverlay');
+    const goalNameElement = vieringOverlay.querySelector('.bingo-viering-goal p');
+    goalNameElement.textContent = currentGoal.name;
+    vieringOverlay.classList.remove('hidden');
+}
+
+// Sluit viering en ga naar volgend doel
+function closeBingoViering() {
+    // Verberg vieringsoverlay
+    const vieringOverlay = document.getElementById('bingoVieringOverlay');
+    vieringOverlay.classList.add('hidden');
+    
+    // Ga naar volgend doel
+    currentGoalIndex++;
+    updateBingoGoal();
+    
+    // Toon bericht over volgend doel of voltooiing
+    if (currentGoalIndex < bingoGoals.length) {
+        setTimeout(() => {
+            alert(`📋 Volgend doel: ${bingoGoals[currentGoalIndex].name}`);
+        }, 500);
+    } else {
+        setTimeout(() => {
+            alert('🏆 Alle BINGO doelen behaald! Gefeliciteerd! 🎉');
+        }, 500);
+    }
 }
 
 // Speel BINGO geluid effect
 function playBingoEffect() {
-    // Speel een speciaal effect of meerdere effecten achter elkaar
-    if (effectSound && effectsPlaylist.length > 0) {
-        playRandomEffect();
-        setTimeout(() => playRandomEffect(), 300);
-        setTimeout(() => playRandomEffect(), 600);
+    // Speel victory geluid
+    if (effectSound) {
+        effectSound.src = 'sounds/victory/pokimons.mp3';
+        effectSound.volume = effectsVolume;
+        effectSound.play().catch(e => console.error('Error playing victory sound:', e));
     }
 }
 
