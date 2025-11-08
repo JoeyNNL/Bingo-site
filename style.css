@@ -487,6 +487,74 @@ h3 {
     to { opacity: 1; }
 }
 
+/* Ronde Start Overlay */
+.ronde-start-content {
+    text-align: center;
+    padding: 60px;
+    background: linear-gradient(135deg, #23a6d5 0%, #23d5ab 100%);
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    max-width: 700px;
+    animation: scaleIn 0.5s ease;
+}
+
+.ronde-start-title {
+    font-size: clamp(2.5em, 7vw, 5em);
+    color: white;
+    margin-bottom: 30px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.ronde-start-info {
+    margin-bottom: 30px;
+}
+
+.ronde-start-round {
+    font-size: clamp(1.5em, 4vw, 2.5em);
+    color: white;
+    font-weight: bold;
+    margin: 0;
+}
+
+.ronde-start-goal {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 25px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+}
+
+.ronde-start-goal p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.3em;
+    margin-bottom: 15px;
+}
+
+.ronde-start-goal h2 {
+    color: white;
+    font-size: clamp(1.8em, 5vw, 3em);
+    margin: 0;
+    font-weight: bold;
+}
+
+.ronde-start-btn {
+    padding: 20px 50px;
+    font-size: clamp(1.3em, 3vw, 2em);
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    box-shadow: 0 10px 30px rgba(46, 204, 113, 0.4);
+}
+
+.ronde-start-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(46, 204, 113, 0.6);
+}
+
 /* BINGO Bevestiging */
 .bingo-confirm-content {
     text-align: center;

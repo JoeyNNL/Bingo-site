@@ -568,6 +568,23 @@ function selectRound(roundNumber) {
             btn.classList.remove('active');
         }
     });
+    
+    // Toon ronde start overlay
+    showRondeStartOverlay(roundNumber);
+}
+
+// Toon ronde start overlay
+function showRondeStartOverlay(roundNumber) {
+    const overlay = document.getElementById('rondeStartOverlay');
+    document.getElementById('rondeStartRoundNumber').textContent = roundNumber;
+    document.getElementById('rondeStartGoalText').textContent = bingoGoals[0].name;
+    overlay.classList.remove('hidden');
+}
+
+// Sluit ronde start overlay
+function closeRondeStart() {
+    const overlay = document.getElementById('rondeStartOverlay');
+    overlay.classList.add('hidden');
 }
 
 // Functie om de kleur te bepalen op basis van het nummer

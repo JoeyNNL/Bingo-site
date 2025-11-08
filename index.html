@@ -99,6 +99,21 @@
     <!-- Canvas voor confetti -->
     <canvas id="confettiCanvas"></canvas>
 
+    <!-- Ronde Start Overlay -->
+    <div id="rondeStartOverlay" class="bingo-overlay hidden">
+        <div class="ronde-start-content">
+            <h1 class="ronde-start-title">🎯 Nieuwe Ronde!</h1>
+            <div class="ronde-start-info">
+                <p class="ronde-start-round">Ronde <span id="rondeStartRoundNumber">-</span></p>
+            </div>
+            <div class="ronde-start-goal">
+                <p>Speel voor:</p>
+                <h2 id="rondeStartGoalText">-</h2>
+            </div>
+            <button class="ronde-start-btn" onclick="closeRondeStart()">🎮 Start Spel!</button>
+        </div>
+    </div>
+
     <!-- BINGO Bevestiging Overlay -->
     <div id="bingoConfirmOverlay" class="bingo-overlay hidden">
         <div class="bingo-confirm-content">
