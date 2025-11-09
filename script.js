@@ -375,12 +375,12 @@ function toggleBackgroundMusic() {
     if (isMusicPlaying) {
         backgroundMusic.pause();
         isMusicPlaying = false;
-        document.getElementById('musicIcon').textContent = '🔇';
+        document.getElementById('musicIcon').innerHTML = '<i class="fas fa-volume-mute"></i>';
     } else {
         backgroundMusic.play()
             .then(() => {
                 isMusicPlaying = true;
-                document.getElementById('musicIcon').textContent = '🔊';
+                document.getElementById('musicIcon').innerHTML = '<i class="fas fa-volume-up"></i>';
             })
             .catch(e => {
                 console.log('Kan muziek niet afspelen:', e);
@@ -834,10 +834,10 @@ function toggleFullscreen() {
         document.documentElement.requestFullscreen().catch(err => {
             alert('Fullscreen niet mogelijk: ' + err.message);
         });
-        document.getElementById('fullscreenIcon').textContent = '⛶';
+        document.getElementById('fullscreenIcon').innerHTML = '<i class="fas fa-compress"></i>';
     } else {
         document.exitFullscreen();
-        document.getElementById('fullscreenIcon').textContent = '⛶';
+        document.getElementById('fullscreenIcon').innerHTML = '<i class="fas fa-expand"></i>';
     }
 }
 
@@ -1338,7 +1338,7 @@ function toggleDarkMode() {
     const icon = document.getElementById('darkModeIcon');
     const isDark = document.body.classList.contains('dark-mode');
     
-    icon.textContent = isDark ? '☀️' : '🌙';
+    icon.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
     
     // Bewaar voorkeur
     localStorage.setItem('bingo_darkMode', isDark ? 'true' : 'false');
@@ -1350,8 +1350,16 @@ document.addEventListener('DOMContentLoaded', function() {
     if (darkModePreference === 'true') {
         document.body.classList.add('dark-mode');
         const icon = document.getElementById('darkModeIcon');
-        if (icon) icon.textContent = '☀️';
+        if (icon) icon.innerHTML = '<i class="fas fa-sun"></i>';
     }
 });
 
 window.toggleDarkMode = toggleDarkMode;
+
+// Toggle Controls Panel
+function toggleControlsPanel() {
+    const panel = document.getElementById('controlsPanel');
+    panel.classList.toggle('hidden');
+}
+
+window.toggleControlsPanel = toggleControlsPanel;
