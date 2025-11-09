@@ -175,6 +175,7 @@ function showMegaConfetti() {
             requestAnimationFrame(draw);
         } else {
             console.log('Confetti animation finished');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
     }
     
