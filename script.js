@@ -593,7 +593,7 @@ function selectRound(roundNumber) {
     if (backgroundMusic && !isMusicPlaying) {
         backgroundMusic.play().then(() => {
             isMusicPlaying = true;
-            document.getElementById('musicIcon').textContent = '🔊';
+            document.getElementById('musicIcon').innerHTML = '<i class="fas fa-volume-up"></i>';
             console.log('🎵 Achtergrondmuziek gestart');
         }).catch(err => {
             console.log('ℹ️ Muziek kon niet starten:', err.message);
@@ -839,12 +839,6 @@ function toggleFullscreen() {
         document.exitFullscreen();
         document.getElementById('fullscreenIcon').innerHTML = '<i class="fas fa-expand"></i>';
     }
-}
-
-// Toggle instellingen (audio controles)
-function toggleSettings() {
-    const audioControls = document.getElementById('audioControls');
-    audioControls.classList.toggle('hidden');
 }
 
 // Open bingokaarten generator
@@ -1308,7 +1302,6 @@ window.closeBingoViering = closeBingoViering;
 window.closeRondeStart = closeRondeStart;
 window.closeVolgendDoel = closeVolgendDoel;
 window.closeAlleDoelen = closeAlleDoelen;
-window.toggleSettings = toggleSettings;
 window.openDisplayWindow = openDisplayWindow;
 window.resetDisplay = resetDisplay;
 window.updatePendingBingo = updatePendingBingo;
