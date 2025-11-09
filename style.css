@@ -37,10 +37,6 @@ body {
     position: relative;
 }
 
-body.dark-mode {
-    background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e);
-}
-
 body.dark-mode .container {
     background: #1e1e1e;
     color: #e0e0e0;
@@ -944,6 +940,42 @@ h3 {
     text-overflow: ellipsis;
 }
 
+.bingo-used-numbers-container {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+.bingo-used-numbers-container h3 {
+    color: white;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.bingo-used-numbers-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    max-width: 100%;
+}
+
+.bingo-used-numbers-grid .used-number {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
 .bingo-confirm-question {
     color: white;
     font-size: clamp(0.9em, 2vw, 1.4em);
@@ -1203,3 +1235,19 @@ h3 {
     transform: scale(1.1);
 }
 
+/* Responsive styling voor BINGO bevestiging */
+@media (max-width: 768px) {
+    .bingo-used-numbers-grid .used-number {
+        width: 35px;
+        height: 35px;
+        font-size: 1em;
+    }
+    
+    .bingo-used-numbers-container {
+        padding: 15px;
+    }
+    
+    .bingo-used-numbers-container h3 {
+        font-size: 1em;
+    }
+}

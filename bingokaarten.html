@@ -191,6 +191,14 @@
             height: 42px;
         }
 
+        .card-footer {
+            text-align: center;
+            font-size: 0.8em;
+            color: #999;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
         @media print {
             body {
                 background: white;
@@ -347,6 +355,12 @@
 
             const numbersPerCard = gridSize * gridSize;
 
+            // Check of er genoeg unieke nummers zijn
+            if (allNumbers.length < numbersPerCard) {
+                alert(`❌ Fout: Er zijn maar ${allNumbers.length} nummers beschikbaar, maar je hebt ${numbersPerCard} vakjes (${gridSize}x${gridSize}).\n\nKies een kleinere kaartgrootte of een andere ronde.`);
+                return;
+            }
+
             for (let i = 0; i < cardCount; i++) {
                 const card = document.createElement('div');
                 card.className = `bingo-card font-${fontSize}`;
@@ -363,6 +377,13 @@
                 // Selecteer willekeurige nummers
                 const shuffled = [...allNumbers].sort(() => Math.random() - 0.5);
                 const selectedNumbers = shuffled.slice(0, numbersPerCard);
+
+                // Duplicaat check
+                const uniqueNumbers = new Set(selectedNumbers);
+                if (uniqueNumbers.size !== selectedNumbers.length) {
+                    console.error(`⚠️ Duplicaten gevonden op kaart ${i + 1}:`, selectedNumbers);
+                    alert(`⚠️ Waarschuwing: Kaart ${i + 1} bevat dubbele nummers!\n\nDit zou niet moeten gebeuren. Probeer opnieuw te genereren.`);
+                }
 
                 selectedNumbers.forEach(num => {
                     const cell = document.createElement('div');
@@ -382,6 +403,13 @@
                 });
 
                 card.appendChild(grid);
+                
+                // Footer toevoegen
+                const footer = document.createElement('div');
+                footer.className = 'card-footer';
+                footer.textContent = 'Mede mogelijk gemaakt door JoeyNNL';
+                card.appendChild(footer);
+                
                 container.appendChild(card);
             }
         }

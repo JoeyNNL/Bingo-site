@@ -36,6 +36,9 @@
             <button class="icon-btn" onclick="openBingoCards()" title="Bingokaarten genereren">
                 <i class="fas fa-ticket-alt"></i>
             </button>
+            <button class="icon-btn" onclick="downloadStatementsPDF()" title="Download Stellingen PDF" style="background: #e74c3c; color: white;">
+                <i class="fas fa-file-pdf"></i>
+            </button>
             <button class="icon-btn" onclick="toggleBackgroundMusic()" title="Achtergrondmuziek aan/uit">
                 <span id="musicIcon"><i class="fas fa-volume-mute"></i></span>
             </button>
@@ -142,6 +145,13 @@
                 <p>Speel voor:</p>
                 <h2 id="bingoConfirmGoalText">-</h2>
             </div>
+            
+            <!-- Gebruikte nummers -->
+            <div class="bingo-used-numbers-container">
+                <h3>Gebruikte nummers:</h3>
+                <div id="bingoUsedNumbers" class="bingo-used-numbers-grid"></div>
+            </div>
+            
             <p class="bingo-confirm-question">Is dit een echte BINGO?</p>
             
             <!-- Naam invoer voor winnaar -->
@@ -201,6 +211,7 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

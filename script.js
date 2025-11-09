@@ -196,6 +196,7 @@ const audioConfig = {
             "Guyon - boef man.mp3",
             "Guyon - GANG.mp3",
             "Guyon - Grappig.mp3",
+            "Guyon - hou je bek.mp3",
             "Guyon - Reet neuken.mp3",
             "Guyon - vallen.mp3",
             "Guyon gvange.wav",
@@ -875,6 +876,19 @@ function triggerBingo() {
     const overlay = document.getElementById('bingoConfirmOverlay');
     const goalNameElement = document.getElementById('bingoConfirmGoalText');
     goalNameElement.textContent = currentGoal.name;
+    
+    // Toon gebruikte nummers
+    const usedNumbersContainer = document.getElementById('bingoUsedNumbers');
+    usedNumbersContainer.innerHTML = '';
+    
+    usedNumbers.sort((a, b) => a - b).forEach(num => {
+        const span = document.createElement('span');
+        span.className = 'used-number';
+        span.textContent = num;
+        span.style.backgroundColor = getNumberColor(num);
+        usedNumbersContainer.appendChild(span);
+    });
+    
     overlay.classList.remove('hidden');
     
     // Focus op naam invoerveld
@@ -1356,3 +1370,113 @@ function toggleControlsPanel() {
 }
 
 window.toggleControlsPanel = toggleControlsPanel;
+
+// Download Stellingen als PDF
+function downloadStatementsPDF() {
+    try {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        
+        const pageWidth = 210; // A4 width
+        const margin = 20;
+        const lineHeight = 8;
+        let yPosition = 20;
+        
+        // Titel
+        pdf.setFontSize(20);
+        pdf.setFont(undefined, 'bold');
+        pdf.text(`BINGO - Alle Stellingen`, margin, yPosition);
+        
+        yPosition += 15;
+        
+        // Loop door alle 3 rondes
+        for (let roundNum = 1; roundNum <= 3; roundNum++) {
+            const roundStatements = statements[roundNum];
+            
+            // Ronde titel
+            pdf.setFontSize(16);
+            pdf.setFont(undefined, 'bold');
+            pdf.setTextColor(102, 126, 234); // Paarse kleur
+            pdf.text(`Ronde ${roundNum}`, margin, yPosition);
+            pdf.setTextColor(0);
+            
+            yPosition += 10;
+            
+            // Headers
+            pdf.setFontSize(12);
+            pdf.setFont(undefined, 'bold');
+            pdf.text('Nr', margin, yPosition);
+            pdf.text('Stelling', margin + 15, yPosition);
+            
+            yPosition += 5;
+            pdf.setLineWidth(0.5);
+            pdf.line(margin, yPosition, pageWidth - margin, yPosition);
+            
+            yPosition += 8;
+            
+            // Stellingen
+            pdf.setFont(undefined, 'normal');
+            pdf.setFontSize(10);
+            
+            for (let num = 1; num <= 50; num++) {
+                const statement = roundStatements[num] || '-';
+                
+                // Check if we need a new page
+                if (yPosition > 270) {
+                    pdf.addPage();
+                    yPosition = 20;
+                }
+                
+                // Nummer
+                pdf.setFont(undefined, 'bold');
+                pdf.text(num.toString(), margin + 2, yPosition);
+                
+                // Stelling (met text wrapping)
+                pdf.setFont(undefined, 'normal');
+                const maxWidth = pageWidth - margin - 35;
+                const lines = pdf.splitTextToSize(statement, maxWidth);
+                
+                lines.forEach((line, index) => {
+                    if (yPosition > 270) {
+                        pdf.addPage();
+                        yPosition = 20;
+                    }
+                    pdf.text(line, margin + 15, yPosition + (index * lineHeight));
+                });
+                
+                yPosition += Math.max(lineHeight, lines.length * lineHeight);
+            }
+            
+            // Ruimte tussen rondes (als het niet de laatste ronde is)
+            if (roundNum < 3) {
+                yPosition += 15;
+                // Als er niet genoeg ruimte is, nieuwe pagina
+                if (yPosition > 250) {
+                    pdf.addPage();
+                    yPosition = 20;
+                }
+            }
+        }
+        
+        // Footer op elke pagina
+        const pageCount = pdf.internal.getNumberOfPages();
+        for (let i = 1; i <= pageCount; i++) {
+            pdf.setPage(i);
+            pdf.setFontSize(8);
+            pdf.setFont(undefined, 'italic');
+            pdf.setTextColor(150);
+            pdf.text(`Pagina ${i} van ${pageCount} - Mede mogelijk gemaakt door JoeyNNL`, margin, 285);
+            pdf.setTextColor(0);
+        }
+        
+        // Download
+        const date = new Date().toLocaleDateString('nl-NL').replace(/\//g, '-');
+        pdf.save(`BINGO_Alle_Stellingen_${date}.pdf`);
+        
+    } catch (error) {
+        console.error('PDF generatie fout:', error);
+        alert('❌ PDF generatie mislukt. Controleer of jsPDF correct is geladen.');
+    }
+}
+
+window.downloadStatementsPDF = downloadStatementsPDF;
