@@ -137,6 +137,18 @@
             justify-content: center;
             padding: 5px;
             position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .music-text {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-sizing: border-box;
         }
 
         .card-number {
@@ -304,7 +316,58 @@
         const statements = {
             1: Array.from({length: 50}, (_, i) => i + 1),
             2: Array.from({length: 50}, (_, i) => i + 1),
-            3: Array.from({length: 50}, (_, i) => i + 1)
+            3: {
+                1: "Martin Garrix - Animals",
+                2: "Jan Smit - Tranquilo",
+                3: "Doe Maar - Smoorverliefd",
+                4: "Kygo & Conrad Sewell - Firestone",
+                5: "Avicii - Levels",
+                6: "VIZE, Joker Bra & Leony - Paradise",
+                7: "André Hazes Jr. - Leef",
+                8: "Ali B, The Partysquad & Yes-R - Rampeneren",
+                9: "Ronnie Flex & Frenna - Energie",
+                10: "K3 - Oya Lélé",
+                11: "Parla & Pardoux - Liberté",
+                12: "George Baker Selection - Una Paloma Blanca",
+                13: "Guns N' Roses - Sweet Child O' Mine",
+                14: "Het Goede Doel - Belgie",
+                15: "Klapperkebab & Kale Toeter - Sinterklaasjournaal Techno",
+                16: "De Jeugd Van Tegenwoordig - Sterrenstof",
+                17: "Marco Borsato - Rood",
+                18: "Frenna & Shallipopi - ZAAZAA",
+                19: "Andre Hazes - Bloed, Zweet En Tranen",
+                20: "Kraantje Pappie - Best Wel Een Ding",
+                21: "David Guetta ft. Nicki Minaj, Bebe Rexha & Afrojack - Hey Mama",
+                22: "B-Brave & Sevn Alias - One Night Stand",
+                23: "Sam Smith - Stay With Me",
+                24: "Goldband - Noodgeval",
+                25: "The Opposites - Slaap",
+                26: "Michael Jackson - Dirty Diana",
+                27: "Sade - Smooth Operator",
+                28: "Imagine Dragons - Demons",
+                29: "Martin Solveig & Dragonette - Hello",
+                30: "Avicii - Waiting For Love",
+                31: "Guns N' Roses - Paradise City",
+                32: "ABBA - Gimme! Gimme! Gimme!",
+                33: "Eminem - Without Me",
+                34: "Ed Sheeran - Shivers",
+                35: "André van Duin - Het Pizzalied",
+                36: "Paul de Leeuw - Vlieg Met Me Mee",
+                37: "Suzan & Freek - Als Het Avond Is",
+                38: "Thijs Boontjes - Deze Nacht",
+                39: "Dio & Sef - Tijdmachine",
+                40: "Anouk - Girl",
+                41: "Porter Robinson & Madeon - Shelter",
+                42: "Martin Garrix, Sem Vox & Jaimes - Gravity",
+                43: "Maroon 5 - Maps",
+                44: "HAVEN. - I Run",
+                45: "A Touch Of Class - Around the World",
+                46: "Elvis Presley - Return to Sender",
+                47: "Cartoon, Jéja & Daniel Levi - On & On",
+                48: "Joost - Europapa",
+                49: "Eminem - Houdini",
+                50: "Michael Jackson - Liberian Girl"
+            }
         };
 
         // Kleurenschema's
@@ -347,8 +410,14 @@
 
             // Verzamel alle beschikbare nummers
             let allNumbers = [];
+            let isMusicRound = false;
+            
             if (round === 'all') {
                 allNumbers = Array.from({length: 50}, (_, i) => i + 1);
+            } else if (round === '3') {
+                // Muziek ronde - verzamel nummer keys
+                isMusicRound = true;
+                allNumbers = Object.keys(statements[round]).map(k => parseInt(k));
             } else {
                 allNumbers = statements[round];
             }
@@ -389,16 +458,34 @@
                     const cell = document.createElement('div');
                     cell.className = 'card-cell';
 
-                    const number = document.createElement('div');
-                    number.className = 'card-number' + (showNumbers ? '' : ' hidden');
-                    number.textContent = num;
-                    number.style.backgroundColor = getNumberColor(num, colorScheme);
+                    // Voor muziekronde (ronde 3): toon artiest + titel direct in de cel
+                    if (isMusicRound) {
+                        const musicText = document.createElement('div');
+                        musicText.className = 'music-text';
+                        musicText.textContent = statements[round][num];
+                        musicText.style.fontSize = '0.65em';
+                        musicText.style.padding = '4px';
+                        musicText.style.textAlign = 'center';
+                        musicText.style.lineHeight = '1.2';
+                        musicText.style.color = '#333';
+                        musicText.style.fontWeight = '600';
+                        musicText.style.wordWrap = 'break-word';
+                        musicText.style.hyphens = 'auto';
+                        musicText.style.overflowWrap = 'break-word';
+                        cell.appendChild(musicText);
+                    } else {
+                        const number = document.createElement('div');
+                        number.className = 'card-number' + (showNumbers ? '' : ' hidden');
+                        number.textContent = num;
+                        number.style.backgroundColor = getNumberColor(num, colorScheme);
 
-                    const note = document.createElement('div');
-                    note.className = 'card-note' + (showNoteLines ? '' : ' hidden');
+                        const note = document.createElement('div');
+                        note.className = 'card-note' + (showNoteLines ? '' : ' hidden');
 
-                    cell.appendChild(number);
-                    cell.appendChild(note);
+                        cell.appendChild(number);
+                        cell.appendChild(note);
+                    }
+                    
                     grid.appendChild(cell);
                 });
 

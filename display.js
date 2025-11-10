@@ -418,7 +418,16 @@ function updateDisplay() {
 
         // Update stelling display
         const statementDisplay = document.getElementById('displayStatement');
+        
         if (currentStatement) {
+            // Voor ronde 3 (muziekronde): toon "Welk nummer is dit?" in plaats van artiest + titel
+            let displayText = currentStatement;
+            
+            // Check of we in muziekronde (ronde 3) zitten
+            if (currentRound && currentRound.includes('3')) {
+                displayText = '🎵 Welk nummer is dit? 🎵';
+            }
+            
             // Trigger animation if statement changed
             if (currentStatement !== lastDisplayedStatement) {
                 statementDisplay.style.animation = 'none';
@@ -426,7 +435,7 @@ function updateDisplay() {
                 statementDisplay.style.animation = 'fadeInStatement 0.5s ease-out 1.5s forwards';
                 lastDisplayedStatement = currentStatement;
             }
-            statementDisplay.textContent = currentStatement;
+            statementDisplay.textContent = displayText;
         } else {
             statementDisplay.textContent = 'Wacht op de volgende stelling...';
             lastDisplayedStatement = '';
