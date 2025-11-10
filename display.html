@@ -10,6 +10,15 @@
     <link rel="stylesheet" href="display.css">
 </head>
 <body>
+    <!-- Gordijn Overlay -->
+    <div id="curtainOverlay" class="curtain-overlay">
+        <div class="curtain curtain-left"></div>
+        <div class="curtain curtain-right"></div>
+        <div id="pauseText" class="pause-text hidden">
+            <h1>⏸️ PAUZE ⏸️</h1>
+        </div>
+    </div>
+
     <div class="display-container">
         <!-- Ronde informatie -->
         <div class="round-info">
@@ -84,7 +93,7 @@
     <!-- Ronde Start Overlay voor Display -->
     <div id="rondeStartOverlay" class="ronde-start-overlay hidden">
         <div class="ronde-start-content">
-            <h1 class="ronde-start-title">Start Ronde <span id="rondeStartRoundNumber">-</span></h1>
+            <h1 class="ronde-start-title" id="rondeStartRoundName">Start Ronde</h1>
             <div class="ronde-start-info">
                 <p class="ronde-start-label">Eerste Doel:</p>
                 <p class="ronde-start-goal" id="rondeStartGoalText">-</p>

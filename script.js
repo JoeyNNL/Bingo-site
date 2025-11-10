@@ -53,56 +53,56 @@ const statements = {
         50: "Heeft ooit iemand onterecht beschuldigd"
     },
     2: {
-        1: "Heeft ooit gelogen over een relatie",
-        2: "Heeft ooit gedaan alsof ze druk waren",
-        3: "Heeft ooit een ex bericht gestuurd tegen beter weten in",
-        4: "Heeft ooit iets gedaan wat totaal uit de hand liep",
-        5: "Heeft ooit iemand laten struikelen (expres of niet)",
-        6: "Heeft ooit een crush gehad op iemand in een relatie",
-        7: "Heeft ooit een gênante spraakmemo gestuurd",
-        8: "Heeft ooit iemand genegeerd om macht te houden",
-        9: "Heeft ooit een domme uitdaging aangenomen",
-        10: "Heeft ooit een geheim expres ontfutseld",
-        11: "Heeft ooit iets kapot  gemaakt en gedaan alsof het niet zij waren",
-        12: "Heeft ooit iemand laten lachen op een ongepast moment",
-        13: "Heeft ooit een fout bericht doorgestuurd",
-        14: "Heeft ooit een vriend(in) per ongeluk beledigd",
-        15: "Heeft ooit gedaan alsof ze iemand aardig vonden terwijl dat niet zo was",
-        16: "Heeft ooit een afspraak vergeten",
-        17: "Heeft ooit gelogen om iemand beter te laten voelen",
-        18: "Heeft ooit een domme weddenschap verloren",
-        19: "Heeft ooit een crush verknald door iets stoms te zeggen",
-        20: "Heeft ooit een slechte grap gemaakt op het verkeerde moment",
-        21: "Heeft ooit te hard gelachen om andermans fout",
-        22: "Heeft ooit iets stoms gedaan uit jaloezie",
-        23: "Heeft ooit iets geheim gehouden voor de groep",
-        24: "Heeft ooit een gênante voicemail achtergelaten",
-        25: "Heeft ooit iets fout gedaan op werk/school",
-        26: "Heeft ooit gedaan alsof ze iets snapten terwijl dat niet zo was",
-        27: "Heeft ooit iemand per ongeluk genegeerd",
-        28: "Heeft ooit een fout bericht naar hun baas gestuurd",
-        29: "Heeft ooit iemand in verlegenheid gebracht zonder het te merken",
-        30: "Heeft ooit iemand geghost zonder uitleg",
-        31: "Heeft ooit iemand belachelijk gemaakt en er later spijt van gehad",
-        32: "Heeft ooit iemand misleid met goede bedoelingen",
-        33: "Heeft ooit iets doms gezegd tijdens een ruzie",
-        34: "Heeft ooit een geheim niet kunnen bewaren",
-        35: "Heeft ooit een cadeau hergebruikt",
-        36: "Heeft ooit gedaan alsof ze ziek waren om thuis te blijven",
-        37: "Heeft ooit iets gezegd dat verkeerd viel",
-        38: "Heeft ooit iemand gemeden vanwege schuldgevoel",
-        39: "Heeft ooit iets stoms gepost uit frustratie",
-        40: "Heeft ooit gedaan alsof ze iemand vergaten",
-        41: "Heeft ooit een crush geheim gehouden",
-        42: "Heeft ooit een vriendschap beëindigd op een vreemde manier",
-        43: "Heeft ooit een foute date gehad",
-        44: "Heeft ooit een gênante herinnering verdrongen",
-        45: "Heeft ooit iemand expres laten denken dat ze interesse hadden",
-        46: "Heeft ooit een ander gebruikt om iemand jaloers te maken",
-        47: "Heeft ooit een leugen verteld voor een grap",
-        48: "Heeft ooit een fout geheim gehouden voor een vriend(in)",
-        49: "Heeft ooit een gênant verhaal over zichzelf gedeeld",
-        50: "Heeft ooit een ruzie verergerd door iets doms te zeggen"
+        1: "Becky",
+        2: "Zoete aardappelfriet",
+        3: "Enzo Knol",
+        4: "Parijs",
+        5: "Thor",
+        6: "André Hazes",
+        7: "Blauwe vinvis",
+        8: "Fortnite",
+        9: "Willem-Alexander",
+        10: "SpongeBob",
+        11: "Mount Everest",
+        12: "Twitter/X",
+        13: "Wesley Sneijder",
+        14: "Gers Pardoel",
+        15: "Rusland",
+        16: "Voldemort",
+        17: "Martin Garrix",
+        18: "Amsterdam",
+        19: "Yoshi",
+        20: "Joey",
+        21: "Mercurius",
+        22: "Netflix",
+        23: "K3",
+        24: "De Nijl",
+        25: "Spider-Man",
+        26: "Danny Z",
+        27: "Azië",
+        28: "Thomas",
+        29: "Steve Jobs",
+        30: "Dires",
+        31: "Eiffeltoren",
+        32: "Minecraft",
+        33: "Johan Cruijff",
+        34: "Joe Biden",
+        35: "Gio Latooy",
+        36: "Sahara",
+        37: "Duncan Laurence",
+        38: "Instagram",
+        39: "Carice van Houten",
+        40: "Jachtluipaard",
+        41: "Danny M",
+        42: "Vaticaanstad",
+        43: "Bløf",
+        44: "Atlantische Oceaan",
+        45: "Superman",
+        46: "Ajax",
+        47: "Yen",
+        48: "Joel",
+        49: "Baikalmeer",
+        50: "GUYON!"
     },
     3: {
         1: "Martin Garrix - Animals",
@@ -156,6 +156,60 @@ const statements = {
         49: "Eminem - Houdini",
         50: "Michael Jackson - Liberian Girl"
     }
+};
+
+// Vragen voor ronde 2 (voor op het display)
+const round2Questions = {
+    1: "Ik ben de grootste streamer van Nederland",
+    2: "Ik ben een oranje snack die gefrituurde aardappel is",
+    3: "Ik ben een bekende Nederlandse YouTuber met meer dan 2 miljoen subs",
+    4: "Ik ben de hoofdstad van Frankrijk",
+    5: "Ik ben een superheld met een hamer en kom uit Asgard",
+    6: "Ik ben een Nederlandse zanger die bekend werd met 'Zij Gelooft In Mij'",
+    7: "Ik ben het grootste zoogdier ter wereld",
+    8: "Ik ben een populaire battle royale game met een storm",
+    9: "Ik ben de Nederlandse koning",
+    10: "Ik ben een geel vierkant animatiefiguur die woont in een ananas",
+    11: "Ik ben de hoogste berg ter wereld",
+    12: "Ik ben een social media platform met een blauwe vogel logo",
+    13: "Ik ben een Nederlandse voetballer die speelde voor Real Madrid",
+    14: "Ik ben een Vlaamse rapper die bekend werd met 'Olivia'",
+    15: "Ik ben het grootste land ter wereld",
+    16: "Ik ben een bekende schurk uit Harry Potter zonder neus",
+    17: "Ik ben een Nederlandse DJ die bekend werd met 'Tremor'",
+    18: "Ik ben de hoofdstad van Nederland",
+    19: "Ik ben een groene dinosaurus uit een Nintendo game",
+    20: "Ik heb tank gereden",
+    21: "Ik ben de planeet die het dichtst bij de zon staat",
+    22: "Ik ben een streaming dienst met rode letters",
+    23: "Ik ben een Vlaamse popgroep met 3 meisjes",
+    24: "Ik ben de langste rivier ter wereld",
+    25: "Ik ben een superheld met een web",
+    26: "Ik kan eigenlijk niet voetballen maar doe het toch",
+    27: "Ik ben het grootste continent ter wereld",
+    28: "Ik ben wordt altijd nat op de motor",
+    29: "Ik ben de oprichter van Apple (niet meer in leven)",
+    30: "Ik heb een stoel gekregen van me ouders om het verdriet te verwerken",
+    31: "Ik ben de hoogste toren van Parijs",
+    32: "Ik ben een populaire game waar je blokjes plaatst",
+    33: "Ik ben een Nederlandse voetballer die speelde voor Barcelona en had nummer 14",
+    34: "Ik ben de president van Amerika (2025)",
+    35: "Ik ben een bekende Nederlandse YouTuber die pranks doet",
+    36: "Ik ben het grootste woestijn ter wereld",
+    37: "Ik ben een Nederlandse zangeres die won met 'Arcade'",
+    38: "Ik ben een social media platform waar je foto's deelt",
+    39: "Ik ben een Nederlandse actrice die speelde in Game of Thrones",
+    40: "Ik ben de snelste landdier ter wereld",
+    41: "Ik geloof in de WEF en de toekomst van AI",
+    42: "Ik ben het kleinste land ter wereld",
+    43: "Ik ben een Nederlandse zanger die bekend werd met 'Dichterbij'",
+    44: "Ik ben de oceaan tussen Europa en Amerika",
+    45: "Ik ben een superheld die kan vliegen en van krypton komt",
+    46: "Ik ben een Nederlandse voetbalclub uit Amsterdam",
+    47: "Ik ben de munteenheid van Japan",
+    48: "Wie haat er Marvel films?",
+    49: "Ik ben het grootste meer ter wereld",
+    50: "Ik hou van blauwe oog schaduw"
 };
 
 // Audio configuratie
@@ -283,6 +337,7 @@ let usedNumbers = [];
 let statementHistory = [];
 let totalStatements = 0;
 let historyIndex = -1; // Voor navigatie door geschiedenis
+let currentDisplayStatement = ''; // Voor sync naar display (alleen vraag bij ronde 2)
 
 // BINGO doelen systeem
 const bingoGoals = [
@@ -609,9 +664,22 @@ function showRondeStartOverlay(roundNumber) {
     document.getElementById('rondeStartGoalText').textContent = bingoGoals[0].name;
     overlay.classList.remove('hidden');
     
+    // Bepaal ronde naam voor display
+    let roundName;
+    if (roundNumber === 1) {
+        roundName = 'Ronde 1 - Stellingen';
+    } else if (roundNumber === 2) {
+        roundName = 'Ronde 2 - Wie of Wat Ben Ik?';
+    } else if (roundNumber === 3) {
+        roundName = 'Ronde 3 - Muziekronde';
+    } else {
+        roundName = `Ronde ${roundNumber}`;
+    }
+    
     // Sync naar display
     localStorage.setItem('bingo_round_start_overlay', 'true');
     localStorage.setItem('bingo_round_start_number', roundNumber);
+    localStorage.setItem('bingo_round_start_name', roundName);
     localStorage.setItem('bingo_round_start_goal', bingoGoals[0].name);
 }
 
@@ -656,10 +724,30 @@ function nextStatement() {
     usedNumbers.push(selectedNumber);
     
     // Haal stelling op
-    const statement = statements[currentRound][selectedNumber];
+    let statement, controlStatement, displayStatement;
     
-    // Voeg toe aan geschiedenis
-    statementHistory.push({ number: selectedNumber, statement: statement });
+    if (currentRound === 2) {
+        // Voor ronde 2: vraag voor display, vraag+antwoord voor control panel
+        const question = round2Questions[selectedNumber];
+        const answer = statements[currentRound][selectedNumber];
+        displayStatement = question; // Alleen vraag voor publiek display
+        controlStatement = `${question}\n\n💡 Antwoord: ${answer}`; // Vraag + antwoord voor control
+        statement = question; // Voor history
+        console.log('Ronde 2 - Vraag:', question, 'Antwoord:', answer);
+    } else {
+        // Voor andere rondes: gewoon de stelling
+        statement = statements[currentRound][selectedNumber];
+        controlStatement = statement;
+        displayStatement = statement;
+    }
+    
+    // Voeg toe aan geschiedenis (met vraag voor ronde 2)
+    statementHistory.push({ 
+        number: selectedNumber, 
+        statement: statement,
+        displayStatement: displayStatement,
+        controlStatement: controlStatement
+    });
     historyIndex = statementHistory.length - 1; // Huidige positie in geschiedenis
     
     // Update display met verbeterde animatie
@@ -674,7 +762,10 @@ function nextStatement() {
     setTimeout(() => {
         numberDisplay.textContent = selectedNumber;
         numberDisplay.style.backgroundColor = getNumberColor(selectedNumber);
-        statementDisplay.textContent = statement;
+        statementDisplay.textContent = controlStatement; // Toon vraag+antwoord op control
+        
+        // Sla display statement op voor sync
+        currentDisplayStatement = displayStatement;
         
         // Voeg rolling animatie toe
         numberDisplay.classList.add('rolling');
@@ -768,6 +859,9 @@ function resetRound() {
     if (confirm('Weet je zeker dat je deze ronde wilt resetten?')) {
         selectRound(currentRound);
         
+        // Clear display statement
+        currentDisplayStatement = '';
+        
         // Clear display data
         localStorage.removeItem('bingo_currentNumber');
         localStorage.removeItem('bingo_currentStatement');
@@ -803,7 +897,10 @@ function showPreviousStatement() {
     // Toon de stelling zonder animatie
     numberDisplay.textContent = previous.number;
     numberDisplay.style.backgroundColor = getNumberColor(previous.number);
-    statementDisplay.textContent = `[Geschiedenis] ${previous.statement}`;
+    statementDisplay.textContent = `[Geschiedenis] ${previous.controlStatement || previous.statement}`;
+    
+    // Update display statement voor sync
+    currentDisplayStatement = previous.displayStatement || previous.statement;
     
     // Sync naar display
     syncToDisplay();
@@ -823,7 +920,10 @@ function showNextInHistory() {
     
     numberDisplay.textContent = next.number;
     numberDisplay.style.backgroundColor = getNumberColor(next.number);
-    statementDisplay.textContent = `[Geschiedenis] ${next.statement}`;
+    statementDisplay.textContent = `[Geschiedenis] ${next.controlStatement || next.statement}`;
+    
+    // Update display statement voor sync
+    currentDisplayStatement = next.displayStatement || next.statement;
     
     // Sync naar display
     syncToDisplay();
@@ -1265,9 +1365,19 @@ function resetDisplay() {
 // Sync data naar display scherm via localStorage
 function syncToDisplay() {
     try {
-        // Huidige ronde
+        // Huidige ronde met naam
         if (currentRound) {
-            localStorage.setItem('bingo_currentRound', `Ronde ${currentRound}`);
+            let roundName;
+            if (currentRound === 1) {
+                roundName = 'Ronde 1 - Stellingen';
+            } else if (currentRound === 2) {
+                roundName = 'Ronde 2 - Wie of Wat Ben Ik?';
+            } else if (currentRound === 3) {
+                roundName = 'Ronde 3 - Muziekronde';
+            } else {
+                roundName = `Ronde ${currentRound}`;
+            }
+            localStorage.setItem('bingo_currentRound', roundName);
         }
         
         // Huidig doel
@@ -1285,10 +1395,10 @@ function syncToDisplay() {
         }
         
         // Huidige stelling
-        const statementDisplay = document.getElementById('statementDisplay');
-        const currentStatement = statementDisplay.textContent;
-        if (currentStatement && !currentStatement.includes('Klik op')) {
-            localStorage.setItem('bingo_currentStatement', currentStatement);
+        // Voor display: gebruik currentDisplayStatement (alleen vraag bij ronde 2)
+        if (currentDisplayStatement && !currentDisplayStatement.includes('Klik op')) {
+            console.log('Syncing display statement:', currentDisplayStatement);
+            localStorage.setItem('bingo_currentStatement', currentDisplayStatement);
         }
         
         // Gebruikte nummers
@@ -1309,6 +1419,50 @@ function openDisplayWindow() {
     }
 }
 
+// Open het gordijn op het display scherm
+function openCurtain() {
+    localStorage.setItem('bingo_open_curtain', 'true');
+    localStorage.setItem('bingo_paused', 'false');
+    console.log('🎭 Gordijn wordt geopend op display');
+    
+    // Update pauze knop
+    updatePauseButton(false);
+}
+
+// Toggle pauze functie
+let isPaused = false;
+
+function togglePause() {
+    isPaused = !isPaused;
+    localStorage.setItem('bingo_paused', isPaused ? 'true' : 'false');
+    
+    if (isPaused) {
+        console.log('⏸️ Pauze geactiveerd');
+    } else {
+        // Bij hervatten: open gordijn
+        localStorage.setItem('bingo_open_curtain', 'true');
+        console.log('▶️ Pauze beëindigd');
+    }
+    
+    updatePauseButton(isPaused);
+}
+
+function updatePauseButton(paused) {
+    const pauseBtn = document.getElementById('pauseBtn');
+    if (pauseBtn) {
+        const icon = pauseBtn.querySelector('i');
+        if (paused) {
+            icon.className = 'fas fa-play';
+            pauseBtn.title = 'Hervat';
+            pauseBtn.style.background = '#27ae60';
+        } else {
+            icon.className = 'fas fa-pause';
+            pauseBtn.title = 'Pauze / Hervat';
+            pauseBtn.style.background = '#FF8C00';
+        }
+    }
+}
+
 // Maak functies globaal beschikbaar voor onclick handlers
 window.triggerBingo = triggerBingo;
 window.confirmBingo = confirmBingo;
@@ -1317,6 +1471,8 @@ window.closeRondeStart = closeRondeStart;
 window.closeVolgendDoel = closeVolgendDoel;
 window.closeAlleDoelen = closeAlleDoelen;
 window.openDisplayWindow = openDisplayWindow;
+window.openCurtain = openCurtain;
+window.togglePause = togglePause;
 window.resetDisplay = resetDisplay;
 window.updatePendingBingo = updatePendingBingo;
 
@@ -1419,7 +1575,13 @@ function downloadStatementsPDF() {
             pdf.setFontSize(10);
             
             for (let num = 1; num <= 50; num++) {
-                const statement = roundStatements[num] || '-';
+                // Voor ronde 2: gebruik de vraag in de PDF
+                let statement;
+                if (roundNum === 2) {
+                    statement = round2Questions[num] || '-';
+                } else {
+                    statement = roundStatements[num] || '-';
+                }
                 
                 // Check if we need a new page
                 if (yPosition > 270) {

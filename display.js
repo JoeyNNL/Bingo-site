@@ -548,11 +548,11 @@ function updateDisplay() {
         const roundStartOverlay = document.getElementById('rondeStartOverlay');
         
         if (showRoundStart === 'true') {
-            const roundNumber = localStorage.getItem('bingo_round_start_number');
+            const roundName = localStorage.getItem('bingo_round_start_name');
             const roundGoal = localStorage.getItem('bingo_round_start_goal');
             
-            if (roundNumber && roundGoal) {
-                document.getElementById('rondeStartRoundNumber').textContent = roundNumber;
+            if (roundName && roundGoal) {
+                document.getElementById('rondeStartRoundName').textContent = roundName;
                 document.getElementById('rondeStartGoalText').textContent = roundGoal;
                 roundStartOverlay.classList.remove('hidden');
             }
@@ -573,6 +573,114 @@ window.addEventListener('storage', updateDisplay);
 
 // Initiële update
 updateDisplay();
+
+// Gordijn functionaliteit - luister naar commando van control panel
+const curtainOverlay = document.getElementById('curtainOverlay');
+const pauseText = document.getElementById('pauseText');
+
+function checkCurtainCommand() {
+    const openCommand = localStorage.getItem('bingo_open_curtain');
+    const isPaused = localStorage.getItem('bingo_paused') || 'false';
+    
+    if (openCommand === 'true' && curtainOverlay && !curtainOverlay.classList.contains('opening')) {
+        curtainOverlay.style.display = 'block';
+        curtainOverlay.classList.remove('closing');
+        curtainOverlay.classList.add('opening');
+        
+        // Verberg pauze tekst
+        if (pauseText) {
+            pauseText.classList.add('hidden');
+        }
+        
+        // Verberg gordijnen alleen als we niet in pauze zijn
+        if (isPaused !== 'true') {
+            setTimeout(() => {
+                if (localStorage.getItem('bingo_paused') !== 'true') {
+                    curtainOverlay.style.display = 'none';
+                }
+            }, 2500);
+        }
+        
+        // Reset het commando
+        localStorage.setItem('bingo_open_curtain', 'false');
+    }
+}
+
+// Check voor pauze status
+let lastPausedState = localStorage.getItem('bingo_paused') || 'false';
+
+function checkPauseStatus() {
+    const isPaused = localStorage.getItem('bingo_paused') || 'false';
+    
+    // Alleen actie ondernemen als de status is veranderd
+    if (isPaused === lastPausedState) {
+        return;
+    }
+    
+    lastPausedState = isPaused;
+    
+    if (isPaused === 'true') {
+        // Pauze geactiveerd - sluit gordijnen met animatie
+        if (curtainOverlay) {
+            const leftCurtain = curtainOverlay.querySelector('.curtain-left');
+            const rightCurtain = curtainOverlay.querySelector('.curtain-right');
+            
+            // Toon overlay
+            curtainOverlay.style.display = 'block';
+            
+            // Zet gordijnen eerst in open positie (zonder animatie)
+            if (leftCurtain && rightCurtain) {
+                leftCurtain.style.transition = 'none';
+                rightCurtain.style.transition = 'none';
+                leftCurtain.style.transform = 'translateX(-100%)';
+                rightCurtain.style.transform = 'translateX(100%)';
+                
+                // Force reflow
+                void leftCurtain.offsetWidth;
+                
+                // Nu transition terug aanzetten
+                leftCurtain.style.transition = '';
+                rightCurtain.style.transition = '';
+                
+                // Gebruik requestAnimationFrame voor betere timing
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        leftCurtain.style.transform = 'translateX(0)';
+                        rightCurtain.style.transform = 'translateX(0)';
+                    });
+                });
+            }
+        }
+        if (pauseText) {
+            setTimeout(() => {
+                if (pauseText) pauseText.classList.remove('hidden');
+            }, 1000);
+        }
+    } else {
+        // Pauze beëindigd
+        if (pauseText) {
+            pauseText.classList.add('hidden');
+        }
+        // Reset inline styles zodat CSS classes weer werken
+        if (curtainOverlay) {
+            const leftCurtain = curtainOverlay.querySelector('.curtain-left');
+            const rightCurtain = curtainOverlay.querySelector('.curtain-right');
+            
+            if (leftCurtain && rightCurtain) {
+                leftCurtain.style.transition = '';
+                rightCurtain.style.transition = '';
+                leftCurtain.style.transform = '';
+                rightCurtain.style.transform = '';
+            }
+        }
+    }
+}
+
+// Check regelmatig voor gordijn commando en pauze status
+setInterval(() => {
+    checkCurtainCommand();
+    checkPauseStatus();
+}, 100);
 
 // Toon melding dat display klaar is
 console.log('BINGO Display gereed - wacht op updates van bedieningspaneel');
