@@ -1,62 +1,62 @@
 // Stellingen per ronde - pas deze aan naar jouw stellingen
 const statements = {
     1: {
-        1: "Heeft ooit iets stoms gedaan om indruk te maken",
-        2: "Is ooit betrapt op een leugen",
-        3: "Heeft een slechte gewoonte die ze niet kunnen afleren",
-        4: "Heeft ooit iets gestolen (hoe klein ook)",
-        5: "Is weleens wakker geworden op een vreemde plek",
-        6: "Heeft ooit iemand geblokkeerd en dat nooit uitgelegd",
-        7: "Heeft ooit iets gezegd wat ze meteen betreurden",
-        8: "Heeft een geheim dat niemand weet",
-        9: "Heeft ooit een crush gehad op iemand die ze niet mochten leuk vinden",
-        10: "Heeft ooit een dronken bericht gestuurd dat ze nu zouden verwijderen",
-        11: "Heeft ooit een roddel verspreid",
-        12: "Is ooit betrapt tijdens een gênant moment",
-        13: "Heeft ooit iemand genegeerd zonder reden",
-        14: "Heeft ooit gedaan alsof ze nuchter waren",
-        15: "Heeft ooit iets stiekem weggegooid dat niet van hen was",
-        16: "Heeft ooit een foute beslissing genomen op vakantie",
-        17: "Heeft ooit iemand jaloers proberen te maken",
-        18: "Heeft ooit iets gebroken op een feestje",
-        19: "Heeft ooit een crush gehad op iemand van werk of school",
-        20: "Heeft ooit iets verkeerd gestuurd naar de verkeerde persoon",
-        21: "Heeft ooit een ex opgezocht op social media",
-        22: "Heeft ooit gelogen om drama te vermijden",
-        23: "Heeft ooit iemand laten wachten zonder reden",
-        24: "Heeft ooit een gênante bijnaam gekregen",
-        25: "Heeft ooit iemand ontweken in het openbaar",
-        26: "Heeft ooit een vriendschap verwaarloosd",
-        27: "Heeft ooit een avond verpest met te veel drank",
-        28: "Heeft ooit iemand teleurgesteld en daar spijt van",
-        29: "Heeft ooit een fout geheim gehouden",
-        30: "Heeft ooit iets doms gekocht uit impuls",
-        31: "Heeft ooit een foto verwijderd uit schaamte",
-        32: "Heeft ooit een compliment niet gemeend",
-        33: "Heeft ooit gedaan alsof ze iemand niet herkenden",
-        34: "Heeft ooit een plan afgezegd met een smoes",
-        35: "Heeft ooit iemand gebruikt voor aandacht",
-        36: "Heeft ooit gelogen tijdens een spelletje",
-        37: "Heeft ooit iets gedaan wat tegen hun principes inging",
-        38: "Heeft ooit iemand genegeerd in een groepsapp",
-        39: "Heeft ooit te veel gedeeld op social media",
-        40: "Heeft ooit spijt gehad van eerlijkheid",
-        41: "Heeft ooit iemand in deze groep beledigd (bewust of niet)",
-        42: "Heeft ooit een geheim verteld dat niet van hen was",
-        43: "Heeft ooit iets verdraaid om er beter uit te zien",
-        44: "Heeft ooit een ander de schuld gegeven van hun fout",
-        45: "Heeft ooit iets gedaan waar ze nu om kunnen lachen",
-        46: "Heeft ooit een gênante uitspraak gedaan in gezelschap",
-        47: "Heeft ooit iets vergeten wat belangrijk was",
-        48: "Heeft ooit een vreemde versierd voor de grap",
-        49: "Heeft ooit iets fout geïnterpreteerd en zich belachelijk gemaakt",
-        50: "Heeft ooit iemand onterecht beschuldigd"
+        1: "Wie heeft ooit iets stoms gedaan om indruk te maken",
+        2: "Wie is ooit betrapt op een leugen",
+        3: "Wie heeft een slechte gewoonte die ze niet kunnen afleren",
+        4: "Wie heeft ooit iets gestolen (hoe klein ook)",
+        5: "Wie is weleens wakker geworden op een vreemde plek",
+        6: "Wie heeft ooit iemand geblokkeerd en dat nooit uitgelegd",
+        7: "Wie heeft ooit iets gezegd wat ze meteen betreurden",
+        8: "Wie heeft een geheim dat niemand weet",
+        9: "Wie heeft ooit een crush gehad op iemand die ze niet mochten leuk vinden",
+        10: "Wie heeft ooit een dronken bericht gestuurd dat ze nu zouden verwijderen",
+        11: "Wie heeft ooit een roddel verspreid",
+        12: "Wie is ooit betrapt tijdens een gênant moment",
+        13: "Wie heeft ooit iemand genegeerd zonder reden",
+        14: "Wie heeft ooit gedaan alsof ze nuchter waren",
+        15: "Wie heeft ooit iets stiekem weggegooid dat niet van hen was",
+        16: "Wie heeft ooit een foute beslissing genomen op vakantie",
+        17: "Wie heeft ooit iemand jaloers proberen te maken",
+        18: "Wie heeft ooit iets gebroken op een feestje",
+        19: "Wie heeft ooit een crush gehad op iemand van werk of school",
+        20: "Wie heeft ooit iets verkeerd gestuurd naar de verkeerde persoon",
+        21: "Wie heeft ooit een ex opgezocht op social media",
+        22: "Wie heeft ooit gelogen om drama te vermijden",
+        23: "Wie heeft ooit iemand laten wachten zonder reden",
+        24: "Wie heeft ooit een gênante bijnaam gekregen",
+        25: "Wie heeft ooit iemand ontweken in het openbaar",
+        26: "Wie heeft ooit een vriendschap verwaarloosd",
+        27: "Wie heeft ooit een avond verpest met te veel drank",
+        28: "Wie heeft ooit iemand teleurgesteld en daar spijt van",
+        29: "Wie heeft ooit een fout geheim gehouden",
+        30: "Wie heeft ooit iets doms gekocht uit impuls",
+        31: "Wie heeft ooit een foto verwijderd uit schaamte",
+        32: "Wie heeft ooit een compliment niet gemeend",
+        33: "Wie heeft ooit gedaan alsof ze iemand niet herkenden",
+        34: "Wie heeft ooit een plan afgezegd met een smoes",
+        35: "Wie heeft ooit iemand gebruikt voor aandacht",
+        36: "Wie heeft ooit gelogen tijdens een spelletje",
+        37: "Wie heeft ooit iets gedaan wat tegen hun principes inging",
+        38: "Wie heeft ooit iemand genegeerd in een groepsapp",
+        39: "Wie heeft ooit te veel gedeeld op social media",
+        40: "Wie heeft ooit spijt gehad van eerlijkheid",
+        41: "Wie heeft ooit iemand in deze groep beledigd (bewust of niet)",
+        42: "Wie heeft ooit een geheim verteld dat niet van hen was",
+        43: "Wie heeft ooit iets verdraaid om er beter uit te zien",
+        44: "Wie heeft ooit een ander de schuld gegeven van hun fout",
+        45: "Wie heeft ooit iets gedaan waar ze nu om kunnen lachen",
+        46: "Wie heeft ooit een gênante uitspraak gedaan in gezelschap",
+        47: "Wie heeft ooit iets vergeten wat belangrijk was",
+        48: "Wie heeft ooit een vreemde versierd voor de grap",
+        49: "Wie heeft ooit iets fout geïnterpreteerd en zich belachelijk gemaakt",
+        50: "Wie heeft ooit iemand onterecht beschuldigd"
     },
     2: {
         1: "Becky",
         2: "Zoete aardappelfriet",
         3: "Enzo Knol",
-        4: "Parijs",
+        4: "Zürich",
         5: "Thor",
         6: "André Hazes",
         7: "Blauwe vinvis",
@@ -70,7 +70,7 @@ const statements = {
         15: "Rusland",
         16: "Voldemort",
         17: "Martin Garrix",
-        18: "Amsterdam",
+        18: "Wenen",
         19: "Yoshi",
         20: "Joey",
         21: "Mercurius",
@@ -86,7 +86,7 @@ const statements = {
         31: "Eiffeltoren",
         32: "Minecraft",
         33: "Johan Cruijff",
-        34: "Joe Biden",
+        34: "Oempa Loompa",
         35: "Gio Latooy",
         36: "Sahara",
         37: "Duncan Laurence",
@@ -163,21 +163,21 @@ const round2Questions = {
     1: "Ik ben de grootste streamer van Nederland",
     2: "Ik ben een oranje snack die gefrituurde aardappel is",
     3: "Ik ben een bekende Nederlandse YouTuber met meer dan 2 miljoen subs",
-    4: "Ik ben de hoofdstad van Frankrijk",
+    4: "Ik ben de hoofdstad van Zwitserland",
     5: "Ik ben een superheld met een hamer en kom uit Asgard",
-    6: "Ik ben een Nederlandse zanger die bekend werd met 'Zij Gelooft In Mij'",
+    6: "Ik ben een Nederlandse zanger die bekend is van 'Zij Gelooft In Mij'",
     7: "Ik ben het grootste zoogdier ter wereld",
     8: "Ik ben een populaire battle royale game met een storm",
     9: "Ik ben de Nederlandse koning",
     10: "Ik ben een geel vierkant animatiefiguur die woont in een ananas",
     11: "Ik ben de hoogste berg ter wereld",
-    12: "Ik ben een social media platform met een blauwe vogel logo",
+    12: "Ik ben een social media platform met een X",
     13: "Ik ben een Nederlandse voetballer die speelde voor Real Madrid",
-    14: "Ik ben een Vlaamse rapper die bekend werd met 'Olivia'",
+    14: "Ik ben een Nederlandse rapper die bekend werd met 'Ik Neem Je Mee'",
     15: "Ik ben het grootste land ter wereld",
     16: "Ik ben een bekende schurk uit Harry Potter zonder neus",
-    17: "Ik ben een Nederlandse DJ die bekend werd met 'Tremor'",
-    18: "Ik ben de hoofdstad van Nederland",
+    17: "Ik ben een Nederlandse DJ die bekend werd met 'Animals'",
+    18: "Ik ben de hoofdstad van Oostenrijk",
     19: "Ik ben een groene dinosaurus uit een Nintendo game",
     20: "Ik heb tank gereden",
     21: "Ik ben de planeet die het dichtst bij de zon staat",
@@ -187,14 +187,14 @@ const round2Questions = {
     25: "Ik ben een superheld met een web",
     26: "Ik kan eigenlijk niet voetballen maar doe het toch",
     27: "Ik ben het grootste continent ter wereld",
-    28: "Ik ben wordt altijd nat op de motor",
+    28: "Ik word altijd nat op de motor",
     29: "Ik ben de oprichter van Apple (niet meer in leven)",
     30: "Ik heb een stoel gekregen van me ouders om het verdriet te verwerken",
     31: "Ik ben de hoogste toren van Parijs",
     32: "Ik ben een populaire game waar je blokjes plaatst",
     33: "Ik ben een Nederlandse voetballer die speelde voor Barcelona en had nummer 14",
     34: "Ik ben de president van Amerika (2025)",
-    35: "Ik ben een bekende Nederlandse YouTuber die pranks doet",
+    35: "Ik ben een bekende Nederlandse YouTuber met meer dan 1 miljoen subs",
     36: "Ik ben het grootste woestijn ter wereld",
     37: "Ik ben een Nederlandse zangeres die won met 'Arcade'",
     38: "Ik ben een social media platform waar je foto's deelt",
@@ -1547,68 +1547,79 @@ function downloadStatementsPDF() {
         
         // Loop door alle 3 rondes
         for (let roundNum = 1; roundNum <= 3; roundNum++) {
+            if (roundNum > 1) {
+                pdf.addPage();
+                yPosition = 20;
+            }
             const roundStatements = statements[roundNum];
-            
             // Ronde titel
             pdf.setFontSize(16);
             pdf.setFont(undefined, 'bold');
             pdf.setTextColor(102, 126, 234); // Paarse kleur
             pdf.text(`Ronde ${roundNum}`, margin, yPosition);
             pdf.setTextColor(0);
-            
             yPosition += 10;
-            
             // Headers
             pdf.setFontSize(12);
             pdf.setFont(undefined, 'bold');
-            pdf.text('Nr', margin, yPosition);
-            pdf.text('Stelling', margin + 15, yPosition);
-            
+            if (roundNum === 2) {
+                pdf.text('Nr', margin, yPosition);
+                pdf.text('Vraag', margin + 15, yPosition);
+                pdf.text('Antwoord', margin + 120, yPosition);
+            } else {
+                pdf.text('Nr', margin, yPosition);
+                pdf.text('Stelling', margin + 15, yPosition);
+            }
             yPosition += 5;
             pdf.setLineWidth(0.5);
             pdf.line(margin, yPosition, pageWidth - margin, yPosition);
-            
             yPosition += 8;
-            
             // Stellingen
             pdf.setFont(undefined, 'normal');
             pdf.setFontSize(10);
-            
             for (let num = 1; num <= 50; num++) {
-                // Voor ronde 2: gebruik de vraag in de PDF
-                let statement;
                 if (roundNum === 2) {
-                    statement = round2Questions[num] || '-';
-                } else {
-                    statement = roundStatements[num] || '-';
-                }
-                
-                // Check if we need a new page
-                if (yPosition > 270) {
-                    pdf.addPage();
-                    yPosition = 20;
-                }
-                
-                // Nummer
-                pdf.setFont(undefined, 'bold');
-                pdf.text(num.toString(), margin + 2, yPosition);
-                
-                // Stelling (met text wrapping)
-                pdf.setFont(undefined, 'normal');
-                const maxWidth = pageWidth - margin - 35;
-                const lines = pdf.splitTextToSize(statement, maxWidth);
-                
-                lines.forEach((line, index) => {
+                    const vraag = round2Questions[num] || '-';
+                    const antwoord = statements[2][num] || '-';
+                    // Check if we need a new page
                     if (yPosition > 270) {
                         pdf.addPage();
                         yPosition = 20;
                     }
-                    pdf.text(line, margin + 15, yPosition + (index * lineHeight));
-                });
-                
-                yPosition += Math.max(lineHeight, lines.length * lineHeight);
+                    // Nummer
+                    pdf.setFont(undefined, 'bold');
+                    pdf.text(num.toString(), margin + 2, yPosition);
+                    // Vraag (text wrapping)
+                    pdf.setFont(undefined, 'normal');
+                    const vraagMaxWidth = 100;
+                    const vraagLines = pdf.splitTextToSize(vraag, vraagMaxWidth);
+                    vraagLines.forEach((line, index) => {
+                        pdf.text(line, margin + 15, yPosition + (index * lineHeight));
+                    });
+                    // Antwoord
+                    pdf.setFont(undefined, 'bold');
+                    pdf.text(antwoord, margin + 120, yPosition);
+                    yPosition += Math.max(lineHeight, vraagLines.length * lineHeight);
+                } else {
+                    const statement = roundStatements[num] || '-';
+                    // Check if we need a new page
+                    if (yPosition > 270) {
+                        pdf.addPage();
+                        yPosition = 20;
+                    }
+                    // Nummer
+                    pdf.setFont(undefined, 'bold');
+                    pdf.text(num.toString(), margin + 2, yPosition);
+                    // Stelling (text wrapping)
+                    pdf.setFont(undefined, 'normal');
+                    const maxWidth = pageWidth - margin - 35;
+                    const lines = pdf.splitTextToSize(statement, maxWidth);
+                    lines.forEach((line, index) => {
+                        pdf.text(line, margin + 15, yPosition + (index * lineHeight));
+                    });
+                    yPosition += Math.max(lineHeight, lines.length * lineHeight);
+                }
             }
-            
             // Ruimte tussen rondes (als het niet de laatste ronde is)
             if (roundNum < 3) {
                 yPosition += 15;
