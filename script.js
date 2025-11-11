@@ -547,57 +547,6 @@ function playDingSound() {
     }
 }
 
-// Confetti animatie
-function showConfetti() {
-    const canvas = document.getElementById('confettiCanvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    const confetti = [];
-    const colors = ['#e74c3c', '#3498db', '#f1c40f', '#2ecc71', '#9b59b6', '#667eea'];
-    
-    for (let i = 0; i < 150; i++) {
-        confetti.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height - canvas.height,
-            r: Math.random() * 6 + 4,
-            d: Math.random() * 10 + 10,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            tilt: Math.floor(Math.random() * 10) - 10,
-            tiltAngleIncremental: Math.random() * 0.07 + 0.05,
-            tiltAngle: 0
-        });
-    }
-    
-    function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        confetti.forEach((p, index) => {
-            ctx.beginPath();
-            ctx.lineWidth = p.r / 2;
-            ctx.strokeStyle = p.color;
-            ctx.moveTo(p.x + p.tilt + p.r, p.y);
-            ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r);
-            ctx.stroke();
-            
-            p.tiltAngle += p.tiltAngleIncremental;
-            p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
-            p.tilt = Math.sin(p.tiltAngle) * 15;
-            
-            if (p.y > canvas.height) {
-                confetti.splice(index, 1);
-            }
-        });
-        
-        if (confetti.length > 0) {
-            requestAnimationFrame(draw);
-        }
-    }
-    
-    draw();
-}
-
 // Update progress bar
 function updateProgress() {
     const total = totalStatements;
@@ -711,7 +660,6 @@ function nextStatement() {
     
     if (availableNumbers.length === 0) {
         alert('Alle stellingen van deze ronde zijn gebruikt! Klik op "Reset Ronde" om opnieuw te beginnen.');
-        showConfetti();
         return;
     }
     
@@ -790,11 +738,6 @@ function nextStatement() {
     // Update gebruikte nummers en progress
     updateUsedNumbers();
     updateProgress();
-    
-    // Confetti als laatste stelling
-    if (availableNumbers.length === 0) {
-        setTimeout(() => showConfetti(), 500);
-    }
 }
 
 // Update de lijst met gebruikte nummers
@@ -1044,7 +987,6 @@ function confirmBingo(isConfirmed) {
     
     // Speel BINGO effecten
     playBingoEffect();
-    showMegaConfetti();
     
     // Toon vieringsoverlay met winnaarsnaam
     const vieringOverlay = document.getElementById('bingoVieringOverlay');
@@ -1112,8 +1054,6 @@ function closeVolgendDoel() {
 function showAlleDoelentOverlay() {
     const overlay = document.getElementById('alleDoelenhOverlay');
     overlay.classList.remove('hidden');
-    // Speel nog een keer confetti voor de volledige voltooiing
-    showMegaConfetti();
     
     // Sync naar display
     localStorage.setItem('bingo_all_goals_overlay', 'true');
@@ -1186,57 +1126,148 @@ function playBingoEffect() {
     }
 }
 
-// Mega confetti voor BINGO
-function showMegaConfetti() {
-    const canvas = document.getElementById('confettiCanvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+// Dark Mode Toggle
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const icon = document.getElementById('darkModeIcon');
+    const isDark = document.body.classList.contains('dark-mode');
     
-    const confetti = [];
-    const colors = ['#e74c3c', '#3498db', '#f1c40f', '#2ecc71', '#9b59b6', '#e67e22', '#1abc9c', '#e91e63'];
+    icon.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
     
-    // Veel meer confetti voor BINGO!
-    for (let i = 0; i < 300; i++) {
-        confetti.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height - canvas.height,
-            r: Math.random() * 8 + 6,
-            d: Math.random() * 15 + 10,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            tilt: Math.floor(Math.random() * 20) - 10,
-            tiltAngleIncremental: Math.random() * 0.1 + 0.05,
-            tiltAngle: 0
-        });
-    }
-    
-    function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        confetti.forEach((p, index) => {
-            ctx.beginPath();
-            ctx.lineWidth = p.r / 2;
-            ctx.strokeStyle = p.color;
-            ctx.moveTo(p.x + p.tilt + p.r, p.y);
-            ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r);
-            ctx.stroke();
-            
-            p.tiltAngle += p.tiltAngleIncremental;
-            p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
-            p.tilt = Math.sin(p.tiltAngle) * 15;
-            
-            if (p.y > canvas.height) {
-                confetti.splice(index, 1);
-            }
-        });
-        
-        if (confetti.length > 0) {
-            requestAnimationFrame(draw);
-        }
-    }
-    
-    draw();
+    // Bewaar voorkeur
+    localStorage.setItem('bingo_darkMode', isDark ? 'true' : 'false');
 }
+
+// Laad dark mode voorkeur bij opstarten
+document.addEventListener('DOMContentLoaded', function() {
+    const darkModePreference = localStorage.getItem('bingo_darkMode');
+    if (darkModePreference === 'true') {
+        document.body.classList.add('dark-mode');
+        const icon = document.getElementById('darkModeIcon');
+        if (icon) icon.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+});
+
+window.toggleDarkMode = toggleDarkMode;
+
+// Toggle Controls Panel
+function toggleControlsPanel() {
+    const panel = document.getElementById('controlsPanel');
+    panel.classList.toggle('hidden');
+}
+
+window.toggleControlsPanel = toggleControlsPanel;
+
+// Download Stellingen als PDF
+function downloadStatementsPDF() {
+    try {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        
+        const pageWidth = 210; // A4 width
+        const margin = 20;
+        const lineHeight = 8;
+        let yPosition = 20;
+        
+        // Titel
+        pdf.setFontSize(20);
+        pdf.setFont(undefined, 'bold');
+        pdf.text(`BINGO - Alle Stellingen`, margin, yPosition);
+        
+        yPosition += 15;
+        
+        // Loop door alle 3 rondes
+        for (let roundNum = 1; roundNum <= 3; roundNum++) {
+            if (roundNum > 1) {
+                pdf.addPage();
+                yPosition = 20;
+            }
+            const roundStatements = statements[roundNum];
+            // Ronde titel
+            pdf.setFontSize(16);
+            pdf.setFont(undefined, 'bold');
+            pdf.setTextColor(102, 126, 234); // Paarse kleur
+            pdf.text(`Ronde ${roundNum}`, margin, yPosition);
+            pdf.setTextColor(0);
+            yPosition += 10;
+            // Headers
+            pdf.setFontSize(12);
+            pdf.setFont(undefined, 'bold');
+            if (roundNum === 2) {
+                pdf.text('Nr', margin, yPosition);
+                pdf.text('Vraag', margin + 15, yPosition);
+                pdf.text('Antwoord', margin + 120, yPosition);
+            } else {
+                pdf.text('Nr', margin, yPosition);
+                pdf.text('Stelling', margin + 15, yPosition);
+            }
+            yPosition += 5;
+            pdf.setLineWidth(0.5);
+            pdf.line(margin, yPosition, pageWidth - margin, yPosition);
+            yPosition += 8;
+            // Stellingen
+            pdf.setFont(undefined, 'normal');
+            pdf.setFontSize(10);
+            // Houd bij op welke pagina's inhoud staat
+            const usedPages = new Set();
+            for (let num = 1; num <= 50; num++) {
+                // Nummer
+                pdf.setFont(undefined, 'bold');
+                pdf.text(num.toString(), margin + 2, yPosition);
+                // Vraag/Antwoord of Stelling
+                if (roundNum === 2) {
+                    const vraag = round2Questions[num] || '-';
+                    const antwoord = statements[2][num] || '-';
+                    pdf.setFont(undefined, 'normal');
+                    const vraagMaxWidth = 100;
+                    const vraagLines = pdf.splitTextToSize(vraag, vraagMaxWidth);
+                    vraagLines.forEach((line, index) => {
+                        pdf.text(line, margin + 15, yPosition + (index * lineHeight));
+                    });
+                    pdf.setFont(undefined, 'bold');
+                    pdf.text(antwoord, margin + 120, yPosition);
+                    yPosition += Math.max(lineHeight, vraagLines.length * lineHeight);
+                } else {
+                    const statement = roundStatements[num] || '-';
+                    pdf.setFont(undefined, 'normal');
+                    const maxWidth = pageWidth - margin - 35;
+                    const lines = pdf.splitTextToSize(statement, maxWidth);
+                    lines.forEach((line, index) => {
+                        pdf.text(line, margin + 15, yPosition + (index * lineHeight));
+                    });
+                    yPosition += Math.max(lineHeight, lines.length * lineHeight);
+                }
+                // Voeg een nieuwe pagina toe als er te weinig ruimte is voor de volgende stelling
+                if (yPosition > 270 && num < 50) {
+                    pdf.addPage();
+                    yPosition = 20;
+                }
+            }
+        }
+        
+        // Footer op elke pagina
+        const pageCount = pdf.internal.getNumberOfPages();
+        // Verwijder laatste pagina als die leeg is
+        if (pageCount > 1) {
+            const lastPage = pageCount;
+            pdf.setPage(lastPage);
+            // Check of er tekst op de pagina staat (simpele check: yPosition is nog op startpositie)
+            if (yPosition === 20) {
+                pdf.deletePage(lastPage);
+            }
+        }
+        
+        // Download
+        const date = new Date().toLocaleDateString('nl-NL').replace(/\//g, '-');
+        pdf.save(`BINGO_Alle_Stellingen_${date}.pdf`);
+        
+    } catch (error) {
+        console.error('PDF generatie fout:', error);
+        alert('❌ PDF generatie mislukt. Controleer of jsPDF correct is geladen.');
+    }
+}
+
+window.downloadStatementsPDF = downloadStatementsPDF;
 
 // Sneltoetsen
 document.addEventListener('keydown', (e) => {
@@ -1494,162 +1525,3 @@ function updatePhotoTimer() {
 
 // Start de foto timer
 setInterval(updatePhotoTimer, 1000); // Update elke seconde
-
-// Dark Mode Toggle
-function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-    const icon = document.getElementById('darkModeIcon');
-    const isDark = document.body.classList.contains('dark-mode');
-    
-    icon.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-    
-    // Bewaar voorkeur
-    localStorage.setItem('bingo_darkMode', isDark ? 'true' : 'false');
-}
-
-// Laad dark mode voorkeur bij opstarten
-document.addEventListener('DOMContentLoaded', function() {
-    const darkModePreference = localStorage.getItem('bingo_darkMode');
-    if (darkModePreference === 'true') {
-        document.body.classList.add('dark-mode');
-        const icon = document.getElementById('darkModeIcon');
-        if (icon) icon.innerHTML = '<i class="fas fa-sun"></i>';
-    }
-});
-
-window.toggleDarkMode = toggleDarkMode;
-
-// Toggle Controls Panel
-function toggleControlsPanel() {
-    const panel = document.getElementById('controlsPanel');
-    panel.classList.toggle('hidden');
-}
-
-window.toggleControlsPanel = toggleControlsPanel;
-
-// Download Stellingen als PDF
-function downloadStatementsPDF() {
-    try {
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        
-        const pageWidth = 210; // A4 width
-        const margin = 20;
-        const lineHeight = 8;
-        let yPosition = 20;
-        
-        // Titel
-        pdf.setFontSize(20);
-        pdf.setFont(undefined, 'bold');
-        pdf.text(`BINGO - Alle Stellingen`, margin, yPosition);
-        
-        yPosition += 15;
-        
-        // Loop door alle 3 rondes
-        for (let roundNum = 1; roundNum <= 3; roundNum++) {
-            if (roundNum > 1) {
-                pdf.addPage();
-                yPosition = 20;
-            }
-            const roundStatements = statements[roundNum];
-            // Ronde titel
-            pdf.setFontSize(16);
-            pdf.setFont(undefined, 'bold');
-            pdf.setTextColor(102, 126, 234); // Paarse kleur
-            pdf.text(`Ronde ${roundNum}`, margin, yPosition);
-            pdf.setTextColor(0);
-            yPosition += 10;
-            // Headers
-            pdf.setFontSize(12);
-            pdf.setFont(undefined, 'bold');
-            if (roundNum === 2) {
-                pdf.text('Nr', margin, yPosition);
-                pdf.text('Vraag', margin + 15, yPosition);
-                pdf.text('Antwoord', margin + 120, yPosition);
-            } else {
-                pdf.text('Nr', margin, yPosition);
-                pdf.text('Stelling', margin + 15, yPosition);
-            }
-            yPosition += 5;
-            pdf.setLineWidth(0.5);
-            pdf.line(margin, yPosition, pageWidth - margin, yPosition);
-            yPosition += 8;
-            // Stellingen
-            pdf.setFont(undefined, 'normal');
-            pdf.setFontSize(10);
-            for (let num = 1; num <= 50; num++) {
-                if (roundNum === 2) {
-                    const vraag = round2Questions[num] || '-';
-                    const antwoord = statements[2][num] || '-';
-                    // Check if we need a new page
-                    if (yPosition > 270) {
-                        pdf.addPage();
-                        yPosition = 20;
-                    }
-                    // Nummer
-                    pdf.setFont(undefined, 'bold');
-                    pdf.text(num.toString(), margin + 2, yPosition);
-                    // Vraag (text wrapping)
-                    pdf.setFont(undefined, 'normal');
-                    const vraagMaxWidth = 100;
-                    const vraagLines = pdf.splitTextToSize(vraag, vraagMaxWidth);
-                    vraagLines.forEach((line, index) => {
-                        pdf.text(line, margin + 15, yPosition + (index * lineHeight));
-                    });
-                    // Antwoord
-                    pdf.setFont(undefined, 'bold');
-                    pdf.text(antwoord, margin + 120, yPosition);
-                    yPosition += Math.max(lineHeight, vraagLines.length * lineHeight);
-                } else {
-                    const statement = roundStatements[num] || '-';
-                    // Check if we need a new page
-                    if (yPosition > 270) {
-                        pdf.addPage();
-                        yPosition = 20;
-                    }
-                    // Nummer
-                    pdf.setFont(undefined, 'bold');
-                    pdf.text(num.toString(), margin + 2, yPosition);
-                    // Stelling (text wrapping)
-                    pdf.setFont(undefined, 'normal');
-                    const maxWidth = pageWidth - margin - 35;
-                    const lines = pdf.splitTextToSize(statement, maxWidth);
-                    lines.forEach((line, index) => {
-                        pdf.text(line, margin + 15, yPosition + (index * lineHeight));
-                    });
-                    yPosition += Math.max(lineHeight, lines.length * lineHeight);
-                }
-            }
-            // Ruimte tussen rondes (als het niet de laatste ronde is)
-            if (roundNum < 3) {
-                yPosition += 15;
-                // Als er niet genoeg ruimte is, nieuwe pagina
-                if (yPosition > 250) {
-                    pdf.addPage();
-                    yPosition = 20;
-                }
-            }
-        }
-        
-        // Footer op elke pagina
-        const pageCount = pdf.internal.getNumberOfPages();
-        for (let i = 1; i <= pageCount; i++) {
-            pdf.setPage(i);
-            pdf.setFontSize(8);
-            pdf.setFont(undefined, 'italic');
-            pdf.setTextColor(150);
-            pdf.text(`Pagina ${i} van ${pageCount} - Mede mogelijk gemaakt door JoeyNNL`, margin, 285);
-            pdf.setTextColor(0);
-        }
-        
-        // Download
-        const date = new Date().toLocaleDateString('nl-NL').replace(/\//g, '-');
-        pdf.save(`BINGO_Alle_Stellingen_${date}.pdf`);
-        
-    } catch (error) {
-        console.error('PDF generatie fout:', error);
-        alert('❌ PDF generatie mislukt. Controleer of jsPDF correct is geladen.');
-    }
-}
-
-window.downloadStatementsPDF = downloadStatementsPDF;
