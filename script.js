@@ -967,10 +967,14 @@ function confirmBingo(isConfirmed) {
     
     if (!isConfirmed) {
         console.log('❌ BINGO geannuleerd');
-        // Optioneel: speel een "fout" geluid
-        if (effectSound) {
-            playDingSound(); // Of een ander geluid voor foutieve BINGO
+        // Speel het "lost" geluid af bij foute bingo
+        const lostAudio = new Audio('sounds/lost/take-the-l-fortnite-emote-audiotrimmer.mp3');
+        if (typeof audioConfig !== 'undefined' && audioConfig.effects && typeof audioConfig.effects.volume === 'number') {
+            lostAudio.volume = audioConfig.effects.volume;
+        } else {
+            lostAudio.volume = 1;
         }
+        lostAudio.play().catch(e => console.log('Kan lost-audio niet afspelen:', e));
         return;
     }
     
@@ -1525,3 +1529,4 @@ function updatePhotoTimer() {
 
 // Start de foto timer
 setInterval(updatePhotoTimer, 1000); // Update elke seconde
+
