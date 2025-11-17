@@ -196,7 +196,7 @@ const round2Questions = {
     34: "Ik ben de president van Amerika (2025)",
     35: "Ik ben een bekende Nederlandse YouTuber met meer dan 1 miljoen subs",
     36: "Ik ben het grootste woestijn ter wereld",
-    37: "Ik ben een Nederlandse zangeres die won met 'Arcade'",
+    37: "Ik ben een Nederlandse zanger die won met 'Arcade'",
     38: "Ik ben een social media platform waar je foto's deelt",
     39: "Ik ben een Nederlandse actrice die speelde in Game of Thrones",
     40: "Ik ben de snelste landdier ter wereld",
