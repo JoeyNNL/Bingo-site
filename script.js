@@ -171,7 +171,7 @@ const round2Questions = {
     9: "Ik ben de Nederlandse koning",
     10: "Ik ben een geel vierkant animatiefiguur die woont in een ananas",
     11: "Ik ben de hoogste berg ter wereld",
-    12: "Ik ben heb een relatie met iemand uit de mooiste stad van NL",
+    12: "Ik heb een relatie met iemand uit de mooiste stad van NL",
     13: "Ik ben een Nederlandse voetballer die speelde voor Real Madrid",
     14: "Ik ben een Nederlandse rapper die bekend werd met 'Ik Neem Je Mee'",
     15: "Ik ben het grootste land ter wereld",
@@ -202,7 +202,7 @@ const round2Questions = {
     40: "Ik ben de snelste landdier ter wereld",
     41: "Ik geloof in de WEF en de toekomst van AI",
     42: "Ik ben het kleinste land ter wereld",
-    43: "Ik ben een Nederlandse zanger die bekend werd met 'Dichterbij'",
+    43: "Ik ben een Nederlandse band die bekend werd met 'Dichterbij'",
     44: "Ik ben de oceaan tussen Europa en Amerika",
     45: "Ik ben een superheld die kan vliegen en van krypton komt",
     46: "Ik ben een Nederlandse voetbalclub uit Amsterdam",
@@ -595,6 +595,11 @@ function selectRound(roundNumber) {
     // Sync naar display scherm
     syncToDisplay();
     
+        // Zet audio sliders opnieuw zodat volume klopt
+        const musicSlider = document.getElementById('musicVolume');
+        if (musicSlider) setMusicVolume(musicSlider.value);
+        const effectsSlider = document.getElementById('effectsVolume');
+        if (effectsSlider) setEffectsVolume(effectsSlider.value);
     // Toon ronde start overlay
     showRondeStartOverlay(roundNumber);
     
