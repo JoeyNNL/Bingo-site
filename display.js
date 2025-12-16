@@ -5,6 +5,26 @@ let lastCelebrationState = 'false';
 let lastDisplayedNumber = '-';
 let lastDisplayedStatement = '';
 
+// Sneeuw Effect
+function createSnowflake() {
+    const snowflake = document.createElement('div');
+    snowflake.classList.add('snowflake');
+    snowflake.innerHTML = '❄';
+    snowflake.style.left = Math.random() * 100 + '%';
+    snowflake.style.fontSize = (Math.random() * 1.5 + 0.5) + 'em';
+    snowflake.style.animationDuration = (Math.random() * 10 + 10) + 's';
+    snowflake.style.opacity = Math.random();
+    
+    document.getElementById('snowContainer').appendChild(snowflake);
+    
+    setTimeout(() => {
+        snowflake.remove();
+    }, 20000);
+}
+
+// Genereer sneeuwvlokken
+setInterval(createSnowflake, 200);
+
 // Vliegende foto's configuratie
 const flyingImages = [
     'images/1.png',

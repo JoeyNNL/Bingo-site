@@ -1,56 +1,21 @@
 // Stellingen per ronde - pas deze aan naar jouw stellingen
 const statements = {
     1: {
-        1: "Wie heeft ooit iets stoms gedaan om indruk te maken",
-        2: "Wie is ooit betrapt op een leugen",
-        3: "Wie heeft een slechte gewoonte die ze niet kunnen afleren",
-        4: "Wie heeft ooit iets gestolen (hoe klein ook)",
-        5: "Wie is weleens wakker geworden op een vreemde plek",
-        6: "Wie heeft ooit iemand geblokkeerd en dat nooit uitgelegd",
-        7: "Wie heeft ooit iets gezegd wat ze meteen betreurden",
-        8: "Wie heeft een geheim dat niemand weet",
-        9: "Wie heeft ooit een crush gehad op iemand die ze niet mochten leuk vinden",
-        10: "Wie heeft ooit een dronken bericht gestuurd dat ze nu zouden verwijderen",
-        11: "Wie heeft ooit een vreemde taal geprobeerd te spreken en gefaald",
-        12: "Wie is ooit betrapt tijdens een gênant moment",
-        13: "Wie heeft ooit iemand genegeerd zonder reden",
-        14: "Wie heeft ooit gedaan alsof ze nuchter waren",
-        15: "Wie heeft ooit iets stiekem weggegooid dat niet van hen was",
-        16: "Wie heeft ooit een foute beslissing genomen op vakantie",
-        17: "Wie heeft ooit iemand jaloers proberen te maken",
-        18: "Wie heeft ooit iets gebroken op een feestje",
-        19: "Wie heeft ooit een crush gehad op iemand van werk of school",
-        20: "Wie heeft ooit iets verkeerd gestuurd naar de verkeerde persoon",
-        21: "Wie heeft ooit een maaltijd laten aanbranden",
-        22: "Wie heeft ooit gelogen om drama te vermijden",
-        23: "Wie heeft ooit iemand laten wachten zonder reden",
-        24: "Wie heeft ooit een gênante bijnaam gekregen",
-        25: "Wie heeft ooit iemand ontweken in het openbaar",
-        26: "Wie heeft ooit een vriendschap verwaarloosd",
-        27: "Wie heeft ooit een avond verpest met te veel drank",
-        28: "Wie heeft ooit iemand teleurgesteld en daar spijt van",
-        29: "Wie heeft ooit een fout geheim gehouden",
-        30: "Wie heeft ooit iets doms gekocht uit impuls",
-        31: "Wie heeft ooit een geheim verklapt zonder het te beseffen",
-        32: "Wie heeft ooit een compliment niet gemeend",
-        33: "Wie heeft ooit gedaan alsof ze iemand niet herkenden",
-        34: "Wie heeft ooit een plan afgezegd met een smoes",
-        35: "Wie heeft ooit iemand gebruikt voor aandacht",
-        36: "Wie heeft ooit gelogen tijdens een spelletje",
-        37: "Wie heeft ooit iets gedaan wat tegen hun principes inging",
-        38: "Wie heeft ooit iemand genegeerd in een groepsapp",
-        39: "Wie heeft ooit te veel gedeeld op social media",
-        40: "Wie heeft ooit spijt gehad van eerlijkheid",
-        41: "Wie heeft ooit iemand in deze groep beledigd (bewust of niet)",
-        42: "Wie heeft ooit een geheim verteld dat niet van hen was",
-        43: "Wie heeft ooit iets verdraaid om er beter uit te zien",
-        44: "Wie heeft ooit een ander de schuld gegeven van hun fout",
-        45: "Wie heeft ooit iets gedaan waar ze nu om kunnen lachen",
-        46: "Wie heeft ooit een gênante uitspraak gedaan in gezelschap",
-        47: "Wie heeft ooit iets vergeten wat belangrijk was",
-        48: "Wie heeft ooit een vreemde versierd voor de grap",
-        49: "Wie heeft ooit iets fout geïnterpreteerd en zich belachelijk gemaakt",
-        50: "Wie heeft ooit iemand onterecht beschuldigd"
+        1: "Nummer 1", 2: "Nummer 2", 3: "Nummer 3", 4: "Nummer 4", 5: "Nummer 5",
+        6: "Nummer 6", 7: "Nummer 7", 8: "Nummer 8", 9: "Nummer 9", 10: "Nummer 10",
+        11: "Nummer 11", 12: "Nummer 12", 13: "Nummer 13", 14: "Nummer 14", 15: "Nummer 15",
+        16: "Nummer 16", 17: "Nummer 17", 18: "Nummer 18", 19: "Nummer 19", 20: "Nummer 20",
+        21: "Nummer 21", 22: "Nummer 22", 23: "Nummer 23", 24: "Nummer 24", 25: "Nummer 25",
+        26: "Nummer 26", 27: "Nummer 27", 28: "Nummer 28", 29: "Nummer 29", 30: "Nummer 30",
+        31: "Nummer 31", 32: "Nummer 32", 33: "Nummer 33", 34: "Nummer 34", 35: "Nummer 35",
+        36: "Nummer 36", 37: "Nummer 37", 38: "Nummer 38", 39: "Nummer 39", 40: "Nummer 40",
+        41: "Nummer 41", 42: "Nummer 42", 43: "Nummer 43", 44: "Nummer 44", 45: "Nummer 45",
+        46: "Nummer 46", 47: "Nummer 47", 48: "Nummer 48", 49: "Nummer 49", 50: "Nummer 50",
+        51: "Nummer 51", 52: "Nummer 52", 53: "Nummer 53", 54: "Nummer 54", 55: "Nummer 55",
+        56: "Nummer 56", 57: "Nummer 57", 58: "Nummer 58", 59: "Nummer 59", 60: "Nummer 60",
+        61: "Nummer 61", 62: "Nummer 62", 63: "Nummer 63", 64: "Nummer 64", 65: "Nummer 65",
+        66: "Nummer 66", 67: "Nummer 67", 68: "Nummer 68", 69: "Nummer 69", 70: "Nummer 70",
+        71: "Nummer 71", 72: "Nummer 72", 73: "Nummer 73", 74: "Nummer 74", 75: "Nummer 75"
     },
     2: {
         1: "Becky",
@@ -102,59 +67,49 @@ const statements = {
         47: "Yen",
         48: "Joel",
         49: "Vakansie Vincens",
-        50: "GUYON!"
+        50: "GUYON!",
+        51: "Kerstman",
+        52: "Rendier Rudolf",
+        53: "Kerstboom",
+        54: "Sneeuwpop",
+        55: "Kerstsok",
+        56: "Jingle Bells",
+        57: "Bethlehem",
+        58: "Engel",
+        59: "Adventkalender",
+        60: "Kerstster",
+        61: "Kerststal",
+        62: "Drie Wijzen",
+        63: "Mistletoe",
+        64: "Kerstdiner",
+        65: "Sinterklaas",
+        66: "Gingerbread",
+        67: "Hulst",
+        68: "Kerstkrans",
+        69: "Kerstvakantie",
+        70: "Glühwein",
+        71: "Maretak",
+        72: "Sneeuwvlok",
+        73: "Kerstmarkt",
+        74: "Geschenk",
+        75: "Kerstkaart"
     },
     3: {
-        1: "Martin Garrix - Animals",
-        2: "Jan Smit - Tranquilo",
-        3: "Doe Maar - Smoorverliefd",
-        4: "Kygo & Conrad Sewell - Firestone",
-        5: "Avicii - Levels",
-        6: "VIZE, Joker Bra & Leony - Paradise",
-        7: "André Hazes Jr. - Leef",
-        8: "Ali B, The Partysquad & Yes-R - Rampeneren",
-        9: "Ronnie Flex & Frenna - Energie",
-        10: "K3 - Oya Lélé",
-        11: "Parla & Pardoux - Liberté",
-        12: "George Baker Selection - Una Paloma Blanca",
-        13: "Guns N' Roses - Sweet Child O' Mine",
-        14: "Het Goede Doel - Belgie",
-        15: "Klapperkebab & Kale Toeter - Sinterklaasjournaal Techno",
-        16: "De Jeugd Van Tegenwoordig - Sterrenstof",
-        17: "Marco Borsato - Rood",
-        18: "Frenna & Shallipopi - ZAAZAA",
-        19: "Andre Hazes - Bloed, Zweet En Tranen",
-        20: "Kraantje Pappie - Best Wel Een Ding",
-        21: "David Guetta ft. Nicki Minaj, Bebe Rexha & Afrojack - Hey Mama",
-        22: "B-Brave & Sevn Alias - One Night Stand",
-        23: "Sam Smith - Stay With Me",
-        24: "Goldband - Noodgeval",
-        25: "The Opposites - Slaap",
-        26: "Michael Jackson - Dirty Diana",
-        27: "Sade - Smooth Operator",
-        28: "Imagine Dragons - Demons",
-        29: "Martin Solveig & Dragonette - Hello",
-        30: "Avicii - Waiting For Love",
-        31: "Guns N' Roses - Paradise City",
-        32: "ABBA - Gimme! Gimme! Gimme!",
-        33: "Eminem - Without Me",
-        34: "Ed Sheeran - Shivers",
-        35: "André van Duin - Het Pizzalied",
-        36: "Paul de Leeuw - Vlieg Met Me Mee",
-        37: "Suzan & Freek - Als Het Avond Is",
-        38: "Thijs Boontjes - Deze Nacht",
-        39: "Dio & Sef - Tijdmachine",
-        40: "Anouk - Girl",
-        41: "Porter Robinson & Madeon - Shelter",
-        42: "Martin Garrix, Sem Vox & Jaimes - Gravity",
-        43: "Maroon 5 - Maps",
-        44: "HAVEN. - I Run",
-        45: "A Touch Of Class - Around the World",
-        46: "Elvis Presley - Return to Sender",
-        47: "Cartoon, Jéja & Daniel Levi - On & On",
-        48: "Joost - Europapa",
-        49: "Eminem - Houdini",
-        50: "Michael Jackson - Liberian Girl"
+        1: "Nummer 1 - Artiest", 2: "Nummer 2 - Artiest", 3: "Nummer 3 - Artiest", 4: "Nummer 4 - Artiest", 5: "Nummer 5 - Artiest",
+        6: "Nummer 6 - Artiest", 7: "Nummer 7 - Artiest", 8: "Nummer 8 - Artiest", 9: "Nummer 9 - Artiest", 10: "Nummer 10 - Artiest",
+        11: "Nummer 11 - Artiest", 12: "Nummer 12 - Artiest", 13: "Nummer 13 - Artiest", 14: "Nummer 14 - Artiest", 15: "Nummer 15 - Artiest",
+        16: "Nummer 16 - Artiest", 17: "Nummer 17 - Artiest", 18: "Nummer 18 - Artiest", 19: "Nummer 19 - Artiest", 20: "Nummer 20 - Artiest",
+        21: "Nummer 21 - Artiest", 22: "Nummer 22 - Artiest", 23: "Nummer 23 - Artiest", 24: "Nummer 24 - Artiest", 25: "Nummer 25 - Artiest",
+        26: "Nummer 26 - Artiest", 27: "Nummer 27 - Artiest", 28: "Nummer 28 - Artiest", 29: "Nummer 29 - Artiest", 30: "Nummer 30 - Artiest",
+        31: "Nummer 31 - Artiest", 32: "Nummer 32 - Artiest", 33: "Nummer 33 - Artiest", 34: "Nummer 34 - Artiest", 35: "Nummer 35 - Artiest",
+        36: "Nummer 36 - Artiest", 37: "Nummer 37 - Artiest", 38: "Nummer 38 - Artiest", 39: "Nummer 39 - Artiest", 40: "Nummer 40 - Artiest",
+        41: "Nummer 41 - Artiest", 42: "Nummer 42 - Artiest", 43: "Nummer 43 - Artiest", 44: "Nummer 44 - Artiest", 45: "Nummer 45 - Artiest",
+        46: "Nummer 46 - Artiest", 47: "Nummer 47 - Artiest", 48: "Nummer 48 - Artiest", 49: "Nummer 49 - Artiest", 50: "Nummer 50 - Artiest",
+        51: "Nummer 51 - Artiest", 52: "Nummer 52 - Artiest", 53: "Nummer 53 - Artiest", 54: "Nummer 54 - Artiest", 55: "Nummer 55 - Artiest",
+        56: "Nummer 56 - Artiest", 57: "Nummer 57 - Artiest", 58: "Nummer 58 - Artiest", 59: "Nummer 59 - Artiest", 60: "Nummer 60 - Artiest",
+        61: "Nummer 61 - Artiest", 62: "Nummer 62 - Artiest", 63: "Nummer 63 - Artiest", 64: "Nummer 64 - Artiest", 65: "Nummer 65 - Artiest",
+        66: "Nummer 66 - Artiest", 67: "Nummer 67 - Artiest", 68: "Nummer 68 - Artiest", 69: "Nummer 69 - Artiest", 70: "Nummer 70 - Artiest",
+        71: "Nummer 71 - Artiest", 72: "Nummer 72 - Artiest", 73: "Nummer 73 - Artiest", 74: "Nummer 74 - Artiest", 75: "Nummer 75 - Artiest"
     }
 };
 
@@ -209,7 +164,32 @@ const round2Questions = {
     47: "Ik ben de munteenheid van Japan",
     48: "Wie haat er Marvel films?",
     49: "Mag ik èèn patat mayo?",
-    50: "Ik hou van blauwe oog schaduw"
+    50: "Ik hou van blauwe oog schaduw",
+    51: "Ik ben rood-wit gekleed en breng cadeautjes met kerst",
+    52: "Ik ben een rendier met een rode neus die de slee trekt",
+    53: "Ik sta in huis versierd met lichtjes en ballen tijdens kerst",
+    54: "Ik ben gemaakt van sneeuw met een wortel als neus",
+    55: "Ik hang aan de schoorsteenmantel voor kleine cadeautjes",
+    56: "Ik ben een bekend kerstliedje over belletjes in de sneeuw",
+    57: "Ik ben de geboorteplaats van Jezus",
+    58: "Ik vlieg in de lucht en verkondigde het goede nieuws",
+    59: "Ik ben een kalender waar je elke dag in december een vakje opent",
+    60: "Ik ben de ster die bovenop de kerstboom staat",
+    61: "Ik ben een kleine tempel met Maria, Jozef en het kindje Jezus",
+    62: "Wij zijn drie koningen die geschenken brachten aan Jezus",
+    63: "Ik ben een plant waar je onder moet zoenen met kerst",
+    64: "Ik ben de feestelijke maaltijd op kerstavond",
+    65: "Ik ben een goedheiljman die in december cadeautjes brengt",
+    66: "Ik ben een knapperig koekje vaak in de vorm van een mannetje",
+    67: "Ik ben een groene plant met rode bessen gebruikt bij kerstversiering",
+    68: "Ik hang op de voordeur als welkom tijdens de feestdagen",
+    69: "Ik ben de vrije dagen rond kerst en oud & nieuw",
+    70: "Ik ben een warme kruidige wijn die gedronken wordt op kerstmarkten",
+    71: "Ik ben een plant met witte bessen waar je onder moet zoenen",
+    72: "Ik ben een uniek ijskristal dat valt tijdens een witte kerst",
+    73: "Ik ben een gezellige markt met kraampjes tijdens de kersttijd",
+    74: "Ik word uitgepakt met kerst en zit vaak mooi ingepakt",
+    75: "Ik ben een kaart met kerstwensen die je verstuurt"
 };
 
 // Audio configuratie
@@ -217,10 +197,10 @@ const audioConfig = {
     backgroundMusic: {
         folder: 'sounds/background/',
         files: [
-            'Wii Party Soundtrack 016 - Bingo [9cJGHyxwftc].mp3'
+            'fireplace-loop-original-noise-178209.mp3'
         ],
         currentIndex: 0,
-        volume: 0.1
+        volume: 0.5
     },
     effects: {
         folder: 'sounds/effects/',
@@ -528,24 +508,48 @@ function replayLastEffect() {
         });
 }
 
-// Maak geluid (Web Audio API fallback omdat we geen externe bestanden hebben)
+// Maak kerst belletje geluid (Web Audio API fallback)
 function playDingSound() {
     try {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
         
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
+        // Random variatie in tonen voor meer diversiteit
+        const patterns = [
+            [1568, 1318], // G6, E6 (hoog naar laag)
+            [1318, 1568], // E6, G6 (laag naar hoog)
+            [1760, 1568], // A6, G6
+            [1568, 1480], // G6, F#6
+            [1397, 1568], // F6, G6
+            [1976, 1568]  // B6, G6
+        ];
         
-        oscillator.frequency.value = 800;
-        oscillator.type = 'sine';
+        const pattern = patterns[Math.floor(Math.random() * patterns.length)];
         
-        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+        // Eerste belletje toon
+        const osc1 = audioContext.createOscillator();
+        const gain1 = audioContext.createGain();
+        osc1.connect(gain1);
+        gain1.connect(audioContext.destination);
+        osc1.frequency.value = pattern[0];
+        osc1.type = 'sine';
+        gain1.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gain1.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+        osc1.start(audioContext.currentTime);
+        osc1.stop(audioContext.currentTime + 0.3);
         
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.5);
+        // Tweede belletje toon
+        const osc2 = audioContext.createOscillator();
+        const gain2 = audioContext.createGain();
+        osc2.connect(gain2);
+        gain2.connect(audioContext.destination);
+        osc2.frequency.value = pattern[1];
+        osc2.type = 'sine';
+        gain2.gain.setValueAtTime(0, audioContext.currentTime + 0.15);
+        gain2.gain.setValueAtTime(0.3, audioContext.currentTime + 0.15);
+        gain2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+        osc2.start(audioContext.currentTime + 0.15);
+        osc2.stop(audioContext.currentTime + 0.5);
+        
     } catch (e) {
         console.log('Audio niet ondersteund');
     }
@@ -625,7 +629,7 @@ function showRondeStartOverlay(roundNumber) {
     // Bepaal ronde naam voor display
     let roundName;
     if (roundNumber === 1) {
-        roundName = 'Ronde 1 - Stellingen';
+        roundName = 'Ronde 1 - Getallen';
     } else if (roundNumber === 2) {
         roundName = 'Ronde 2 - Wie of Wat Ben Ik?';
     } else if (roundNumber === 3) {
@@ -1413,7 +1417,7 @@ function syncToDisplay() {
         if (currentRound) {
             let roundName;
             if (currentRound === 1) {
-                roundName = 'Ronde 1 - Stellingen';
+                roundName = 'Ronde 1 - Getallen';
             } else if (currentRound === 2) {
                 roundName = 'Ronde 2 - Wie of Wat Ben Ik?';
             } else if (currentRound === 3) {
