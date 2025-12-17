@@ -95,21 +95,81 @@ const statements = {
         75: "Kerstkaart"
     },
     3: {
-        1: "Nummer 1 - Artiest", 2: "Nummer 2 - Artiest", 3: "Nummer 3 - Artiest", 4: "Nummer 4 - Artiest", 5: "Nummer 5 - Artiest",
-        6: "Nummer 6 - Artiest", 7: "Nummer 7 - Artiest", 8: "Nummer 8 - Artiest", 9: "Nummer 9 - Artiest", 10: "Nummer 10 - Artiest",
-        11: "Nummer 11 - Artiest", 12: "Nummer 12 - Artiest", 13: "Nummer 13 - Artiest", 14: "Nummer 14 - Artiest", 15: "Nummer 15 - Artiest",
-        16: "Nummer 16 - Artiest", 17: "Nummer 17 - Artiest", 18: "Nummer 18 - Artiest", 19: "Nummer 19 - Artiest", 20: "Nummer 20 - Artiest",
-        21: "Nummer 21 - Artiest", 22: "Nummer 22 - Artiest", 23: "Nummer 23 - Artiest", 24: "Nummer 24 - Artiest", 25: "Nummer 25 - Artiest",
-        26: "Nummer 26 - Artiest", 27: "Nummer 27 - Artiest", 28: "Nummer 28 - Artiest", 29: "Nummer 29 - Artiest", 30: "Nummer 30 - Artiest",
-        31: "Nummer 31 - Artiest", 32: "Nummer 32 - Artiest", 33: "Nummer 33 - Artiest", 34: "Nummer 34 - Artiest", 35: "Nummer 35 - Artiest",
-        36: "Nummer 36 - Artiest", 37: "Nummer 37 - Artiest", 38: "Nummer 38 - Artiest", 39: "Nummer 39 - Artiest", 40: "Nummer 40 - Artiest",
-        41: "Nummer 41 - Artiest", 42: "Nummer 42 - Artiest", 43: "Nummer 43 - Artiest", 44: "Nummer 44 - Artiest", 45: "Nummer 45 - Artiest",
-        46: "Nummer 46 - Artiest", 47: "Nummer 47 - Artiest", 48: "Nummer 48 - Artiest", 49: "Nummer 49 - Artiest", 50: "Nummer 50 - Artiest",
-        51: "Nummer 51 - Artiest", 52: "Nummer 52 - Artiest", 53: "Nummer 53 - Artiest", 54: "Nummer 54 - Artiest", 55: "Nummer 55 - Artiest",
-        56: "Nummer 56 - Artiest", 57: "Nummer 57 - Artiest", 58: "Nummer 58 - Artiest", 59: "Nummer 59 - Artiest", 60: "Nummer 60 - Artiest",
-        61: "Nummer 61 - Artiest", 62: "Nummer 62 - Artiest", 63: "Nummer 63 - Artiest", 64: "Nummer 64 - Artiest", 65: "Nummer 65 - Artiest",
-        66: "Nummer 66 - Artiest", 67: "Nummer 67 - Artiest", 68: "Nummer 68 - Artiest", 69: "Nummer 69 - Artiest", 70: "Nummer 70 - Artiest",
-        71: "Nummer 71 - Artiest", 72: "Nummer 72 - Artiest", 73: "Nummer 73 - Artiest", 74: "Nummer 74 - Artiest", 75: "Nummer 75 - Artiest"
+        1: "Danse Macabre, de laatste Symfonie - Camille Saint-Saëns",
+        2: "Belle Hélène - Doe Maar",
+        3: "Rood - Marco Borsato",
+        4: "Het Pizzalied - André van Duin",
+        5: "Vlieg Met Me Mee - Paul de Leeuw",
+        6: "Deze Nacht (All Night Long) - Thijs Boontjes",
+        7: "Liberian Girl - Michael Jackson",
+        8: "Europapa - Joost",
+        9: "Als Het Avond Is - Suzan & Freek",
+        10: "Gimme! Gimme! Gimme! (A Man After Midnight) - ABBA",
+        11: "Demons - Imagine Dragons",
+        12: "Bloed, Zweet En Tranen - Andre Hazes",
+        13: "All I Want for Christmas Is You - Mariah Carey",
+        14: "Gold - Spandau Ballet",
+        15: "Sweet Caroline - Christoff",
+        16: "Heb Je Even Voor Mij - Frans Bauer",
+        17: "Heaven - Bryan Adams",
+        18: "Ik Heb Een Toeter Op M'n Waterscooter - Gebroeders Ko",
+        19: "Zij Weet Het - Tino Martin",
+        20: "Toppertje! - Guillermo & Tropical Danny",
+        21: "YMCA - Village People",
+        22: "Carnaval Festival - Efteling",
+        23: "Per Spoor (Kedeng Kedeng) - Guus Meeuwis & Vagant",
+        24: "Belgie ... (Is Er Leven Op Pluto ...) - Het Goede Doel",
+        25: "Ik Voel Me Zo Verdomd Alleen - Danny De Munk",
+        26: "Maak Me Gek - Gerard Joling",
+        27: "Summer Of '69 - Bryan Adams",
+        28: "Harder Dan Ik Hebben Kan - BLØF",
+        29: "Ich bin wie du - Marianne Rosenberg",
+        30: "10.000 Luchtballonnen - K3",
+        31: "99 Luftballons - Nena",
+        32: "Het Kuikentje Piep - Pulcino Pio",
+        33: "Rainbow In The Sky - Paul Elstak",
+        34: "Leef - André Hazes Jr.",
+        35: "Mexico - Zangeres Zonder Naam",
+        36: "La Bomba - King Africa",
+        37: "Greased Lightnin' - John Travolta",
+        38: "Que Si, Que No - Jody Bernal",
+        39: "Wake Me Up Before You Go-Go - Wham!",
+        40: "Eye of the Tiger - Survivor",
+        41: "Atje Voor De Sfeer - Rene Karst",
+        42: "Links Rechts - Snollebollekes",
+        43: "Red Red Wine - UB40",
+        44: "Ik Neem Je Mee - Gers Pardoel",
+        45: "Dynamite - Taio Cruz",
+        46: "Baby - Justin Bieber & Ludacris",
+        47: "Why Tell Me Why - Anita Meyer",
+        48: "Smooth Operator - Sade",
+        49: "Hello - Martin Solveig & Dragonette",
+        50: "Starships - Nicki Minaj",
+        51: "Diamonds - Rihanna",
+        52: "Halo - Beyoncé",
+        53: "Single Ladies (Put a Ring on It) - Beyoncé",
+        54: "Set Fire to the Rain - Adele",
+        55: "Hotel California - Eagles",
+        56: "Roller Coaster - Danny Vera",
+        57: "Bad Romance - Lady Gaga",
+        58: "Candy - Robbie Williams",
+        59: "Sterrenstof - De Jeugd Van Tegenwoordig",
+        60: "Rampeneren - Ali B, The Partysquad & Yes-R",
+        61: "Uit Elkaar - Yes-R",
+        62: "Kali - Django Wagner",
+        63: "Mon amour - BZN",
+        64: "Banger Hart - Rob De Nijs",
+        65: "Sinds 1 Dag Of 2 (32 Jaar) - Doe Maar",
+        66: "Smooth Criminal - Michael Jackson",
+        67: "Yellow Submarine - The Beatles",
+        68: "Mambo No. 5 (a Little Bit of...) - Lou Bega",
+        69: "De Vlieger - Andre Hazes",
+        70: "Ik Ga Zwemmen - Mart Hoogkamer",
+        71: "Spetter Pieter Pater - Herman van Veen",
+        72: "Pak Maar M'n Hand - Nick & Simon",
+        73: "Als De Morgen Is Gekomen - Jan Smit",
+        74: "Pump Up The Jam - Technotronic",
+        75: "Cold as Ice - Foreigner"
     }
 };
 
@@ -1227,7 +1287,11 @@ function downloadStatementsPDF() {
             pdf.setFontSize(10);
             // Houd bij op welke pagina's inhoud staat
             const usedPages = new Set();
-            for (let num = 1; num <= 50; num++) {
+            
+            // Bepaal het aantal items voor deze ronde
+            const itemCount = Object.keys(roundStatements).length;
+            
+            for (let num = 1; num <= itemCount; num++) {
                 // Nummer
                 pdf.setFont(undefined, 'bold');
                 pdf.text(num.toString(), margin + 2, yPosition);
@@ -1255,7 +1319,7 @@ function downloadStatementsPDF() {
                     yPosition += Math.max(lineHeight, lines.length * lineHeight);
                 }
                 // Voeg een nieuwe pagina toe als er te weinig ruimte is voor de volgende stelling
-                if (yPosition > 270 && num < 50) {
+                if (yPosition > 270 && num < itemCount) {
                     pdf.addPage();
                     yPosition = 20;
                 }

@@ -15,23 +15,73 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #c41e3a 0%, #165b33 50%, #c41e3a 100%);
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '❄️ ⛄ 🎄 ❄️ 🎁 ❄️ 🎄 ⛄ ❄️';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 2em;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            z-index: 1;
+            animation: snowDrift 20s linear infinite;
+        }
+
+        @keyframes snowDrift {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: white;
+            margin-top: 60px;
+            background: linear-gradient(to bottom, #fff 0%, #f8f8f8 100%);
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 3px solid #c41e3a;
+            position: relative;
+        }
+
+        .container::before,
+        .container::after {
+            content: '🎄';
+            position: absolute;
+            font-size: 3em;
+            top: -20px;
+        }
+
+        .container::before {
+            left: 20px;
+        }
+
+        .container::after {
+            right: 20px;
         }
 
         h1 {
             text-align: center;
-            color: #667eea;
+            color: #c41e3a;
             margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        h1::before {
+            content: '🎅 ';
+        }
+
+        h1::after {
+            content: ' 🎅';
         }
 
         .controls {
@@ -47,12 +97,12 @@
             align-items: center;
             gap: 10px;
             font-weight: bold;
-            color: #764ba2;
+            color: #165b33;
         }
 
         .controls input, .controls select {
             padding: 8px 12px;
-            border: 2px solid #667eea;
+            border: 2px solid #c41e3a;
             border-radius: 8px;
             font-size: 1em;
         }
@@ -68,32 +118,35 @@
         }
 
         .generate-btn {
-            background: #667eea;
+            background: linear-gradient(135deg, #c41e3a 0%, #a01729 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(196, 30, 58, 0.3);
         }
 
         .generate-btn:hover {
-            background: #5568d3;
+            background: linear-gradient(135deg, #a01729 0%, #c41e3a 100%);
             transform: translateY(-2px);
         }
 
         .print-btn {
-            background: #2ecc71;
+            background: linear-gradient(135deg, #165b33 0%, #0d3d22 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(22, 91, 51, 0.3);
         }
 
         .print-btn:hover {
-            background: #27ae60;
+            background: linear-gradient(135deg, #0d3d22 0%, #165b33 100%);
             transform: translateY(-2px);
         }
 
         .download-btn {
-            background: #e74c3c;
+            background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
         }
 
         .download-btn:hover {
-            background: #c0392b;
+            background: linear-gradient(135deg, #b8941f 0%, #d4af37 100%);
             transform: translateY(-2px);
         }
 
@@ -105,19 +158,31 @@
         }
 
         .bingo-card {
-            border: 3px solid #667eea;
+            border: 3px solid #c41e3a;
             border-radius: 15px;
             padding: 20px;
-            background: white;
+            background: linear-gradient(to bottom, #ffffff 0%, #fff5f5 100%);
             page-break-inside: avoid;
+            box-shadow: 0 4px 15px rgba(196, 30, 58, 0.2);
+            position: relative;
+        }
+
+        .bingo-card::before {
+            content: '❄️';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 1.5em;
+            opacity: 0.3;
         }
 
         .card-title {
             text-align: center;
             font-size: 1.5em;
             font-weight: bold;
-            color: #667eea;
+            color: #c41e3a;
             margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .card-grid {
@@ -129,7 +194,7 @@
 
         .card-cell {
             aspect-ratio: 1;
-            border: 2px solid #667eea;
+            border: 2px solid #c41e3a;
             border-radius: 8px;
             display: flex;
             flex-direction: column;
@@ -139,6 +204,7 @@
             position: relative;
             overflow: hidden;
             box-sizing: border-box;
+            background: linear-gradient(135deg, #fff 0%, #fffafa 100%);
         }
 
         .music-text {
@@ -164,6 +230,16 @@
             margin-bottom: 5px;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
+            transition: all 0.3s ease;
+        }
+
+        /* Grotere ballen wanneer notitie lijnen verborgen zijn */
+        .card-note.hidden ~ .card-number,
+        .card-cell:has(.card-note.hidden) .card-number {
+            font-size: 2em;
+            width: 55px;
+            height: 55px;
+            margin-bottom: 0;
         }
 
         .card-note {
@@ -327,56 +403,21 @@
         // Stellingen per ronde (kopie voor bingokaarten)
         const statements = {
             1: {
-                1: "Wie heeft ooit iets stoms gedaan om indruk te maken",
-                2: "Wie is ooit betrapt op een leugen",
-                3: "Wie heeft een slechte gewoonte die ze niet kunnen afleren",
-                4: "Wie heeft ooit iets gestolen (hoe klein ook)",
-                5: "Wie is weleens wakker geworden op een vreemde plek",
-                6: "Wie heeft ooit iemand geblokkeerd en dat nooit uitgelegd",
-                7: "Wie heeft ooit iets gezegd wat ze meteen betreurden",
-                8: "Wie heeft een geheim dat niemand weet",
-                9: "Wie heeft ooit een crush gehad op iemand die ze niet mochten leuk vinden",
-                10: "Wie heeft ooit een dronken bericht gestuurd dat ze nu zouden verwijderen",
-                11: "Wie heeft ooit een roddel verspreid",
-                12: "Wie is ooit betrapt tijdens een gênant moment",
-                13: "Wie heeft ooit iemand genegeerd zonder reden",
-                14: "Wie heeft ooit gedaan alsof ze nuchter waren",
-                15: "Wie heeft ooit iets stiekem weggegooid dat niet van hen was",
-                16: "Wie heeft ooit een foute beslissing genomen op vakantie",
-                17: "Wie heeft ooit iemand jaloers proberen te maken",
-                18: "Wie heeft ooit iets gebroken op een feestje",
-                19: "Wie heeft ooit een crush gehad op iemand van werk of school",
-                20: "Wie heeft ooit iets verkeerd gestuurd naar de verkeerde persoon",
-                21: "Wie heeft ooit een maaltijd laten aanbranden?",
-                22: "Wie heeft ooit gelogen om drama te vermijden",
-                23: "Wie heeft ooit iemand laten wachten zonder reden",
-                24: "Wie heeft ooit een gênante bijnaam gekregen",
-                25: "Wie heeft ooit iemand ontweken in het openbaar",
-                26: "Wie heeft ooit een vriendschap verwaarloosd",
-                27: "Wie heeft ooit een avond verpest met te veel drank",
-                28: "Wie heeft ooit iemand teleurgesteld en daar spijt van",
-                29: "Wie heeft ooit een fout geheim gehouden",
-                30: "Wie heeft ooit iets doms gekocht uit impuls",
-                31: "Wie heeft ooit een geheim verklapt zonder het te beseffen?",
-                32: "Wie heeft ooit een compliment niet gemeend",
-                33: "Wie heeft ooit gedaan alsof ze iemand niet herkenden",
-                34: "Wie heeft ooit een plan afgezegd met een smoes",
-                35: "Wie heeft ooit iemand gebruikt voor aandacht",
-                36: "Wie heeft ooit gelogen tijdens een spelletje",
-                37: "Wie heeft ooit iets gedaan wat tegen hun principes inging",
-                38: "Wie heeft ooit iemand genegeerd in een groepsapp",
-                39: "Wie heeft ooit te veel gedeeld op social media",
-                40: "Wie heeft ooit spijt gehad van eerlijkheid",
-                41: "Wie heeft ooit iemand in deze groep beledigd (bewust of niet)",
-                42: "Wie heeft ooit een geheim verteld dat niet van hen was",
-                43: "Wie heeft ooit iets verdraaid om er beter uit te zien",
-                44: "Wie heeft ooit een ander de schuld gegeven van hun fout",
-                45: "Wie heeft ooit iets gedaan waar ze nu om kunnen lachen",
-                46: "Wie heeft ooit een gênante uitspraak gedaan in gezelschap",
-                47: "Wie heeft ooit iets vergeten wat belangrijk was",
-                48: "Wie heeft ooit een vreemde versierd voor de grap",
-                49: "Wie heeft ooit iets fout geïnterpreteerd en zich belachelijk gemaakt",
-                50: "Wie heeft ooit iemand onterecht beschuldigd"
+                1: "Nummer 1", 2: "Nummer 2", 3: "Nummer 3", 4: "Nummer 4", 5: "Nummer 5",
+                6: "Nummer 6", 7: "Nummer 7", 8: "Nummer 8", 9: "Nummer 9", 10: "Nummer 10",
+                11: "Nummer 11", 12: "Nummer 12", 13: "Nummer 13", 14: "Nummer 14", 15: "Nummer 15",
+                16: "Nummer 16", 17: "Nummer 17", 18: "Nummer 18", 19: "Nummer 19", 20: "Nummer 20",
+                21: "Nummer 21", 22: "Nummer 22", 23: "Nummer 23", 24: "Nummer 24", 25: "Nummer 25",
+                26: "Nummer 26", 27: "Nummer 27", 28: "Nummer 28", 29: "Nummer 29", 30: "Nummer 30",
+                31: "Nummer 31", 32: "Nummer 32", 33: "Nummer 33", 34: "Nummer 34", 35: "Nummer 35",
+                36: "Nummer 36", 37: "Nummer 37", 38: "Nummer 38", 39: "Nummer 39", 40: "Nummer 40",
+                41: "Nummer 41", 42: "Nummer 42", 43: "Nummer 43", 44: "Nummer 44", 45: "Nummer 45",
+                46: "Nummer 46", 47: "Nummer 47", 48: "Nummer 48", 49: "Nummer 49", 50: "Nummer 50",
+                51: "Nummer 51", 52: "Nummer 52", 53: "Nummer 53", 54: "Nummer 54", 55: "Nummer 55",
+                56: "Nummer 56", 57: "Nummer 57", 58: "Nummer 58", 59: "Nummer 59", 60: "Nummer 60",
+                61: "Nummer 61", 62: "Nummer 62", 63: "Nummer 63", 64: "Nummer 64", 65: "Nummer 65",
+                66: "Nummer 66", 67: "Nummer 67", 68: "Nummer 68", 69: "Nummer 69", 70: "Nummer 70",
+                71: "Nummer 71", 72: "Nummer 72", 73: "Nummer 73", 74: "Nummer 74", 75: "Nummer 75"
             },
             2: {
                 1: "Becky",
@@ -428,85 +469,135 @@
                 47: "Yen",
                 48: "Joel",
                 49: "Vakansie Vincens",
-                50: "GUYON!"
+                50: "GUYON!",
+                51: "Kerstman",
+                52: "Rendier Rudolf",
+                53: "Kerstboom",
+                54: "Sneeuwpop",
+                55: "Kerstsok",
+                56: "Jingle Bells",
+                57: "Bethlehem",
+                58: "Engel",
+                59: "Adventkalender",
+                60: "Kerstster",
+                61: "Kerststal",
+                62: "Drie Wijzen",
+                63: "Mistletoe",
+                64: "Kerstdiner",
+                65: "Sinterklaas",
+                66: "Gingerbread",
+                67: "Hulst",
+                68: "Kerstkrans",
+                69: "Kerstvakantie",
+                70: "Glühwein",
+                71: "Maretak",
+                72: "Sneeuwvlok",
+                73: "Kerstmarkt",
+                74: "Geschenk",
+                75: "Kerstkaart"
             },
             3: {
-                1: "Martin Garrix - Animals",
-                2: "Jan Smit - Tranquilo",
-                3: "Doe Maar - Smoorverliefd",
-                4: "Kygo & Conrad Sewell - Firestone",
-                5: "Avicii - Levels",
-                6: "VIZE, Joker Bra & Leony - Paradise",
-                7: "André Hazes Jr. - Leef",
-                8: "Ali B, The Partysquad & Yes-R - Rampeneren",
-                9: "Ronnie Flex & Frenna - Energie",
-                10: "K3 - Oya Lélé",
-                11: "Parla & Pardoux - Liberté",
-                12: "George Baker Selection - Una Paloma Blanca",
-                13: "Guns N' Roses - Sweet Child O' Mine",
-                14: "Het Goede Doel - Belgie",
-                15: "Klapperkebab & Kale Toeter - Sinterklaasjournaal Techno",
-                16: "De Jeugd Van Tegenwoordig - Sterrenstof",
-                17: "Marco Borsato - Rood",
-                18: "Frenna & Shallipopi - ZAAZAA",
-                19: "Andre Hazes - Bloed, Zweet En Tranen",
-                20: "Kraantje Pappie - Best Wel Een Ding",
-                21: "David Guetta ft. Nicki Minaj, Bebe Rexha & Afrojack - Hey Mama",
-                22: "B-Brave & Sevn Alias - One Night Stand",
-                23: "Sam Smith - Stay With Me",
-                24: "Goldband - Noodgeval",
-                25: "The Opposites - Slaap",
-                26: "Michael Jackson - Dirty Diana",
-                27: "Sade - Smooth Operator",
-                28: "Imagine Dragons - Demons",
-                29: "Martin Solveig & Dragonette - Hello",
-                30: "Avicii - Waiting For Love",
-                31: "Guns N' Roses - Paradise City",
-                32: "ABBA - Gimme! Gimme! Gimme!",
-                33: "Eminem - Without Me",
-                34: "Ed Sheeran - Shivers",
-                35: "André van Duin - Het Pizzalied",
-                36: "Paul de Leeuw - Vlieg Met Me Mee",
-                37: "Suzan & Freek - Als Het Avond Is",
-                38: "Thijs Boontjes - Deze Nacht",
-                39: "Dio & Sef - Tijdmachine",
-                40: "Anouk - Girl",
-                41: "Porter Robinson & Madeon - Shelter",
-                42: "Martin Garrix, Sem Vox & Jaimes - Gravity",
-                43: "Maroon 5 - Maps",
-                44: "HAVEN. - I Run",
-                45: "A Touch Of Class - Around the World",
-                46: "Elvis Presley - Return to Sender",
-                47: "Cartoon, Jéja & Daniel Levi - On & On",
-                48: "Joost - Europapa",
-                49: "Eminem - Houdini",
-                50: "Michael Jackson - Liberian Girl"
+                1: "Danse Macabre, de laatste Symfonie - Camille Saint-Saëns",
+                2: "Belle Hélène - Doe Maar",
+                3: "Rood - Marco Borsato",
+                4: "Het Pizzalied - André van Duin",
+                5: "Vlieg Met Me Mee - Paul de Leeuw",
+                6: "Deze Nacht (All Night Long) - Thijs Boontjes",
+                7: "Liberian Girl - Michael Jackson",
+                8: "Europapa - Joost",
+                9: "Als Het Avond Is - Suzan & Freek",
+                10: "Gimme! Gimme! Gimme! (A Man After Midnight) - ABBA",
+                11: "Demons - Imagine Dragons",
+                12: "Bloed, Zweet En Tranen - Andre Hazes",
+                13: "All I Want for Christmas Is You - Mariah Carey",
+                14: "Gold - Spandau Ballet",
+                15: "Sweet Caroline - Christoff",
+                16: "Heb Je Even Voor Mij - Frans Bauer",
+                17: "Heaven - Bryan Adams",
+                18: "Ik Heb Een Toeter Op M'n Waterscooter - Gebroeders Ko",
+                19: "Zij Weet Het - Tino Martin",
+                20: "Toppertje! - Guillermo & Tropical Danny",
+                21: "YMCA - Village People",
+                22: "Carnaval Festival - Efteling",
+                23: "Per Spoor (Kedeng Kedeng) - Guus Meeuwis & Vagant",
+                24: "Belgie ... (Is Er Leven Op Pluto ...) - Het Goede Doel",
+                25: "Ik Voel Me Zo Verdomd Alleen - Danny De Munk",
+                26: "Maak Me Gek - Gerard Joling",
+                27: "Summer Of '69 - Bryan Adams",
+                28: "Harder Dan Ik Hebben Kan - BLØF",
+                29: "Ich bin wie du - Marianne Rosenberg",
+                30: "10.000 Luchtballonnen - K3",
+                31: "99 Luftballons - Nena",
+                32: "Het Kuikentje Piep - Pulcino Pio",
+                33: "Rainbow In The Sky - Paul Elstak",
+                34: "Leef - André Hazes Jr.",
+                35: "Mexico - Zangeres Zonder Naam",
+                36: "La Bomba - King Africa",
+                37: "Greased Lightnin' - John Travolta",
+                38: "Que Si, Que No - Jody Bernal",
+                39: "Wake Me Up Before You Go-Go - Wham!",
+                40: "Eye of the Tiger - Survivor",
+                41: "Atje Voor De Sfeer - Rene Karst",
+                42: "Links Rechts - Snollebollekes",
+                43: "Red Red Wine - UB40",
+                44: "Ik Neem Je Mee - Gers Pardoel",
+                45: "Dynamite - Taio Cruz",
+                46: "Baby - Justin Bieber & Ludacris",
+                47: "Why Tell Me Why - Anita Meyer",
+                48: "Smooth Operator - Sade",
+                49: "Hello - Martin Solveig & Dragonette",
+                50: "Starships - Nicki Minaj",
+                51: "Diamonds - Rihanna",
+                52: "Halo - Beyoncé",
+                53: "Single Ladies (Put a Ring on It) - Beyoncé",
+                54: "Set Fire to the Rain - Adele",
+                55: "Hotel California - Eagles",
+                56: "Roller Coaster - Danny Vera",
+                57: "Bad Romance - Lady Gaga",
+                58: "Candy - Robbie Williams",
+                59: "Sterrenstof - De Jeugd Van Tegenwoordig",
+                60: "Rampeneren - Ali B, The Partysquad & Yes-R",
+                61: "Uit Elkaar - Yes-R",
+                62: "Kali - Django Wagner",
+                63: "Mon amour - BZN",
+                64: "Banger Hart - Rob De Nijs",
+                65: "Sinds 1 Dag Of 2 (32 Jaar) - Doe Maar",
+                66: "Smooth Criminal - Michael Jackson",
+                67: "Yellow Submarine - The Beatles",
+                68: "Mambo No. 5 (a Little Bit of...) - Lou Bega",
+                69: "De Vlieger - Andre Hazes",
+                70: "Ik Ga Zwemmen - Mart Hoogkamer",
+                71: "Spetter Pieter Pater - Herman van Veen",
+                72: "Pak Maar M'n Hand - Nick & Simon",
+                73: "Als De Morgen Is Gekomen - Jan Smit",
+                74: "Pump Up The Jam - Technotronic",
+                75: "Cold as Ice - Foreigner"
             }
         };
 
         // Kleurenschema's
         const colorSchemes = {
             default: {
-                1: '#e74c3c', 11: '#3498db', 21: '#f1c40f', 31: '#2ecc71', 41: '#9b59b6'
+                1: '#e74c3c', 16: '#3498db', 31: '#f1c40f', 46: '#2ecc71', 61: '#9b59b6'
             },
             pastel: {
-                1: '#ffb3ba', 11: '#bae1ff', 21: '#ffffba', 31: '#baffc9', 41: '#e0bbff'
+                1: '#ffb3ba', 16: '#bae1ff', 31: '#ffffba', 46: '#baffc9', 61: '#e0bbff'
             },
             dark: {
-                1: '#8b0000', 11: '#00008b', 21: '#8b8b00', 31: '#006400', 41: '#4b0082'
+                1: '#8b0000', 16: '#00008b', 31: '#8b8b00', 46: '#006400', 61: '#4b0082'
             },
             rainbow: {
-                1: '#ff0000', 11: '#ff7f00', 21: '#ffff00', 31: '#00ff00', 41: '#4b0082'
+                1: '#ff0000', 16: '#ff7f00', 31: '#ffff00', 46: '#00ff00', 61: '#4b0082'
             }
         };
 
         function getNumberColor(number, scheme = 'default') {
             const colors = colorSchemes[scheme];
-            if (number >= 1 && number <= 10) return colors[1];
-            if (number >= 11 && number <= 20) return colors[11];
-            if (number >= 21 && number <= 30) return colors[21];
-            if (number >= 31 && number <= 40) return colors[31];
-            if (number >= 41 && number <= 50) return colors[41];
+            if (number >= 1 && number <= 15) return colors[1];
+            if (number >= 16 && number <= 30) return colors[16];
+            if (number >= 31 && number <= 45) return colors[31];
+            if (number >= 46 && number <= 60) return colors[46];
+            if (number >= 61 && number <= 75) return colors[61];
             return '#667eea';
         }
 
@@ -527,13 +618,16 @@
             let isTextRound = false; // Voor rondes met tekst (2 en 3)
             
             if (round === 'all') {
-                allNumbers = Array.from({length: 50}, (_, i) => i + 1);
+                allNumbers = Array.from({length: 75}, (_, i) => i + 1);
+            } else if (round === '1') {
+                // Ronde 1 heeft ook statement keys
+                allNumbers = Object.keys(statements[round]).map(k => parseInt(k));
             } else if (round === '2' || round === '3') {
                 // Ronde 2 (Wie of Wat Ben Ik) en Ronde 3 (Muziek) - verzamel nummer keys
                 isTextRound = true;
                 allNumbers = Object.keys(statements[round]).map(k => parseInt(k));
             } else {
-                allNumbers = statements[round];
+                allNumbers = Object.keys(statements[round]).map(k => parseInt(k));
             }
 
             const numbersPerCard = gridSize * gridSize;
@@ -603,12 +697,6 @@
                 });
 
                 card.appendChild(grid);
-                
-                // Footer toevoegen
-                const footer = document.createElement('div');
-                footer.className = 'card-footer';
-                footer.textContent = 'Mede mogelijk gemaakt door JoeyNNL';
-                card.appendChild(footer);
                 
                 container.appendChild(card);
             }
