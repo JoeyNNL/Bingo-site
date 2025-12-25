@@ -651,8 +651,17 @@
                 grid.className = 'card-grid';
                 grid.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
 
-                // Selecteer willekeurige nummers
-                const shuffled = [...allNumbers].sort(() => Math.random() - 0.5);
+
+                // Fisher-Yates shuffle voor betere randomisatie
+                function fisherYatesShuffle(array) {
+                    const arr = [...array];
+                    for (let i = arr.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [arr[i], arr[j]] = [arr[j], arr[i]];
+                    }
+                    return arr;
+                }
+                const shuffled = fisherYatesShuffle(allNumbers);
                 const selectedNumbers = shuffled.slice(0, numbersPerCard);
 
                 // Duplicaat check
